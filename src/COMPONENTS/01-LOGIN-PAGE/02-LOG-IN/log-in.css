@@ -2,7 +2,7 @@
   height: 600px;
   width: 45%;
   margin: auto;
-  border: solid 0.5px #778ca3;
+  border: solid 0.5px #ecf0f1;
   margin-top: 50px;
   position: relative;
   transition: 0.5s;
@@ -53,6 +53,61 @@
   width: 100%;
   position: absolute;
   bottom: 0;
+}
+
+.showSpinner2 {
+  opacity: 0.5;
+  position: relative;
+}
+
+/* Spinner on Loading */
+.showSpinner2::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  border: 5px solid #bdc3c7;
+  border-top-color: #c0392b;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  margin-left: -30px;
+  margin-top: 90px;
+  animation: spinner 0.5s linear infinite;
+  z-index: 10;
+}
+/* Animate Spinner  */
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.text-for-warning {
+  position: relative;
+  padding-top: 25px;
+}
+
+/* Invalid username or pass msg */
+.invalid-msg::before {
+  content: "Invalid email or Password";
+  position: absolute;
+  height: 35px;
+  width: 90%;
+  background-color: rgba(255, 221, 221, 0.54);
+  left: 5%;
+  top: -25px;
+  line-height: 2.5;
+  border: 1px solid #dd4661;
+  border-radius: 4px;
+  cursor: default;
+}
+
+/* Media Query */
+@media only screen and (max-width: 980px) {
+  .showSpinner2::before {
+    margin-left: -30px;
+  }
 }
 
 /* Media Query */

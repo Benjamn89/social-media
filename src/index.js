@@ -9,10 +9,12 @@ import thunk from "redux-thunk";
 
 // import reducers
 import logOnReducer from "./REDUCERS/LOG-PAGE/log-on-reducer";
+import NavbarReducer from "./REDUCERS/NAVBAR/navbar-reducer";
 
 // combined reducers
 const rootReducer = combineReducers({
   logOnReducer,
+  NavbarReducer,
 });
 
 // create logger for thunk

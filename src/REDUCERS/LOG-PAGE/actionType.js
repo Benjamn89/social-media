@@ -38,22 +38,19 @@ const actionTypes = {
             dispatch(actionTypes.userExists());
           } else {
             // hash password and send the user to the db
-            bcrypt.genSalt(6, function (err, salt) {
-              bcrypt.hash(password, salt, function (err, hash) {
-                // Store hash in your password DB.
-                client
-                  .query(
-                    q.Create(q.Collection("Users"), {
-                      credentials: { password: hash },
-                      data: { fullName, email },
-                    })
-                  )
-                  .then((ret) => {
-                    // Notify the customer that the user has been successfully created
-                    dispatch(actionTypes.createUser());
-                  });
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(password, salt);
+            client
+              .query(
+                q.Create(q.Collection("Users"), {
+                  credentials: { password: hash },
+                  data: { fullName, email, password: hash },
+                })
+              )
+              .then((ret) => {
+                // Notify the customer that the user has been successfully created
+                dispatch(actionTypes.createUser());
               });
-            });
           }
         });
     };
@@ -72,19 +69,67 @@ const actionTypes = {
   logIn: (email, pass) => {
     return (dispatch) => {
       client
-        .query(
-          q.Login(q.Match(q.Index("email_exists"), email), {
-            password: pass,
-          })
-        )
+        .query(q.Exists(q.Match(q.Index("email_exists"), email)))
         .then((ret) => {
-          console.log(ret);
-          dispatch(actionTypes.logInSuccess());
+          if (ret) {
+            client
+              .query(q.Get(q.Match(q.Index("email_exists"), email)))
+              .then((ret) => {
+                // Check the password
+                var check = bcrypt.compareSync(pass, ret.data.password);
+                // Save the correct hashed password at the login box
+                var generatePass = ret.data.password;
+                if (check === true) {
+                  console.log("Pass is Ok");
+                  var now = new Date();
+                  var storeKey = {
+                    key: true,
+                    time: now.getTime() + 3600000,
+                  };
+                  localStorage.setItem("myData", JSON.stringify(storeKey));
+                  // Passord ok -> procceed for rciving a token
+                  client
+                    .query(
+                      q.Login(q.Match(q.Index("email_exists"), email), {
+                        password: generatePass,
+                      })
+                    )
+                    .then((ret) => {
+                      // didpatch the login sucees for showing the profile
+                      console.log("dispatch reducer");
+                      dispatch(actionTypes.logInSuccess());
+                    });
+                } else {
+                  // Remove spinner
+                  document
+                    .querySelector(".log-in-div")
+                    .classList.remove("showSpinner2");
+                  // clear pass field
+                  document.querySelector(".clear-password").value = "";
+                  // show invalid msg
+                  document
+                    .querySelector(".text-for-warning")
+                    .classList.add("invalid-msg");
+                }
+              });
+          } else {
+            // Remove spinner
+            document
+              .querySelector(".log-in-div")
+              .classList.remove("showSpinner2");
+            // clear pass field
+            document.querySelector(".clear-password").value = "";
+            // show invalid msg
+            document
+              .querySelector(".text-for-warning")
+              .classList.add("invalid-msg");
+          }
         });
     };
   },
   logInSuccess: () => {
     // log in the user to the profile
+    console.log("rcv dis - send to the reducer");
     return {
       type: "logInSuccess",
     };

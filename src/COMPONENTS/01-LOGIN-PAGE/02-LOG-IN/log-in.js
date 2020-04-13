@@ -6,6 +6,8 @@ import actionTypes from "../../../REDUCERS/LOG-PAGE/actionType";
 
 class LogIn extends Component {
   onSub = (e) => {
+    // load spinner
+    document.querySelector(".log-in-div").classList.add("showSpinner2");
     e.preventDefault();
     var email = e.target.children[1].value;
     var pass = e.target.children[3].value;
@@ -27,10 +29,10 @@ class LogIn extends Component {
           <label>Email</label>
           <input type="email"></input>
           <label>Password</label>
-          <input type="password"></input>
+          <input className="clear-password" type="password" required></input>
           <button className="log-in-button">Sign in</button>
         </form>
-        <p className="log-in-text">
+        <p className="log-in-text text-for-warning">
           New to Sted? <span onClick={this.signUpView}>Sign up</span>
         </p>
         <img src={SmallLogo} alt="small-logo" />
