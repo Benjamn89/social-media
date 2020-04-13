@@ -1,0 +1,63 @@
+.log-in-div {
+  height: 600px;
+  width: 45%;
+  margin: auto;
+  border: solid 0.5px #778ca3;
+  margin-top: 50px;
+  position: relative;
+  transition: 0.5s;
+}
+.log-on-title {
+  text-align: center;
+  margin-top: 30px;
+}
+.log-in-text {
+  margin: 30px 0;
+  text-align: center;
+}
+.log-in-div hr {
+  margin: auto;
+  width: 70%;
+}
+.log-in-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 30%;
+  margin: 30px 0;
+}
+.log-in-form label {
+  text-align: left;
+}
+.log-in-form input {
+  width: 90%;
+  height: 30px;
+  font-size: 120%;
+  padding-left: 5px;
+  border-radius: 2px;
+  border: solid 0.5px #778ca3;
+  outline: none;
+  text-align: center;
+}
+.log-in-form button {
+  width: 90%;
+  height: 30px;
+  margin-top: 15px;
+}
+.log-in-div span {
+  color: #0c2461;
+  cursor: pointer;
+}
+.log-in-div img {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+/* Media Query */
+@media only screen and (max-width: 900px) {
+  .log-in-div {
+    width: 80%;
+  }
+}

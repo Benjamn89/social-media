@@ -1,0 +1,20 @@
+.registered-box-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #f4f5f9;
+  font-family: "Lora", serif;
+}
+.registered-box-div img {
+  height: 80px;
+}
+.registered-box-title {
+  text-align: center;
+  font-weight: 400;
+}
+.registered-box-text span {
+  color: #0c2461;
+  cursor: pointer;
+  font-size: 20px;
+}

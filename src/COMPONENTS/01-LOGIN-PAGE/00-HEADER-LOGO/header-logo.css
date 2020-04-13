@@ -1,0 +1,14 @@
+.logo-div {
+  background-color: #c0392b;
+  height: 25vh;
+  transform: skew(0, -3deg);
+  margin-top: -100px;
+}
+
+.logo-div img {
+  padding-top: 120px;
+}
+.logo-p {
+  color: #fff;
+  padding-left: 150px;
+}

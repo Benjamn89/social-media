@@ -1,0 +1,72 @@
+.register-box-div {
+  height: 50vh;
+  width: 80%;
+  border: solid 0.5px #ecf0f1;
+  margin: 60px auto;
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  transition: 0.5s;
+}
+
+.welcome-part-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.part-one-text {
+  font-family: "Lora", serif;
+  font-weight: 400;
+}
+.welcome-part-div ul {
+  transform: translateY(-30px) translateX(-20px);
+}
+.welcome-part-ul-title {
+  transform: translateX(-25px);
+}
+
+/* Spinner while creating user */
+.showSpinner {
+  opacity: 0.5;
+  position: relative;
+}
+.showSpinner::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  border: 5px solid #bdc3c7;
+  border-top-color: #c0392b;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -30px;
+  margin-top: 90px;
+  animation: spinner 0.5s linear infinite;
+}
+/* Animate Spinner  */
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Add red border when needed */
+.add-red {
+  border-color: #fc5c65;
+}
+
+/* Media Query */
+@media only screen and (max-width: 980px) {
+  .register-box-div {
+    grid-template-columns: 1fr;
+    height: 80vh;
+  }
+  .welcome-part-ul-title {
+    margin-bottom: 20px;
+  }
+  .showSpinner::before {
+    margin-left: -50px;
+  }
+}

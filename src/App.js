@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import LogOnContainer from "./COMPONENTS/01-LOGIN-PAGE/03-CONTAINER/container";
+import ProfilePage from "./COMPONENTS/02-PROFILE-PAGE/test";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = (props) => {
+  console.log("App -> RENDER!!!");
+  var showLogOrProfile = () => {
+    if (props.isLogIn === false) {
+      return <LogOnContainer />;
+    } else {
+      return <ProfilePage />;
+    }
+  };
+  return <div className="App">{showLogOrProfile()}</div>;
+};
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isLogIn: state.logOnReducer.logIn,
+  };
+};
+
+export default connect(mapStateToProps, null)(App);

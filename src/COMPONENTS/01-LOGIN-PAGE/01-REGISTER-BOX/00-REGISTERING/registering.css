@@ -1,0 +1,98 @@
+.welcome-part2-div {
+  background-color: #f4f5f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.welcome-part-div li {
+  list-style: disc;
+  margin-top: 10px;
+}
+.part-two-text {
+  text-align: center;
+  font-family: "Lora", serif;
+  font-weight: 400;
+}
+.part-two-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60%;
+}
+
+.part-two-form button,
+.part-two-form input {
+  border-radius: 2px;
+  border: solid 0.5px #778ca3;
+  outline: none;
+  height: 30px;
+  width: 90%;
+}
+
+.part-two-form input {
+  font-size: 120%;
+  padding-left: 5px;
+  text-align: center;
+}
+.part-two-form button {
+  height: 35px;
+  position: relative;
+}
+.part-two-p {
+  margin-top: 35px;
+  text-align: center;
+}
+.part-two-p span {
+  color: #0c2461;
+  cursor: pointer;
+}
+
+/* Email exists warning */
+.email-warning::after {
+  content: "This email address is already in use.";
+  position: absolute;
+  height: 35px;
+  width: 100%;
+  background-color: rgba(255, 221, 221, 0.54);
+  left: 0;
+  top: 40px;
+  line-height: 2.5;
+  border: 1px solid #dd4661;
+  border-radius: 4px;
+  cursor: default;
+}
+
+/* Spinner while creating user */
+.showSpinner {
+  opacity: 0.5;
+  position: relative;
+}
+.showSpinner::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  border: 5px solid #bdc3c7;
+  border-top-color: #c0392b;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -30px;
+  margin-top: 90px;
+  animation: spinner 0.5s linear infinite;
+}
+/* Animate Spinner  */
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media Query */
+@media only screen and (max-width: 980px) {
+  .showSpinner::before {
+    margin-left: -50px;
+  }
+}
