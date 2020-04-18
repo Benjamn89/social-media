@@ -72,6 +72,7 @@ class ProfileBox extends Component {
               joined {this.props.profileBoxState.timeStamp.month}{" "}
               {this.props.profileBoxState.timeStamp.year}
             </div>
+            <img className="edit-profile-bio" src={Pen} alt="penImg" />
           </div>
         </div>
       );
