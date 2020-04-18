@@ -16,34 +16,61 @@ nav img {
   flex-direction: row;
   margin-right: 35px;
 }
+
 .nav-inside-p {
-  padding: 3px 10px 5px 10px;
+  margin-right: 20px;
   cursor: pointer;
-  /* font-weight: bold; */
-}
-.nav-inside-p:first-child {
-  margin-right: 15px;
-  border: none;
-  color: #1b1464;
-}
-.nav-inside-p:first-child:hover {
+  text-decoration: none;
   color: #fff;
+  position: relative;
+  line-height: 1.7;
+  opacity: 0.8;
 }
-.nav-inside-p:last-child {
-  color: white;
-  transition: 0.2s;
+.nav-inside-p:hover {
+  opacity: 1;
+}
+
+.nav-p1 {
+  padding-left: 5px;
+}
+
+.nav-p1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  height: 1px;
+  width: 110%;
+  transition: 0.3s;
+  transform: scaleX(0);
+  transform-origin: 100% 50%;
+}
+.nav-p1:hover::before {
+  transform: scaleX(1);
+}
+.nav-p1::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: #fff;
+  height: 1px;
+  width: 110%;
+  transition: 0.3s;
+  transform: scaleX(0);
+}
+.nav-p1:hover::after {
+  transform: scaleX(1);
 }
 
 /* Transfrom border on hover */
-.nav-p2 {
-  position: relative;
-}
 .nav-p2::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  background-color: white;
+  background-color: #fff;
   height: 1px;
   width: 0;
   transition: 0.3s;
@@ -57,7 +84,7 @@ nav img {
   position: absolute;
   top: 30px;
   left: 0;
-  background-color: white;
+  background-color: #fff;
   height: 1px;
   width: 100%;
   transition: 0.3s;

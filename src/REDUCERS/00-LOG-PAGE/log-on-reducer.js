@@ -2,6 +2,7 @@ const initialState = {
   currentMode: "signIn",
   regMode: "registering",
   logIn: false,
+  loggedEmail: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +24,7 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       logIn: !state.logIn,
+      loggedEmail: action.email,
     };
   }
   return state;

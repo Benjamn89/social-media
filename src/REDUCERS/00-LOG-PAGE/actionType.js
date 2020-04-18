@@ -27,7 +27,7 @@ const actionTypes = {
     };
   },
 
-  sendCreateRequest: (fullName, email, password) => {
+  sendCreateRequest: (fullName, email, password, defaultImgUrl) => {
     return (dispatch) => {
       // find if email exists in the system
       client
@@ -40,11 +40,19 @@ const actionTypes = {
             // hash password and send the user to the db
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
+            // Create time stamp
+            var time = new Date().toString();
             client
               .query(
                 q.Create(q.Collection("Users"), {
                   credentials: { password: hash },
-                  data: { fullName, email, password: hash },
+                  data: {
+                    fullName,
+                    email,
+                    password: hash,
+                    profileImg: defaultImgUrl,
+                    time,
+                  },
                 })
               )
               .then((ret) => {
@@ -79,12 +87,16 @@ const actionTypes = {
                 var check = bcrypt.compareSync(pass, ret.data.password);
                 // Save the correct hashed password at the login box
                 var generatePass = ret.data.password;
+                // Save the reference id database
+                var ref = ret.ref.value.id;
                 if (check === true) {
                   console.log("Pass is Ok");
                   var now = new Date();
                   var storeKey = {
                     key: true,
                     time: now.getTime() + 3600000,
+                    email,
+                    ref,
                   };
                   localStorage.setItem("myData", JSON.stringify(storeKey));
                   // Passord ok -> procceed for rciving a token
@@ -97,7 +109,7 @@ const actionTypes = {
                     .then((ret) => {
                       // didpatch the login sucees for showing the profile
                       console.log("dispatch reducer");
-                      dispatch(actionTypes.logInSuccess());
+                      dispatch(actionTypes.logInSuccess(email));
                     });
                 } else {
                   // Remove spinner
@@ -127,11 +139,12 @@ const actionTypes = {
         });
     };
   },
-  logInSuccess: () => {
+  logInSuccess: (email) => {
     // log in the user to the profile
     console.log("rcv dis - send to the reducer");
     return {
       type: "logInSuccess",
+      email,
     };
   },
 };

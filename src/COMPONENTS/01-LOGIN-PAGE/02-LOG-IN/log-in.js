@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import "./log-in.css";
 import SmallLogo from "../../../media/small-logo.png";
 import { connect } from "react-redux";
-import actionTypes from "../../../REDUCERS/LOG-PAGE/actionType";
+import actionTypes from "../../../REDUCERS/00-LOG-PAGE/actionType";
 
 class LogIn extends Component {
   onSub = (e) => {
     // load spinner
     document.querySelector(".log-in-div").classList.add("showSpinner2");
     e.preventDefault();
-    var email = e.target.children[1].value;
+    var email = e.target.children[1].value.toLowerCase();
     var pass = e.target.children[3].value;
     this.props.logIn(email, pass);
   };

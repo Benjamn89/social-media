@@ -15,7 +15,7 @@ class LogOnContainer extends Component {
       }
     };
 
-    console.log("LogOnContainer -> REDNER!!!");
+    console.log("LogIn/Regis box is -> REDNER!!!");
     return (
       <div className="log-on-container">
         <HeaderLogo />

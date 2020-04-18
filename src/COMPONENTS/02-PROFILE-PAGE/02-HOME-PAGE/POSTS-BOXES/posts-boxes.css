@@ -1,0 +1,50 @@
+.posts-boxes-wrapper {
+  width: 70%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.post-div {
+  border: solid 2px lightgrey;
+  border-radius: 2px;
+  height: 15vh;
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  margin-bottom: 10px;
+}
+.post-div img {
+  height: 80%;
+  padding-left: 20px;
+}
+.inside-single-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.in-sin-div-features {
+  display: flex;
+  flex-direction: row;
+}
+.in-feat-p {
+  margin-right: 15px;
+}
+
+/* Style the text inside the posts box */
+.in-sin-p1 {
+  font-weight: bold;
+  color: #18dcff;
+}
+.in-sin-p2 {
+  transform: translateY(-10px) translateX(10px);
+  font-size: 13px;
+  color: #aaa69d;
+}
+.in-sin-p3 {
+  transform: translateY(-15px);
+  font-size: 15px;
+}
+.in-sin-div-features {
+  transform: translateY(-10px);
+  font-size: 15px;
+}

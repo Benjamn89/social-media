@@ -4,7 +4,11 @@ import Registering from "./00-REGISTERING/registering";
 import Registered from "./01-REGISTERED/registered";
 
 import { connect } from "react-redux";
-import actionTypes from "../../../REDUCERS/LOG-PAGE/actionType";
+import actionTypes from "../../../REDUCERS/00-LOG-PAGE/actionType";
+
+// Store default profile image URL
+var defaultImgUrl =
+  "https://firebasestorage.googleapis.com/v0/b/sted-7c8ac.appspot.com/o/renamed-no-profile.png?alt=media&token=6003c660-6da1-41b7-a313-76b187a8164e";
 
 class RegisterBox extends Component {
   changeView = (e) => {
@@ -15,10 +19,10 @@ class RegisterBox extends Component {
     e.preventDefault();
     document.querySelector(".welcome-part2-div").classList.add("showSpinner");
     var fullName = e.target.children[1].value;
-    var email = e.target.children[3].value;
+    var email = e.target.children[3].value.toLowerCase();
     var password = e.target.children[5].value;
 
-    this.props.createUser(fullName, email, password);
+    this.props.createUser(fullName, email, password, defaultImgUrl);
   };
 
   render() {
@@ -63,8 +67,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeMode: () => dispatch(actionTypes.changeView("signIn")),
-    createUser: (fullName, email, password) =>
-      dispatch(actionTypes.sendCreateRequest(fullName, email, password)),
+    createUser: (fullName, email, password, defaultImgUrl) =>
+      dispatch(
+        actionTypes.sendCreateRequest(fullName, email, password, defaultImgUrl)
+      ),
   };
 };
 

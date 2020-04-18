@@ -3,6 +3,7 @@ import "./App.css";
 import LogOnContainer from "./COMPONENTS/01-LOGIN-PAGE/03-CONTAINER/container";
 import ProfilePage from "./COMPONENTS/02-PROFILE-PAGE/10-CONTAINER/container";
 import { connect } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 const App = (props) => {
   console.log("App -> RENDER!!!");
@@ -18,9 +19,11 @@ const App = (props) => {
   };
 
   return (
-    <div className="App">
-      {keyValidity() === false ? <LogOnContainer /> : <ProfilePage />}
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        {keyValidity() === false ? <LogOnContainer /> : <ProfilePage />}
+      </div>
+    </BrowserRouter>
   );
 };
 
