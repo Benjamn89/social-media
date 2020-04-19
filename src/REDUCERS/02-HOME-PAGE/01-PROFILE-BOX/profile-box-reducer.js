@@ -1,6 +1,6 @@
 const initialState = {
   url: false,
-  privateName: null,
+  fullName: null,
   refToProDoc: null,
   timeStamp: null,
   location: "Edit",
@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       url: action.dataObj.image,
-      privateName: action.dataObj.name,
+      fullName: action.dataObj.fullName,
       refToProDoc: action.refToProDoc,
       timeStamp: action.timeStamp,
       location: action.dataObj.location,

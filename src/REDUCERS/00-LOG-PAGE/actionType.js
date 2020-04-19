@@ -27,11 +27,11 @@ const actionTypes = {
     };
   },
 
-  sendCreateRequest: (fullName, email, password, defaultImgUrl) => {
+  sendCreateRequest: (obj) => {
     return (dispatch) => {
       // find if email exists in the system
       client
-        .query(q.Exists(q.Match(q.Index("email_exists"), email)))
+        .query(q.Exists(q.Match(q.Index("email_exists"), obj.email)))
         .then((ret) => {
           if (ret === true) {
             // if exists -> dispatch an exists msg
@@ -39,7 +39,7 @@ const actionTypes = {
           } else {
             // hash password and send the user to the db
             var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(password, salt);
+            var hash = bcrypt.hashSync(obj.password, salt);
             // Create time stamp
             var time = new Date().toString();
             client
@@ -47,11 +47,13 @@ const actionTypes = {
                 q.Create(q.Collection("Users"), {
                   credentials: { password: hash },
                   data: {
-                    fullName,
-                    email,
+                    fullName: obj.fullName,
+                    email: obj.email,
                     password: hash,
-                    profileImg: defaultImgUrl,
+                    profileImg: obj.defaultImgUrl,
                     time,
+                    location: "EDIT",
+                    website: "EDIT",
                   },
                 })
               )

@@ -57,12 +57,18 @@ class ProfileBox extends Component {
     el.style.display = "flex";
     el.focus();
 
-    document.querySelectorAll(
-      "#standard-basic"
-    )[1].value = this.props.profileBoxState.location;
-    document.querySelectorAll(
-      "#standard-basic"
-    )[2].value = this.props.profileBoxState.website;
+    var locationValue = this.props.profileBoxState.location;
+    var webValue = this.props.profileBoxState.website;
+
+    if (locationValue === "EDIT") {
+      locationValue = "";
+    }
+    if (webValue === "EDIT") {
+      webValue = "";
+    }
+
+    document.querySelectorAll("#standard-basic")[1].value = locationValue;
+    document.querySelectorAll("#standard-basic")[2].value = webValue;
   };
   // Save profile info when click on save
   establishFetch = () => {
@@ -101,7 +107,7 @@ class ProfileBox extends Component {
             className="profile-img"
           />
           <p className="profilebox-name-title-p">
-            {this.props.profileBoxState.privateName}
+            {this.props.profileBoxState.fullName}
           </p>
           <input
             ref={(fileInput) => (this.fileInput = fileInput)}

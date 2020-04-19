@@ -21,7 +21,6 @@ const actionTypes = {
           ret.data.map((el) => {
             return storeArr.push(el.data);
           });
-          storeArr.reverse();
           dispatch(actionTypes.renderPosts(storeArr));
         });
     };
@@ -39,7 +38,7 @@ const actionTypes = {
         .query(
           q.Create(q.Collection("posts"), {
             data: {
-              name: postProperties.name,
+              fullName: postProperties.fullName,
               time: "now",
               text: postProperties.text,
               likes: 0,

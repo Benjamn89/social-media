@@ -56,7 +56,7 @@ const actionTypes = {
             day: splitTime[2],
           };
           var dataObj = {
-            name: ret.data.fullName,
+            fullName: ret.data.fullName,
             image: ret.data.profileImg,
             location: ret.data.location,
             web: ret.data.website,

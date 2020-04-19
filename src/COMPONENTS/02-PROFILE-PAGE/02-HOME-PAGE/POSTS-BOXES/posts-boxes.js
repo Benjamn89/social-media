@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./posts-boxes.css";
 import { connect } from "react-redux";
 import actionTypes from "../../../../REDUCERS/02-HOME-PAGE/00-POSTS-BOX/actionTypes";
-import TmpProfileImg from "../../../../media/profile.png";
+// import TmpProfileImg from "../../../../media/profile.png";
 import Modal from "./MODAL/modal";
 
 class PostsBoxes extends Component {
@@ -11,9 +11,7 @@ class PostsBoxes extends Component {
   }
 
   shouldComponentUpdate(nP, nS) {
-    console.log(nP.postsArray);
-    console.log(this.props.postsArray);
-    if (nP.postsArray !== this.props.postsArray) {
+    if (nP.postsArray.changePost !== this.props.postsArray.changePost) {
       return true;
     } else {
       return false;
@@ -22,12 +20,12 @@ class PostsBoxes extends Component {
 
   savePost = (e) => {
     const text = document.querySelectorAll("#standard-basic")[0].value;
-    const obj = this.props.profileBoxState;
-    const state = this.props.postsArray;
+    const obj = { ...this.props.profileBoxState };
+    const state = this.props.postsArray.posts;
     const moveOnProperties = {
       text,
       email: obj.email,
-      name: obj.privateName,
+      fullName: obj.fullName,
       url: obj.url,
       likes: 0,
       comments: 0,
@@ -38,13 +36,13 @@ class PostsBoxes extends Component {
 
   render() {
     var fetchedPosts = null;
-    if (this.props.postsArray.length > 0) {
-      fetchedPosts = this.props.postsArray.map((el) => {
+    if (this.props.postsArray.posts.length > 0) {
+      fetchedPosts = this.props.postsArray.posts.map((el) => {
         return (
           <div className="post-div" key={el.text}>
-            <img src={TmpProfileImg} alt="tmppfoimg" />
+            <img src={el.imageUrl} alt="tmppfoimg" />
             <div className="inside-single-div">
-              <p className="in-sin-p1">{el.name}</p>
+              <p className="in-sin-p1">{el.fullName}</p>
               <p className="in-sin-p2">{el.time}</p>
               <p className="in-sin-p3">{el.text}</p>
               <div className="in-sin-div-features">
@@ -55,6 +53,7 @@ class PostsBoxes extends Component {
           </div>
         );
       });
+      fetchedPosts.reverse();
     }
 
     console.log("PostsBoxes -> REDNER!!!");
@@ -69,7 +68,7 @@ class PostsBoxes extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    postsArray: state.PostsReducer.posts,
+    postsArray: state.PostsReducer,
     profileBoxState: state.ProfileBoxReducer,
   };
 };

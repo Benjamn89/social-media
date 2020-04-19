@@ -18,11 +18,18 @@ class RegisterBox extends Component {
   onSub = (e) => {
     e.preventDefault();
     document.querySelector(".welcome-part2-div").classList.add("showSpinner");
-    var fullName = e.target.children[1].value;
-    var email = e.target.children[3].value.toLowerCase();
-    var password = e.target.children[5].value;
+    // var fullName = e.target.children[1].value;
+    // var email = e.target.children[3].value.toLowerCase();
+    // var password = e.target.children[5].value;
 
-    this.props.createUser(fullName, email, password, defaultImgUrl);
+    var obj = {
+      fullName: e.target.children[1].value,
+      email: e.target.children[3].value.toLowerCase(),
+      password: e.target.children[5].value,
+      defaultImgUrl,
+    };
+
+    this.props.createUser(obj);
   };
 
   render() {
@@ -67,10 +74,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeMode: () => dispatch(actionTypes.changeView("signIn")),
-    createUser: (fullName, email, password, defaultImgUrl) =>
-      dispatch(
-        actionTypes.sendCreateRequest(fullName, email, password, defaultImgUrl)
-      ),
+    createUser: (obj) => dispatch(actionTypes.sendCreateRequest(obj)),
   };
 };
 
