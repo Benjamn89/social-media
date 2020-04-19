@@ -8,16 +8,22 @@ class Modal extends Component {
     return false;
   }
 
-  cancelModal = () => {
-    document.querySelector(".posts-modal").style.display = "none";
+  cancelModal = (e) => {
+    if (e.key === "Escape" || e.target.innerHTML === "Cancel") {
+      document.querySelector(".posts-modal").style.display = "none";
+    }
   };
   render() {
     return (
-      <div className="posts-modal">
+      <div className="posts-modal" tabIndex="0" onKeyDown={this.cancelModal}>
         <div className="posts-modal-inside">
           <h1 className="pos-mod-h1">Publish New Post</h1>
           <Input title="Share Something..." />
-          <ModalButtons ok="Share!" cancelModal={this.cancelModal} />
+          <ModalButtons
+            ok="Share!"
+            cancelModal={this.cancelModal}
+            establishFetch={this.props.establishFetch}
+          />
         </div>
       </div>
     );

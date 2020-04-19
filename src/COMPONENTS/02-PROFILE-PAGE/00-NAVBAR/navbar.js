@@ -7,7 +7,9 @@ const Navbar = (props) => {
   console.log("Navba -> RENDER!!!");
 
   const openModal = (e) => {
-    document.querySelector(".posts-modal").style.display = "flex";
+    var el = document.querySelector(".posts-modal");
+    el.style.display = "flex";
+    el.focus();
   };
   return (
     <nav>

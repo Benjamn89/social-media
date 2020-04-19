@@ -10,12 +10,38 @@ class PostsBoxes extends Component {
     this.props.loadPosts();
   }
 
+  shouldComponentUpdate(nP, nS) {
+    console.log(nP.postsArray);
+    console.log(this.props.postsArray);
+    if (nP.postsArray !== this.props.postsArray) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  savePost = (e) => {
+    const text = document.querySelectorAll("#standard-basic")[0].value;
+    const obj = this.props.profileBoxState;
+    const state = this.props.postsArray;
+    const moveOnProperties = {
+      text,
+      email: obj.email,
+      name: obj.privateName,
+      url: obj.url,
+      likes: 0,
+      comments: 0,
+      state,
+    };
+    this.props.createNewPost(moveOnProperties);
+  };
+
   render() {
     var fetchedPosts = null;
     if (this.props.postsArray.length > 0) {
       fetchedPosts = this.props.postsArray.map((el) => {
         return (
-          <div className="post-div" key={el.name}>
+          <div className="post-div" key={el.text}>
             <img src={TmpProfileImg} alt="tmppfoimg" />
             <div className="inside-single-div">
               <p className="in-sin-p1">{el.name}</p>
@@ -34,7 +60,7 @@ class PostsBoxes extends Component {
     console.log("PostsBoxes -> REDNER!!!");
     return (
       <div className="posts-boxes-wrapper">
-        <Modal />
+        <Modal establishFetch={this.savePost} />
         {fetchedPosts}
       </div>
     );
@@ -44,12 +70,15 @@ class PostsBoxes extends Component {
 const mapStateToProps = (state) => {
   return {
     postsArray: state.PostsReducer.posts,
+    profileBoxState: state.ProfileBoxReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadPosts: () => dispatch(actionTypes.loadPosts()),
+    createNewPost: (postProperties) =>
+      dispatch(actionTypes.createNewPost(postProperties)),
   };
 };
 

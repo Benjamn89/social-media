@@ -60,6 +60,7 @@ const actionTypes = {
             image: ret.data.profileImg,
             location: ret.data.location,
             web: ret.data.website,
+            email: ret.data.email,
           };
           dispatch(
             actionTypes.renLogingData(dataObj, parseLocal.ref, timeStamp)
@@ -75,7 +76,7 @@ const actionTypes = {
       timeStamp,
     };
   },
-  saveProInfo: (ref, location, website) => {
+  establishFetch: (ref, location, website) => {
     return (dispatch) => {
       client
         .query(

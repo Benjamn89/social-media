@@ -17,7 +17,7 @@ class Modal extends Component {
           <ModalButtons
             ok="Save!"
             cancelModal={this.props.cancelModal}
-            saveProInfo={this.props.saveProInfo}
+            establishFetch={this.props.establishFetch}
           />
         </div>
       </div>

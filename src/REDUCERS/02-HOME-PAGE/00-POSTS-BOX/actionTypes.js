@@ -21,6 +21,7 @@ const actionTypes = {
           ret.data.map((el) => {
             return storeArr.push(el.data);
           });
+          storeArr.reverse();
           dispatch(actionTypes.renderPosts(storeArr));
         });
     };
@@ -30,6 +31,34 @@ const actionTypes = {
     return {
       type: "renderPosts",
       val: storeArr,
+    };
+  },
+  createNewPost: (postProperties) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Create(q.Collection("posts"), {
+            data: {
+              name: postProperties.name,
+              time: "now",
+              text: postProperties.text,
+              likes: 0,
+              comments: 0,
+              email: postProperties.email,
+              imageUrl: postProperties.url,
+            },
+          })
+        )
+        .then((ret) => {
+          postProperties.state.push(ret.data);
+          dispatch(actionTypes.updatePost(postProperties.state));
+        });
+    };
+  },
+  updatePost: (data) => {
+    return {
+      type: "updatePost",
+      val: data,
     };
   },
 };

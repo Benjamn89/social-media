@@ -5,6 +5,7 @@ const initialState = {
   timeStamp: null,
   location: "Edit",
   website: "Edit",
+  email: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +24,7 @@ const reducer = (state = initialState, action) => {
       timeStamp: action.timeStamp,
       location: action.dataObj.location,
       website: action.dataObj.web,
+      email: action.dataObj.email,
     };
   }
   if (action.type === "renderProInfo") {

@@ -19,6 +19,19 @@ class ProfileBox extends Component {
     this.props.retriveLoginData();
   }
 
+  shouldComponentUpdate(nP, nS) {
+    var tProps = this.props.profileBoxState;
+    if (
+      tProps.email !== nP.profileBoxState.email ||
+      tProps.url !== nP.profileBoxState.url ||
+      tProps.location !== nP.profileBoxState.location
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   pickImage = (e) => {
     storeInputPick = e.target.files[0];
     if (storeInputPick) {
@@ -52,14 +65,14 @@ class ProfileBox extends Component {
     )[2].value = this.props.profileBoxState.website;
   };
   // Save profile info when click on save
-  saveProInfo = () => {
+  establishFetch = () => {
     var location = document.querySelectorAll("#standard-basic")[1].value;
     var web = document.querySelectorAll("#standard-basic")[2].value;
     if (
       location !== this.props.profileBoxState.location ||
       web !== this.props.profileBoxState.website
     ) {
-      this.props.saveProInfo(
+      this.props.establishFetch(
         this.props.profileBoxState.refToProDoc,
         location,
         web
@@ -133,7 +146,10 @@ class ProfileBox extends Component {
     }
     return (
       <div className="posts-sec-wrapper">
-        <Modal saveProInfo={this.saveProInfo} cancelModal={this.cancelModal} />
+        <Modal
+          establishFetch={this.establishFetch}
+          cancelModal={this.cancelModal}
+        />
         {profileBox}
       </div>
     );
@@ -152,8 +168,8 @@ const mapDispatchToProps = (dispatch) => {
     renderProfileImage: (storeInputPick, refDoc) =>
       dispatch(actionTypes.renderProfileImage(storeInputPick, refDoc)),
     retriveLoginData: () => dispatch(actionTypes.retriveLoginData()),
-    saveProInfo: (ref, location, web) =>
-      dispatch(actionTypes.saveProInfo(ref, location, web)),
+    establishFetch: (ref, location, web) =>
+      dispatch(actionTypes.establishFetch(ref, location, web)),
   };
 };
 
