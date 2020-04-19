@@ -90,7 +90,6 @@ const actionTypes = {
                 // Save the reference id database
                 var ref = ret.ref.value.id;
                 if (check === true) {
-                  console.log("Pass is Ok");
                   var now = new Date();
                   var storeKey = {
                     key: true,
@@ -108,7 +107,7 @@ const actionTypes = {
                     )
                     .then((ret) => {
                       // didpatch the login sucees for showing the profile
-                      console.log("dispatch reducer");
+
                       dispatch(actionTypes.logInSuccess(email));
                     });
                 } else {
@@ -141,7 +140,6 @@ const actionTypes = {
   },
   logInSuccess: (email) => {
     // log in the user to the profile
-    console.log("rcv dis - send to the reducer");
     return {
       type: "logInSuccess",
       email,

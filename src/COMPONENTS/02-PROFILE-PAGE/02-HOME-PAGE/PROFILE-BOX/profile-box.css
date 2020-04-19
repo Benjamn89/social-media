@@ -31,7 +31,6 @@
 }
 .profilebox-name-title-p {
   text-transform: capitalize;
-  transform: translateY(-20px);
 }
 .profile-box-pen-image {
   height: 20px;
@@ -40,6 +39,10 @@
 }
 .profile-box-time-stamp {
   text-transform: capitalize;
+}
+.website-a {
+  text-decoration: none;
+  color: black;
 }
 
 .profile-box-div-info {

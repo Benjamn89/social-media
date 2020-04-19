@@ -20,7 +20,6 @@ const reducer = (state = initialState, action) => {
     };
   }
   if (action.type === "logInSuccess") {
-    console.log("chaging the state");
     return {
       ...state,
       logIn: !state.logIn,

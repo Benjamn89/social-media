@@ -3,6 +3,7 @@ import "./posts-boxes.css";
 import { connect } from "react-redux";
 import actionTypes from "../../../../REDUCERS/02-HOME-PAGE/00-POSTS-BOX/actionTypes";
 import TmpProfileImg from "../../../../media/profile.png";
+import Modal from "./MODAL/modal";
 
 class PostsBoxes extends Component {
   componentDidMount() {
@@ -31,7 +32,12 @@ class PostsBoxes extends Component {
     }
 
     console.log("PostsBoxes -> REDNER!!!");
-    return <div className="posts-boxes-wrapper">{fetchedPosts}</div>;
+    return (
+      <div className="posts-boxes-wrapper">
+        <Modal />
+        {fetchedPosts}
+      </div>
+    );
   }
 }
 

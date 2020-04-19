@@ -55,24 +55,47 @@ const actionTypes = {
             month: splitTime[1],
             day: splitTime[2],
           };
+          var dataObj = {
+            name: ret.data.fullName,
+            image: ret.data.profileImg,
+            location: ret.data.location,
+            web: ret.data.website,
+          };
           dispatch(
-            actionTypes.renLogingData(
-              ret.data.fullName,
-              ret.data.profileImg,
-              parseLocal.ref,
-              timeStamp
-            )
+            actionTypes.renLogingData(dataObj, parseLocal.ref, timeStamp)
           );
         });
     };
   },
-  renLogingData: (fullName, imageUrl, refToProDoc, timeStamp) => {
+  renLogingData: (dataObj, refToProDoc, timeStamp) => {
     return {
       type: "renLogingData",
-      fullName,
-      imageUrl,
+      dataObj,
       refToProDoc,
       timeStamp,
+    };
+  },
+  saveProInfo: (ref, location, website) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("Users"), ref), {
+            data: { location, website },
+          })
+        )
+        .then((ret) => {
+          document.querySelector(".modal").style.display = "none";
+          dispatch(actionTypes.renderProInfo(location, website));
+        });
+    };
+  },
+  renderProInfo: (location, web) => {
+    return {
+      type: "renderProInfo",
+      val: {
+        location,
+        web,
+      },
     };
   },
 };

@@ -4,11 +4,14 @@ nav {
   background-color: #c0392b;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  position: relative;
 }
 nav img {
   height: 50%;
+  position: absolute;
+  left: 0;
 }
 
 .nav-inside-div {
@@ -93,4 +96,10 @@ nav img {
 }
 .nav-p2:hover::after {
   transform: scaleX(1);
+}
+
+@media only screen and (max-width: 650px) {
+  nav {
+    justify-content: flex-end;
+  }
 }
