@@ -20,18 +20,29 @@ class PostsBoxes extends Component {
 
   savePost = (e) => {
     const text = document.querySelectorAll("#standard-basic")[0].value;
-    const obj = { ...this.props.profileBoxState };
-    const state = this.props.postsArray.posts;
-    const moveOnProperties = {
-      text,
-      email: obj.email,
-      fullName: obj.fullName,
-      url: obj.url,
-      likes: 0,
-      comments: 0,
-      state,
-    };
-    this.props.createNewPost(moveOnProperties);
+    if (text.length > 0) {
+      const obj = { ...this.props.profileBoxState };
+      const state = this.props.postsArray.posts;
+      const now = new Date();
+      const time = now.getTime();
+      const moveOnProperties = {
+        text,
+        email: obj.email,
+        fullName: obj.fullName,
+        url: obj.url,
+        likes: 0,
+        comments: 0,
+        state,
+        time,
+      };
+      // Remove Modal
+      document.querySelector(".posts-modal").style.display = "none";
+      // Load spinner
+      document
+        .querySelector(".posts-boxes-wrapper")
+        .classList.add("showSpinner");
+      this.props.createNewPost(moveOnProperties);
+    }
   };
 
   render() {
@@ -43,7 +54,7 @@ class PostsBoxes extends Component {
             <img src={el.imageUrl} alt="tmppfoimg" />
             <div className="inside-single-div">
               <p className="in-sin-p1">{el.fullName}</p>
-              <p className="in-sin-p2">{el.time}</p>
+              <p className="in-sin-p2">{el.timeNow}</p>
               <p className="in-sin-p3">{el.text}</p>
               <div className="in-sin-div-features">
                 <p className="in-feat-p">likes {el.likes}</p>

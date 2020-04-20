@@ -35,15 +35,7 @@ class ProfileBox extends Component {
   pickImage = (e) => {
     storeInputPick = e.target.files[0];
     if (storeInputPick) {
-      this.props.renderProfileImage(
-        storeInputPick,
-        this.props.profileBoxState.refToProDoc
-      );
-    }
-  };
-
-  uploadBtn = () => {
-    if (storeInputPick) {
+      document.querySelector(".posts-sec-wrapper").classList.add("showSpinner");
       this.props.renderProfileImage(
         storeInputPick,
         this.props.profileBoxState.refToProDoc
@@ -78,6 +70,11 @@ class ProfileBox extends Component {
       location !== this.props.profileBoxState.location ||
       web !== this.props.profileBoxState.website
     ) {
+      // Remove Modal
+      document.querySelector(".modal").style.display = "none";
+      // Add Spinner
+      document.querySelector(".posts-sec-wrapper").classList.add("showSpinner");
+      // Start Fething
       this.props.establishFetch(
         this.props.profileBoxState.refToProDoc,
         location,

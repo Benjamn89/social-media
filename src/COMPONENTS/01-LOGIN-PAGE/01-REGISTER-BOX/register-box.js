@@ -18,9 +18,6 @@ class RegisterBox extends Component {
   onSub = (e) => {
     e.preventDefault();
     document.querySelector(".welcome-part2-div").classList.add("showSpinner");
-    // var fullName = e.target.children[1].value;
-    // var email = e.target.children[3].value.toLowerCase();
-    // var password = e.target.children[5].value;
 
     var obj = {
       fullName: e.target.children[1].value,

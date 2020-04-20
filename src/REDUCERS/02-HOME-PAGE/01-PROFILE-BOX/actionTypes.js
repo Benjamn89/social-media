@@ -28,6 +28,10 @@ const actionTypes = {
               data: { profileImg: newImgUrl },
             })
           );
+          // Remove the spinner
+          document
+            .querySelector(".posts-sec-wrapper")
+            .classList.remove("showSpinner");
           // Change the state with the reducer
           dispatch(actionTypes.changeImageState(newImgUrl));
         });
@@ -85,7 +89,10 @@ const actionTypes = {
           })
         )
         .then((ret) => {
-          document.querySelector(".modal").style.display = "none";
+          // Remove Spinner
+          document
+            .querySelector(".posts-sec-wrapper")
+            .classList.remove("showSpinner");
           dispatch(actionTypes.renderProInfo(location, website));
         });
     };

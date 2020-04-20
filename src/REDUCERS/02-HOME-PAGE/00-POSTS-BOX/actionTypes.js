@@ -19,6 +19,22 @@ const actionTypes = {
         )
         .then((ret) => {
           ret.data.map((el) => {
+            const now = new Date();
+            const time = now.getTime();
+            var newTime = time - el.data.time;
+            if (newTime < 59000) {
+              el.data.timeNow = `Few sec ago`;
+            }
+            if (newTime > 59000 && newTime < 3540000) {
+              el.data.timeNow = `Few min ago`;
+            }
+            if (newTime > 3540000 && newTime < 86400000) {
+              el.data.timeNow = `Few hours ago`;
+            }
+            if (newTime > 86400000) {
+              let timePast = Math.floor(newTime / 86400000);
+              el.data.timeNow = `${timePast} days ago`;
+            }
             return storeArr.push(el.data);
           });
           dispatch(actionTypes.renderPosts(storeArr));
@@ -39,7 +55,8 @@ const actionTypes = {
           q.Create(q.Collection("posts"), {
             data: {
               fullName: postProperties.fullName,
-              time: "now",
+              time: postProperties.time,
+              timeNow: "Right now...",
               text: postProperties.text,
               likes: 0,
               comments: 0,
@@ -51,6 +68,10 @@ const actionTypes = {
         .then((ret) => {
           postProperties.state.push(ret.data);
           dispatch(actionTypes.updatePost(postProperties.state));
+          // Remove Spinner
+          document
+            .querySelector(".posts-boxes-wrapper")
+            .classList.remove("showSpinner");
         });
     };
   },
