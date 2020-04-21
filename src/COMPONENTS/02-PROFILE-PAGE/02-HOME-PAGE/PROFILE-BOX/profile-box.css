@@ -32,9 +32,26 @@
 .profilebox-name-title-p {
   text-transform: capitalize;
 }
-.profile-box-pen-image {
-  height: 20px;
+.wrap-img-pen,
+.wrap-img-pen2 {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+.wrap-img-pen:hover,
+.wrap-img-pen2:hover {
+  background-color: #dff9fb;
+}
+.wrap-img-pen {
   transform: translateY(-90px) translateX(90px);
+}
+.profile-box-pen-image,
+.edit-profile-bio {
+  height: 20px;
   outline: none;
 }
 .profile-box-time-stamp {
@@ -57,14 +74,14 @@
   flex-direction: row;
   margin-top: 10px;
 }
-.profile-box-div-info img {
+.row-div-inside img {
   height: 20px;
   margin-right: 10px;
 }
 img[alt*="website"] {
   transform: rotate(45deg);
 }
-.edit-profile-bio {
+.wrap-img-pen2 {
   transition: 0.5s;
   transform: translateX(200px);
 }
@@ -87,13 +104,13 @@ img[alt*="website"] {
   .profilebox-name-title-p {
     transform: translateY(5px);
   }
-  .profile-box-pen-image {
+  .wrap-img-pen {
     transform: translateX(90px) translateY(-40px);
   }
 }
 
 @media only screen and (max-width: 550px) {
-  .edit-profile-bio {
+  .wrap-img-pen2 {
     transform: translateX(80px) translateY(30px);
   }
 }

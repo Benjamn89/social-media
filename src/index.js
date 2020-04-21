@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+// import { composeWithDevTools } from "redux-devtools-extension";
 
 // import reducers
 import logOnReducer from "./REDUCERS/00-LOG-PAGE/log-on-reducer";
@@ -31,8 +32,14 @@ const logger = (store) => {
   };
 };
 
+// Adding the redux devtools extension
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 // create store - redux
-const store = createStore(rootReducer, applyMiddleware(logger, thunk));
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(logger, thunk))
+);
 
 const rootElement = document.getElementById("root");
 

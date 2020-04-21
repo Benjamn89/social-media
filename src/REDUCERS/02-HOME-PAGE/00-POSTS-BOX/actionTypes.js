@@ -18,26 +18,30 @@ const actionTypes = {
           )
         )
         .then((ret) => {
-          ret.data.map((el) => {
-            const now = new Date();
-            const time = now.getTime();
-            var newTime = time - el.data.time;
-            if (newTime < 59000) {
-              el.data.timeNow = `Few sec ago`;
-            }
-            if (newTime > 59000 && newTime < 3540000) {
-              el.data.timeNow = `Few min ago`;
-            }
-            if (newTime > 3540000 && newTime < 86400000) {
-              el.data.timeNow = `Few hours ago`;
-            }
-            if (newTime > 86400000) {
-              let timePast = Math.floor(newTime / 86400000);
-              el.data.timeNow = `${timePast} days ago`;
-            }
-            return storeArr.push(el.data);
-          });
-          dispatch(actionTypes.renderPosts(storeArr));
+          if (ret.data.length > 0) {
+            ret.data.map((el) => {
+              // Enter the ref inside my array storing data
+              el.data.ref = el.ref.value.id;
+              const now = new Date();
+              const time = now.getTime();
+              var newTime = time - el.data.postedTime;
+              if (newTime < 59000) {
+                el.data.displayTime = `Few sec ago`;
+              }
+              if (newTime > 59000 && newTime < 3540000) {
+                el.data.displayTime = `Few min ago`;
+              }
+              if (newTime > 3540000 && newTime < 86400000) {
+                el.data.displayTime = `Few hours ago`;
+              }
+              if (newTime > 86400000) {
+                let timePast = Math.floor(newTime / 86400000);
+                el.data.displayTime = `${timePast} days ago`;
+              }
+              return storeArr.push(el.data);
+            });
+            dispatch(actionTypes.renderPosts(storeArr));
+          }
         });
     };
   },
@@ -55,17 +59,20 @@ const actionTypes = {
           q.Create(q.Collection("posts"), {
             data: {
               fullName: postProperties.fullName,
-              time: postProperties.time,
-              timeNow: "Right now...",
+              postedTime: postProperties.postedTime,
+              displayTime: "Right now...",
               text: postProperties.text,
-              likes: 0,
-              comments: 0,
+              likes: [],
+              comments: [],
               email: postProperties.email,
               imageUrl: postProperties.url,
+              uniqeId: postProperties.uniqeId,
+              ref: "",
             },
           })
         )
         .then((ret) => {
+          ret.data.ref = ret.ref.value.id;
           postProperties.state.push(ret.data);
           dispatch(actionTypes.updatePost(postProperties.state));
           // Remove Spinner
@@ -79,6 +86,27 @@ const actionTypes = {
     return {
       type: "updatePost",
       val: data,
+    };
+  },
+  likeOnPost: (properties) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("posts"), properties.ref), {
+            data: {
+              likes: properties.updatedLike,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(actionTypes.addLike(properties.copyPosts));
+        });
+    };
+  },
+  addLike: (newLikesArr) => {
+    return {
+      type: "addLike",
+      val: newLikesArr,
     };
   },
 };

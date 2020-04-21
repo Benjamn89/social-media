@@ -112,15 +112,18 @@ class ProfileBox extends Component {
             onChange={this.pickImage}
             style={{ display: "none" }}
           />
-          <img
-            src={Pen}
-            className="profile-box-pen-image"
-            alt="penImg"
-            onClick={() => this.fileInput.click()}
-          />
+          <div className="wrap-img-pen">
+            <img
+              src={Pen}
+              className="profile-box-pen-image"
+              alt="penImg"
+              onClick={() => this.fileInput.click()}
+            />
+          </div>
           <div className="profile-box-div-info">
             <div className="row-div-inside">
               <img src={Location} alt="location" />
+
               <p className="location-p">
                 {this.props.profileBoxState.location}
               </p>
@@ -137,12 +140,14 @@ class ProfileBox extends Component {
               joined {this.props.profileBoxState.timeStamp.month}{" "}
               {this.props.profileBoxState.timeStamp.year}
             </div>
-            <img
-              onClick={this.openModal}
-              className="edit-profile-bio"
-              src={Pen}
-              alt="penImg"
-            />
+            <div className="wrap-img-pen2">
+              <img
+                onClick={this.openModal}
+                className="edit-profile-bio"
+                src={Pen}
+                alt="penImg"
+              />
+            </div>
           </div>
         </div>
       );

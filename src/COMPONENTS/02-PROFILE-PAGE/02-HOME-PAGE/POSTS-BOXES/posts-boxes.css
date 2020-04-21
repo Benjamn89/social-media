@@ -1,3 +1,10 @@
+/* Gadering Pointers */
+.in-sin-div-features img,
+.in-feat-p,
+.in-feat-p2 {
+  cursor: pointer;
+}
+
 .posts-boxes-wrapper {
   width: 60%;
   background-color: #fff;
@@ -15,7 +22,7 @@
   grid-template-columns: 2fr 5fr;
   margin-bottom: 10px;
 }
-.post-div img {
+.post-div-img {
   height: 100%;
   min-width: 170px;
   max-width: 170px;
@@ -53,6 +60,10 @@
   transform: translateY(-10px);
   font-size: 15px;
 }
+.in-sin-div-features img {
+  height: 20px;
+  margin-right: 5px;
+}
 
 @media only screen and (max-width: 980px) {
   .posts-boxes-wrapper {
@@ -69,7 +80,7 @@
     align-items: center;
     margin: 20px auto;
   }
-  .post-div img {
+  .post-div-img {
     height: 150px;
     width: 100%;
     max-width: 100%;

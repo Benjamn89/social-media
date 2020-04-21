@@ -1,6 +1,8 @@
 const initialState = {
   posts: [],
   changePost: false,
+  addLike: false,
+  test: "test",
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +18,13 @@ const reducer = (state = initialState, action) => {
       ...state,
       posts: action.val,
       changePost: !state.changePost,
+    };
+  }
+  if (action.type === "addLike") {
+    return {
+      ...state,
+      posts: action.val,
+      addLike: !state.addLike,
     };
   }
   return state;
