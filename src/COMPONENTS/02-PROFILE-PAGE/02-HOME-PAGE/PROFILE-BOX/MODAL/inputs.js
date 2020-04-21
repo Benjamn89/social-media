@@ -18,6 +18,7 @@ const inputText = (props) => {
   const { classes } = props;
   return (
     <TextField
+      autoComplete="off"
       className={classes.textField}
       id="standard-basic"
       label={props.title}

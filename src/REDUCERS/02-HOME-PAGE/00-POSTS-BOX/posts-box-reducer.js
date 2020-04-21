@@ -2,7 +2,7 @@ const initialState = {
   posts: [],
   changePost: false,
   addLike: false,
-  test: "test",
+  email: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +11,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       changePost: !state.changePost,
       posts: action.val,
+      email: action.email,
     };
   }
   if (action.type === "updatePost") {

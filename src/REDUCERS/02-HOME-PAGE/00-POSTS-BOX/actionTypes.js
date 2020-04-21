@@ -10,6 +10,8 @@ const actionTypes = {
   loadPosts: () => {
     return (dispatch) => {
       var storeArr = [];
+      var localS = JSON.parse(localStorage.getItem("myData"));
+      var email = localS.email;
       client
         .query(
           q.Map(
@@ -40,16 +42,17 @@ const actionTypes = {
               }
               return storeArr.push(el.data);
             });
-            dispatch(actionTypes.renderPosts(storeArr));
+            dispatch(actionTypes.renderPosts(storeArr, email));
           }
         });
     };
   },
   // Sending the loaded posts to the reducer for rendering on the screen
-  renderPosts: (storeArr) => {
+  renderPosts: (storeArr, email) => {
     return {
       type: "renderPosts",
       val: storeArr,
+      email,
     };
   },
   createNewPost: (postProperties) => {

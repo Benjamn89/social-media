@@ -28,7 +28,7 @@ class PostsBoxes extends Component {
   }
 
   savePost = (e) => {
-    const text = document.querySelectorAll("#standard-basic")[0].value;
+    var text = document.querySelectorAll("#standard-basic")[0].value;
     if (text.length > 0) {
       const uniqeId = this.props.postsArray.posts.length;
       const obj = { ...this.props.profileBoxState };
@@ -46,6 +46,8 @@ class PostsBoxes extends Component {
       };
       // Remove Modal
       document.querySelector(".posts-modal").style.display = "none";
+      // Clean input value
+      document.querySelectorAll("#standard-basic")[0].value = "";
       // Load spinner
       document
         .querySelector(".posts-boxes-wrapper")
@@ -58,27 +60,26 @@ class PostsBoxes extends Component {
     var id = e.target.getAttribute("index");
     var email = this.props.profileBoxState.email;
     var copyPosts = JSON.parse(JSON.stringify(this.props.postsArray));
-
     var post = copyPosts.posts[id];
+    var indexOfLike = post.likes.indexOf(email);
 
     var validateEmail = post.likes.find((el) => {
       return el === email;
     });
 
     if (validateEmail) {
-      console.log("User all ready like that post");
-      copyPosts.posts.splice(id, 1);
+      copyPosts.posts[id].likes.splice(indexOfLike, 1);
     } else {
       copyPosts.posts[id].likes.push(email);
-      var updatedLike = copyPosts.posts[id].likes;
-      var properties = {
-        email,
-        ref: post.ref,
-        updatedLike,
-        copyPosts: copyPosts.posts,
-      };
-      this.props.likeOnPost(properties);
     }
+    var updatedLike = copyPosts.posts[id].likes;
+    var properties = {
+      email,
+      ref: post.ref,
+      updatedLike,
+      copyPosts: copyPosts.posts,
+    };
+    this.props.likeOnPost(properties);
   };
 
   render() {
@@ -86,9 +87,9 @@ class PostsBoxes extends Component {
     // var likeIcon;
     if (this.props.postsArray.posts.length > 0) {
       fetchedPosts = this.props.postsArray.posts.map((el, ind) => {
-        // Checking if the user who log in like this post or not to change the the like icon
-        var checkLikes = el.likes.map((el) => {
-          return el === this.props.profileBoxState.email;
+        // Checking if the user who login like this post or not to change the the like icon
+        var checkLikes = el.likes.find((el) => {
+          return el === this.props.postsArray.email;
         });
 
         return (
@@ -99,14 +100,18 @@ class PostsBoxes extends Component {
               <p className="in-sin-p2">{el.displayTime}</p>
               <p className="in-sin-p3">{el.text}</p>
               <div className="in-sin-div-features">
-                <img
-                  onClick={this.likeClick}
-                  src={checkLikes.length > 0 ? LikeHeart : UnlikeHeart}
-                  alt="unlike"
-                  index={ind}
-                />
+                <div className="wrap-feat-icon-div">
+                  <img
+                    onClick={this.likeClick}
+                    src={checkLikes ? LikeHeart : UnlikeHeart}
+                    alt="unlike"
+                    index={ind}
+                  />
+                </div>
                 <p className="in-feat-p">likes {el.likes.length}</p>
-                <img src={Comments} alt="comments" />
+                <div className="wrap-feat-icon-div">
+                  <img src={Comments} alt="comments" />
+                </div>
                 <p className="in-feat-p2">comments {el.comments}</p>
               </div>
             </div>

@@ -21,11 +21,7 @@ class ProfileBox extends Component {
 
   shouldComponentUpdate(nP, nS) {
     var tProps = this.props.profileBoxState;
-    if (
-      tProps.email !== nP.profileBoxState.email ||
-      tProps.url !== nP.profileBoxState.url ||
-      tProps.location !== nP.profileBoxState.location
-    ) {
+    if (tProps !== nP.profileBoxState) {
       return true;
     } else {
       return false;
