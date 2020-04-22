@@ -8,7 +8,15 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       getPost: !state.getPost,
-      postIndex: action.val,
+      postIndex: action.index,
+      commentsArray: action.arr,
+    };
+  }
+  if (action.type === "updateComment") {
+    return {
+      ...state,
+      getPost: !state.getPost,
+      commentsArray: action.updatedComments,
     };
   }
   return state;

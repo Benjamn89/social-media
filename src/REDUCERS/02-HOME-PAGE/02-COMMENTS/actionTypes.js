@@ -6,10 +6,33 @@ const client = new faunadb.Client({
 });
 
 const actionTypes = {
-  getPost: (id) => {
+  getPost: (properties) => {
     return {
       type: "getPost",
-      val: id,
+      index: properties.postIndex,
+      arr: properties.commentsArray,
+    };
+  },
+  postComment: (properties) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("posts"), properties.postRef), {
+            data: {
+              comments: properties.copyComments,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(actionTypes.updateComment(properties.copyComments));
+          document.querySelector("#outlined-basic").value = "";
+        });
+    };
+  },
+  updateComment: (updatedComments) => {
+    return {
+      type: "updateComment",
+      updatedComments,
     };
   },
 };

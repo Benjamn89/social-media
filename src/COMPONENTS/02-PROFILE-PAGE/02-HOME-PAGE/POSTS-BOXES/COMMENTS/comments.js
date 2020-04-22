@@ -13,8 +13,18 @@ import actionTypes from "../../../../../REDUCERS/02-HOME-PAGE/02-COMMENTS/action
 class Comments extends Component {
   componentDidMount() {
     document.querySelector(".comments-div").focus();
-    var postIndex = this.props.postRef;
-    this.props.getPost(postIndex);
+
+    if (this.props.postRef) {
+      const postIndex = this.props.postRef;
+      const proObj = {
+        postIndex: this.props.postRef,
+        commentsArray: JSON.parse(
+          JSON.stringify(this.props.postArray[postIndex].comments)
+        ),
+      };
+
+      this.props.getPost(proObj);
+    }
   }
 
   goBack = (e) => {
@@ -23,11 +33,49 @@ class Comments extends Component {
     }
   };
 
+  createComment = () => {
+    const inputValue = document.querySelector("#outlined-basic").value;
+
+    if (inputValue.length > 1) {
+      const postIndex = this.props.postRef;
+      const copyComments = JSON.parse(
+        JSON.stringify(this.props.commentsReducer.commentsArray)
+      );
+      const postRef = this.props.postArray[postIndex].ref;
+
+      copyComments.push(inputValue);
+
+      const proObj = {
+        inputValue,
+        postRef,
+        copyComments,
+      };
+      this.props.postComment(proObj);
+    }
+  };
+
   render() {
     var renderPost;
-    console.log(this.props.commentsReducer.getPost);
-    if (this.props.commentsReducer.getPost) {
+    var commentsArray = this.props.commentsReducer.commentsArray;
+    var renderComments;
+
+    if (this.props.commentsReducer.postIndex) {
       var postRef = this.props.postArray[this.props.commentsReducer.postIndex];
+
+      if (commentsArray.length > 0) {
+        renderComments = commentsArray.map((el, ind) => {
+          return (
+            <div className="comments-inside4-div" key={ind}>
+              <img src={postRef.imageUrl} alt="testImg" />
+              <div className="com-ins4-inside">
+                <h1 className="ins2-inside-h1 ins4-h1">{postRef.fullName}</h1>
+                <p className="ins2-inside-time">Time was posted</p>
+                <p className="ins2-inside-body ins4-body">{el}</p>
+              </div>
+            </div>
+          );
+        });
+      }
 
       renderPost = (
         <div className="comments-inside-div">
@@ -55,26 +103,18 @@ class Comments extends Component {
                   <img src={CommentIcon} alt="com-com" />
                 </div>
                 <p className="com-ins2-icon-p">
-                  Comments {postRef.comments.length}
+                  Comments {commentsArray.length}
                 </p>
               </div>
             </div>
           </div>
           <div className="comments-inside3-div">
             <Input />
-            <button className="com-ins3-btn">SUBMIT</button>
+            <button onClick={this.createComment} className="com-ins3-btn">
+              SUBMIT
+            </button>
           </div>
-          <div className="comments-inside2-div com-ins4-div">
-            <img src={testImage} alt="testImg" />
-            <div className="com-ins2-inside">
-              <h1 className="ins2-inside-h1 ins4-h1">Binyamin Tal</h1>
-              <p className="ins2-inside-time">Time was posted</p>
-              <p className="ins2-inside-body ins4-body">
-                The actual msg can be long very long, very very long The actual
-                msg can be long very long, very very long msg can be long very
-              </p>
-            </div>
-          </div>
+          {renderComments}
         </div>
       );
     }
@@ -98,7 +138,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPost: (id) => dispatch(actionTypes.getPost(id)),
+    getPost: (properties) => dispatch(actionTypes.getPost(properties)),
+    postComment: (properties) => dispatch(actionTypes.postComment(properties)),
   };
 };
 
