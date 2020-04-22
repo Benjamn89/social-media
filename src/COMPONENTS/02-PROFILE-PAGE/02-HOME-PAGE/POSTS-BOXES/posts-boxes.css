@@ -49,6 +49,9 @@
 .in-sin-div-features img {
   height: 20px;
 }
+.in-feat-p2 span {
+  margin-left: 5px;
+}
 
 .wrap-feat-icon-div {
   border-radius: 50%;
@@ -60,6 +63,9 @@
   transform: translateY(-4px);
   margin-right: 4px;
   transition: 0.3s;
+}
+.wrap-like-spe {
+  transform: translateY(-2px);
 }
 .wrap-feat-icon-div:hover {
   background-color: #dff9fb;

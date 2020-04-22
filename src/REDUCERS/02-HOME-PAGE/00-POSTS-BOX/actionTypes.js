@@ -6,6 +6,13 @@ const client = new faunadb.Client({
 });
 
 const actionTypes = {
+  setCommentRef: (id) => {
+    return {
+      type: "setCommentRef",
+      val: id,
+    };
+  },
+
   // Retrive all stored posts from database
   loadPosts: () => {
     return (dispatch) => {
@@ -110,6 +117,11 @@ const actionTypes = {
     return {
       type: "addLike",
       val: newLikesArr,
+    };
+  },
+  displayBtn: () => {
+    return {
+      type: "displayBtn",
     };
   },
 };

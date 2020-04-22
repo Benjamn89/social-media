@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./posts-boxes.css";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import actionTypes from "../../../../REDUCERS/02-HOME-PAGE/00-POSTS-BOX/actionTypes";
-// import TmpProfileImg from "../../../../media/profile.png";
+
 import Modal from "./MODAL/modal";
 // Import Media
 import UnlikeHeart from "../../../../media/heart-unlike.png";
@@ -82,6 +83,11 @@ class PostsBoxes extends Component {
     this.props.likeOnPost(properties);
   };
 
+  clickComment = (e) => {
+    var id = e.target.getAttribute("index");
+    this.props.setCommentRef(id);
+  };
+
   render() {
     var fetchedPosts = null;
     // var likeIcon;
@@ -100,7 +106,7 @@ class PostsBoxes extends Component {
               <p className="in-sin-p2">{el.displayTime}</p>
               <p className="in-sin-p3">{el.text}</p>
               <div className="in-sin-div-features">
-                <div className="wrap-feat-icon-div">
+                <div className="wrap-feat-icon-div ">
                   <img
                     onClick={this.likeClick}
                     src={checkLikes ? LikeHeart : UnlikeHeart}
@@ -109,10 +115,14 @@ class PostsBoxes extends Component {
                   />
                 </div>
                 <p className="in-feat-p">likes {el.likes.length}</p>
-                <div className="wrap-feat-icon-div">
-                  <img src={Comments} alt="comments" />
+                <div className="wrap-feat-icon-div wrap-like-spe">
+                  <Link onClick={this.clickComment} to="leaveComment">
+                    <img src={Comments} alt="comments" index={ind} />
+                  </Link>
                 </div>
-                <p className="in-feat-p2">comments {el.comments}</p>
+                <p className="in-feat-p2">
+                  comments <span>{el.comments.length}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -144,6 +154,7 @@ const mapDispatchToProps = (dispatch) => {
     createNewPost: (postProperties) =>
       dispatch(actionTypes.createNewPost(postProperties)),
     likeOnPost: (properties) => dispatch(actionTypes.likeOnPost(properties)),
+    setCommentRef: (ref) => dispatch(actionTypes.setCommentRef(ref)),
   };
 };
 

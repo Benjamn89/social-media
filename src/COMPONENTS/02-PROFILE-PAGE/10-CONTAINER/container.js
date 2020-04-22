@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./container.css";
 import Navbar from "../00-NAVBAR/navbar";
+import Comment from "../02-HOME-PAGE/POSTS-BOXES/COMMENTS/comments";
 import { connect } from "react-redux";
 import MyProfile from "../01-MY-PROFILE/my-profile";
 import HomePage from "../02-HOME-PAGE/home-page";
@@ -17,9 +18,10 @@ class ContainerProfile extends Component {
     return (
       <div className="container-profile-div">
         <Navbar signOut={this.signOut} />
+        <HomePage />
         <Switch>
           <Route exact path="/profile" component={MyProfile} />
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/leaveComment" component={Comment} />
         </Switch>
       </div>
     );

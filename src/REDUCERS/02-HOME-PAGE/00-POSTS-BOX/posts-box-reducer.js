@@ -3,9 +3,17 @@ const initialState = {
   changePost: false,
   addLike: false,
   email: null,
+  commentsModal: false,
+  commentsRef: null,
 };
 
 const reducer = (state = initialState, action) => {
+  if (action.type === "setCommentRef") {
+    return {
+      ...state,
+      commentsRef: action.val,
+    };
+  }
   if (action.type === "renderPosts") {
     return {
       ...state,
@@ -26,6 +34,12 @@ const reducer = (state = initialState, action) => {
       ...state,
       posts: action.val,
       addLike: !state.addLike,
+    };
+  }
+  if (action.type === "displayBtn") {
+    return {
+      ...state,
+      commentsModal: !state.commentsModal,
     };
   }
   return state;

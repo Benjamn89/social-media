@@ -1,0 +1,133 @@
+.comments-div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+  height: 100vh;
+  width: 100vw;
+  z-index: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.comments-inside-div {
+  background: #fff;
+  height: 600px;
+  width: 500px;
+}
+.comments-inside2-div {
+  min-height: 30%;
+  height: auto;
+  padding: 15px;
+  position: relative;
+}
+.comments-inside2-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.com-ins2-img {
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.ins2-inside-h1 {
+  font-size: 20px;
+}
+.ins2-inside-time {
+  font-size: 14px;
+  color: lightgray;
+  margin-bottom: 15px;
+}
+.ins2-inside-body {
+  margin-bottom: 15px;
+}
+.com-ins2-inside > div {
+  display: flex;
+  flex-direction: row;
+}
+.com-ins2-inside > div > p {
+  margin-right: 10px;
+}
+/* FINISH STYLE THE HEADER DIV */
+.comments-inside3-div {
+  text-align: center;
+  padding: 20px;
+  border-top: solid 0.1px #f1f2f6;
+}
+.com-ins3-btn {
+  padding: 8px;
+  background: none;
+  border: none;
+  transition: 0.3s;
+  border-radius: 4px;
+  color: #1976d2;
+  font-weight: 600;
+  letter-spacing: 1px;
+  outline: none;
+  margin-bottom: 15px;
+}
+.com-ins3-btn:hover {
+  background-color: #dff9fb;
+}
+
+/* Section 4 */
+.com-ins4-div {
+  min-height: 20%;
+  border-top: solid 0.1px #f1f2f6;
+}
+
+.com-ins4-div img {
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.ins4-h1 {
+  font-size: 17px;
+}
+.ins4-body {
+  font-size: 14px;
+}
+.com-wrap-icon {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.3s;
+  transform: translateY(-4px);
+  cursor: pointer;
+}
+.com-wrap-icon:hover {
+  background-color: #dff9fb;
+}
+.com-wrap-icon img {
+  height: 20px;
+}
+
+.wrap-x-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.wrap-x-button:hover {
+  background-color: #dff9fb;
+}
+.x-button {
+  font-size: 35px;
+  transform: rotate(45deg) translateY(-4px) translateX(-1px);
+  color: #d1ccc0;
+}
+.x-button:hover {
+  color: black;
+}
