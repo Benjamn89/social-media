@@ -26,6 +26,10 @@ const actionTypes = {
         .then((ret) => {
           dispatch(actionTypes.updateComment(properties.copyPost));
           document.querySelector("#outlined-basic").value = "";
+          // Remove Spinner
+          document
+            .querySelector(".comments-inside4-div")
+            .classList.remove("showSpinner");
         });
     };
   },

@@ -89,6 +89,7 @@ class PostsBoxes extends Component {
   clickComment = (e) => {
     var id = e.target.getAttribute("index");
     this.props.setCommentRef(id);
+    document.body.style.overflow = "hidden";
   };
 
   render() {

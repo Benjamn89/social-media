@@ -43,6 +43,7 @@ class Comments extends Component {
 
   goBack = (e) => {
     if (e.key === "Escape" || e.target.innerHTML === "+") {
+      document.body.style.overflow = "";
       window.history.back();
     }
   };
@@ -51,6 +52,10 @@ class Comments extends Component {
     const inputValue = document.querySelector("#outlined-basic").value;
 
     if (inputValue.length > 1) {
+      // Show spinner
+      document
+        .querySelector(".comments-inside4-div")
+        .classList.add("showSpinner");
       const postIndex = this.props.postRef;
       const copyPost = JSON.parse(
         JSON.stringify(this.props.commentsReducer.copyPost)
