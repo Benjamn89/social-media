@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./comments.css";
-import testImage from "../../../../../media/binyamin.png";
 import Input from "./inputStyle";
 // import media
 import CommentIcon from "../../../../../media/comments.png";
@@ -11,16 +10,31 @@ import { connect } from "react-redux";
 import actionTypes from "../../../../../REDUCERS/02-HOME-PAGE/02-COMMENTS/actionTypes";
 
 class Comments extends Component {
+  shouldComponentUpdate(nP, nS) {
+    console.log("SCP -> Comments");
+    var thisProps = this.props.commentsReducer;
+    if (
+      nP.commentsReducer.getPost !== thisProps.getPost ||
+      nP.commentsReducer.updatedPost !== thisProps.updatedPost
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   componentDidMount() {
     document.querySelector(".comments-div").focus();
 
     if (this.props.postRef) {
       const postIndex = this.props.postRef;
+      const copyPost = JSON.parse(
+        JSON.stringify(this.props.postArray[postIndex])
+      );
+
       const proObj = {
         postIndex: this.props.postRef,
-        commentsArray: JSON.parse(
-          JSON.stringify(this.props.postArray[postIndex].comments)
-        ),
+        copyPost,
       };
 
       this.props.getPost(proObj);
@@ -38,30 +52,30 @@ class Comments extends Component {
 
     if (inputValue.length > 1) {
       const postIndex = this.props.postRef;
-      const copyComments = JSON.parse(
-        JSON.stringify(this.props.commentsReducer.commentsArray)
+      const copyPost = JSON.parse(
+        JSON.stringify(this.props.commentsReducer.copyPost)
       );
       const postRef = this.props.postArray[postIndex].ref;
 
-      copyComments.push(inputValue);
+      copyPost.comments.push(inputValue);
 
       const proObj = {
         inputValue,
         postRef,
-        copyComments,
+        copyPost,
       };
       this.props.postComment(proObj);
     }
   };
 
   render() {
-    var renderPost;
-    var commentsArray = this.props.commentsReducer.commentsArray;
-    var renderComments;
-
     if (this.props.commentsReducer.postIndex) {
-      var postRef = this.props.postArray[this.props.commentsReducer.postIndex];
-
+      // Initial Variables
+      var renderPost, commentsArray, renderComments, checkLikes;
+      var postRef = this.props.commentsReducer.copyPost;
+      // ShortCut to the comments array
+      commentsArray = this.props.commentsReducer.copyPost.comments;
+      //Render the comments with map
       if (commentsArray.length > 0) {
         renderComments = commentsArray.map((el, ind) => {
           return (
@@ -76,7 +90,12 @@ class Comments extends Component {
           );
         });
       }
+      // Check the likes array
+      checkLikes = postRef.likes.find((el) => {
+        return el === this.props.loggedEmail;
+      });
 
+      // Render the single post
       renderPost = (
         <div className="comments-inside-div">
           <div className="comments-inside2-div">
@@ -95,15 +114,23 @@ class Comments extends Component {
               <p className="ins2-inside-time">{postRef.displayTime}</p>
               <p className="ins2-inside-body">{postRef.text}</p>
               <div>
-                <div className="com-wrap-icon">
-                  <img src={UnlikeIcno} alt="com-unlike" />
+                <div className="com-wrap-icon c-w-i-div">
+                  <img
+                    className="com-wrap-icon-img c-w-i-i"
+                    src={checkLikes ? LikeIcon : UnlikeIcno}
+                    alt="com-unlike"
+                  />
                 </div>
                 <p className="com-ins2-icon-p">Likes {postRef.likes.length}</p>
                 <div className="com-wrap-icon">
-                  <img src={CommentIcon} alt="com-com" />
+                  <img
+                    className="com-wrap-icon-img"
+                    src={CommentIcon}
+                    alt="com-com"
+                  />
                 </div>
                 <p className="com-ins2-icon-p">
-                  Comments {commentsArray.length}
+                  Comments {postRef.comments.length}
                 </p>
               </div>
             </div>
@@ -133,6 +160,7 @@ const mapStateToProps = (state) => {
     commentsReducer: state.CommentsReducer,
     postRef: state.PostsReducer.commentsRef,
     postArray: state.PostsReducer.posts,
+    loggedEmail: state.ProfileBoxReducer.email,
   };
 };
 

@@ -10,7 +10,7 @@ const actionTypes = {
     return {
       type: "getPost",
       index: properties.postIndex,
-      arr: properties.commentsArray,
+      copyPost: properties.copyPost,
     };
   },
   postComment: (properties) => {
@@ -19,20 +19,20 @@ const actionTypes = {
         .query(
           q.Update(q.Ref(q.Collection("posts"), properties.postRef), {
             data: {
-              comments: properties.copyComments,
+              comments: properties.copyPost.comments,
             },
           })
         )
         .then((ret) => {
-          dispatch(actionTypes.updateComment(properties.copyComments));
+          dispatch(actionTypes.updateComment(properties.copyPost));
           document.querySelector("#outlined-basic").value = "";
         });
     };
   },
-  updateComment: (updatedComments) => {
+  updateComment: (updatedPost) => {
     return {
       type: "updateComment",
-      updatedComments,
+      updatedPost,
     };
   },
 };

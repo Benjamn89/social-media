@@ -55,20 +55,22 @@
 
 .wrap-feat-icon-div {
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 30px;
   height: 30px;
   transform: translateY(-4px);
   margin-right: 4px;
   transition: 0.3s;
+  text-align: center;
+  line-height: 2.5;
 }
 .wrap-like-spe {
-  transform: translateY(-2px);
+  line-height: 2.2;
 }
 .wrap-feat-icon-div:hover {
   background-color: #dff9fb;
+}
+.f-i-d-i2 {
+  transform: translateY(1.5px) translateX(0.3px);
 }
 /* Style the likes/commnets div */
 

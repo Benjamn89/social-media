@@ -23,6 +23,9 @@ class PostsBoxes extends Component {
       nP.postsArray.addLike !== thisProps.addLike
     ) {
       return true;
+    } else if (nP.commentsState !== this.props.commentsState) {
+      this.props.loadPosts();
+      return false;
     } else {
       return false;
     }
@@ -106,7 +109,7 @@ class PostsBoxes extends Component {
               <p className="in-sin-p2">{el.displayTime}</p>
               <p className="in-sin-p3">{el.text}</p>
               <div className="in-sin-div-features">
-                <div className="wrap-feat-icon-div ">
+                <div className="wrap-feat-icon-div">
                   <img
                     onClick={this.likeClick}
                     src={checkLikes ? LikeHeart : UnlikeHeart}
@@ -117,7 +120,12 @@ class PostsBoxes extends Component {
                 <p className="in-feat-p">likes {el.likes.length}</p>
                 <div className="wrap-feat-icon-div wrap-like-spe">
                   <Link onClick={this.clickComment} to="leaveComment">
-                    <img src={Comments} alt="comments" index={ind} />
+                    <img
+                      className="f-i-d-i2"
+                      src={Comments}
+                      alt="comments"
+                      index={ind}
+                    />
                   </Link>
                 </div>
                 <p className="in-feat-p2">
@@ -145,6 +153,7 @@ const mapStateToProps = (state) => {
   return {
     postsArray: state.PostsReducer,
     profileBoxState: state.ProfileBoxReducer,
+    commentsState: state.CommentsReducer.updatedPost,
   };
 };
 
@@ -155,6 +164,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionTypes.createNewPost(postProperties)),
     likeOnPost: (properties) => dispatch(actionTypes.likeOnPost(properties)),
     setCommentRef: (ref) => dispatch(actionTypes.setCommentRef(ref)),
+    addComment: () => dispatch(actionTypes.addComment()),
   };
 };
 
