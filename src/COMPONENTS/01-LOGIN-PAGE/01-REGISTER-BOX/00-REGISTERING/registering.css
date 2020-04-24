@@ -67,6 +67,7 @@
 .showSpinner {
   opacity: 0.5;
   position: relative;
+  z-index: 300;
 }
 .showSpinner::before {
   content: "";

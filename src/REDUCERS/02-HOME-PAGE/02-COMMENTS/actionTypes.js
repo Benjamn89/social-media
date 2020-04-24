@@ -28,7 +28,7 @@ const actionTypes = {
           document.querySelector("#outlined-basic").value = "";
           // Remove Spinner
           document
-            .querySelector(".comments-inside4-div")
+            .querySelector(".com-ins3-btn")
             .classList.remove("showSpinner");
         });
     };
@@ -37,6 +37,28 @@ const actionTypes = {
     return {
       type: "updateComment",
       updatedPost,
+    };
+  },
+  likeClick: (properties) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("posts"), properties.ref), {
+            data: {
+              likes: properties.likesArray,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(actionTypes.addLike(properties.likesArray));
+        });
+    };
+  },
+
+  addLike: (likesArray) => {
+    return {
+      type: "addLikeComment",
+      val: likesArray,
     };
   },
 };

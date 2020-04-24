@@ -11,8 +11,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: 0.5s;
 }
+
+.posts-boxes-wrapper * {
+  transition: 0.3s;
+}
+
 .post-div {
   border: solid 0.5px lightgrey;
   border-radius: 2px;
@@ -21,19 +25,45 @@
   display: grid;
   grid-template-columns: 2fr 5fr;
   margin-bottom: 10px;
+  position: relative;
 }
+/* Style the x button */
+.post-delete-div::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  left: -6px;
+  top: -7px;
+  transition: 0.2s;
+  transform: scaleY(0);
+  border: solid 1.5px #c0392b;
+  transform-origin: 100% 50%;
+}
+.post-delete-div:hover::before {
+  transform: scaleY(1);
+}
+.post-delete-div {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
+.post-delete-btn {
+  height: 20px;
+  width: 20px;
+}
+
 .post-div-img {
   height: 99%;
   min-width: 170px;
   max-width: 170px;
   align-self: center;
-  /* object-fit: cover; */
 }
 .inside-single-div {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  transition: 0.5s;
 }
 
 /* Style the likes/commnets div */
@@ -60,9 +90,9 @@
   height: 30px;
   transform: translateY(-4px);
   margin-right: 4px;
-  transition: 0.3s;
   text-align: center;
   line-height: 2.5;
+  transition: 0.3s;
 }
 .wrap-like-spe {
   line-height: 2.2;
@@ -98,17 +128,16 @@
 @media only screen and (max-width: 700px) {
   .post-div {
     display: flex;
-    flex-direction: column;
-    width: 300px;
-    height: 500px;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100px;
     margin: 20px auto;
   }
   .post-div-img {
-    height: 150px;
-    width: 100%;
-    max-width: 100%;
+    height: 143px;
+    min-height: 143px;
+    min-width: 143px;
+    max-width: 143px;
   }
   .inside-single-div {
     transform: translateX(0);
@@ -120,3 +149,20 @@
     justify-content: center;
   }
 }
+
+@media only screen and (max-width: 635px) {
+  .post-div {
+    flex-direction: column;
+    height: 300px;
+    padding: 15px 20px;
+  }
+  .post-div-img {
+    min-height: 0;
+    min-width: 0;
+    max-height: 80px;
+    max-width: 80px;
+    border-radius: 50%;
+  }
+}
+
+/* @media screen and (max-width: 900px) and (min-width: 600px) */

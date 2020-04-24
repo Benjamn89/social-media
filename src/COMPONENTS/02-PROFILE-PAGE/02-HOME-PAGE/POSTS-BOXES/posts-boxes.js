@@ -9,6 +9,7 @@ import Modal from "./MODAL/modal";
 import UnlikeHeart from "../../../../media/heart-unlike.png";
 import LikeHeart from "../../../../media/heart-like.png";
 import Comments from "../../../../media/comments.png";
+import Delete from "../../../../media/delete.png";
 
 class PostsBoxes extends Component {
   componentDidMount() {
@@ -65,13 +66,13 @@ class PostsBoxes extends Component {
     var email = this.props.profileBoxState.email;
     var copyPosts = JSON.parse(JSON.stringify(this.props.postsArray));
     var post = copyPosts.posts[id];
-    var indexOfLike = post.likes.indexOf(email);
 
     var validateEmail = post.likes.find((el) => {
       return el === email;
     });
 
     if (validateEmail) {
+      var indexOfLike = post.likes.indexOf(email);
       copyPosts.posts[id].likes.splice(indexOfLike, 1);
     } else {
       copyPosts.posts[id].likes.push(email);
@@ -92,18 +93,34 @@ class PostsBoxes extends Component {
     document.body.style.overflow = "hidden";
   };
 
+  deletePost = () => {
+    console.log("Dialog open");
+  };
+
   render() {
     var fetchedPosts = null;
-    // var likeIcon;
+
     if (this.props.postsArray.posts.length > 0) {
       fetchedPosts = this.props.postsArray.posts.map((el, ind) => {
+        // Create variable to show the delete icon
+        var deleteIcon;
         // Checking if the user who login like this post or not to change the the like icon
         var checkLikes = el.likes.find((el) => {
           return el === this.props.postsArray.email;
         });
 
+        // Checking if the logged user is the post creator for showing the delete btn
+        if (this.props.postsArray.email === el.email) {
+          deleteIcon = (
+            <div className="post-delete-div" onClick={this.deletePost}>
+              <img className="post-delete-btn" src={Delete} alt="deletebtn" />
+            </div>
+          );
+        }
+
         return (
           <div className="post-div" key={ind + 1}>
+            {deleteIcon}
             <img className="post-div-img" src={el.imageUrl} alt="tmppfoimg" />
             <div className="inside-single-div">
               <p className="in-sin-p1">{el.fullName}</p>

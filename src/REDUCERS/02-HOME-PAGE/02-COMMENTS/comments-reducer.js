@@ -21,6 +21,18 @@ const reducer = (state = initialState, action) => {
       copyPost: action.updatedPost,
     };
   }
+  if (action.type === "addLikeComment") {
+    // Copy the copyPost for changing only the likes array
+    var newCopyPost = JSON.parse(JSON.stringify(state.copyPost));
+    // Changing the likes array
+    newCopyPost.likes = action.val;
+
+    return {
+      ...state,
+      updatedPost: !state.updatedPost,
+      copyPost: newCopyPost,
+    };
+  }
   return state;
 };
 
