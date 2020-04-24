@@ -3,13 +3,17 @@ import "./posts-boxes.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import actionTypes from "../../../../REDUCERS/02-HOME-PAGE/00-POSTS-BOX/actionTypes";
-
+// Import modals
+import DeleteModal from "./DELETE-MODAL/delete-modal";
 import Modal from "./MODAL/modal";
 // Import Media
 import UnlikeHeart from "../../../../media/heart-unlike.png";
 import LikeHeart from "../../../../media/heart-like.png";
 import Comments from "../../../../media/comments.png";
 import Delete from "../../../../media/delete.png";
+
+// Global Variables
+var postIndex;
 
 class PostsBoxes extends Component {
   componentDidMount() {
@@ -93,8 +97,30 @@ class PostsBoxes extends Component {
     document.body.style.overflow = "hidden";
   };
 
-  deletePost = () => {
-    console.log("Dialog open");
+  openDeleteDialog = (e) => {
+    //Saving the post index in the global variable
+    postIndex = e.target.getAttribute("index");
+
+    document.querySelector(".delete-modal-div").style.display = "flex";
+    document.querySelector(".delete-modal-div").focus();
+  };
+
+  deletePost = (e) => {
+    // Make a clone copy of the posts array
+    const copyPost = JSON.parse(JSON.stringify(this.props.postsArray.posts));
+    // Pick the post ref
+    const ref = copyPost[postIndex].ref;
+
+    // Remove the post from the copyArray posts
+    copyPost.splice(postIndex, 1);
+    // Create object to pass it to the actin type
+    const objPro = {
+      ref,
+      copyPost,
+    };
+
+    // Sending action to delete the post
+    this.props.deletePost(objPro);
   };
 
   render() {
@@ -112,7 +138,11 @@ class PostsBoxes extends Component {
         // Checking if the logged user is the post creator for showing the delete btn
         if (this.props.postsArray.email === el.email) {
           deleteIcon = (
-            <div className="post-delete-div" onClick={this.deletePost}>
+            <div
+              className="post-delete-div"
+              onClick={this.openDeleteDialog}
+              index={ind}
+            >
               <img className="post-delete-btn" src={Delete} alt="deletebtn" />
             </div>
           );
@@ -160,6 +190,7 @@ class PostsBoxes extends Component {
     console.log("PostsBoxes -> REDNER!!!");
     return (
       <div className="posts-boxes-wrapper">
+        <DeleteModal delete={this.deletePost} />
         <Modal establishFetch={this.savePost} />
         {fetchedPosts}
       </div>
@@ -183,6 +214,7 @@ const mapDispatchToProps = (dispatch) => {
     likeOnPost: (properties) => dispatch(actionTypes.likeOnPost(properties)),
     setCommentRef: (ref) => dispatch(actionTypes.setCommentRef(ref)),
     addComment: () => dispatch(actionTypes.addComment()),
+    deletePost: (properties) => dispatch(actionTypes.deletePost(properties)),
   };
 };
 

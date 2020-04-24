@@ -42,6 +42,13 @@ const reducer = (state = initialState, action) => {
       commentsModal: !state.commentsModal,
     };
   }
+  if (action.type === "deletePost") {
+    return {
+      ...state,
+      posts: action.val,
+      changePost: !state.changePost,
+    };
+  }
   return state;
 };
 

@@ -5,6 +5,7 @@ import Input from "./inputStyle";
 import CommentIcon from "../../../../../media/comments.png";
 import LikeIcon from "../../../../../media/heart-like.png";
 import UnlikeIcno from "../../../../../media/heart-unlike.png";
+import Delete from "../../../../../media/delete.png";
 // Import reducers
 import { connect } from "react-redux";
 import actionTypes from "../../../../../REDUCERS/02-HOME-PAGE/02-COMMENTS/actionTypes";
@@ -125,17 +126,26 @@ class Comments extends Component {
     this.props.likeClick(objPro);
   };
 
+  openDeleteDialog = (e) => {
+    // var index = e.target.getAttribute("index");
+    // var doc = document.querySelectorAll(".comments-inside4-div").length;
+    // var fit = Math.abs(index - doc + 1);
+    // var cssDoc = document.querySelectorAll(".post-delete-div");
+    // console.log(cssDoc);
+    console.log("Open Dialog");
+  };
+
   render() {
     if (this.props.commentsReducer.postIndex) {
       // Initial Variables
-      var renderPost, commentsArray, renderComments, checkLikes;
+      var renderPost, commentsArray, renderComments, checkLikes, deleteIcon;
       var postRef = this.props.commentsReducer.copyPost;
       // ShortCut to the comments array
       commentsArray = this.props.commentsReducer.copyPost.comments;
       //Render the comments with map
       if (commentsArray.length > 0) {
         renderComments = commentsArray.map((el, ind) => {
-          // Running time ckecing to be displayed
+          // Running checking time to be displayed
           const now = new Date();
           const time = now.getTime();
           var newTime = time - el.postedTime;
@@ -157,8 +167,31 @@ class Comments extends Component {
             newTime = `${timePast} days ago`;
           }
 
+          // Ckecing if the login user in each comment and display the delete icon addrdnly
+          if (el.email === this.props.profileBox.email) {
+            deleteIcon = (
+              <div
+                className="post-delete-div"
+                onClick={this.openDeleteDialog}
+                index={ind}
+              >
+                <img className="post-delete-btn" src={Delete} alt="deletebtn" />
+                <div
+                  index={ind}
+                  onClick={() => console.log("TESTING")}
+                  className="popup-delete"
+                >
+                  You Sure?
+                </div>
+              </div>
+            );
+          } else {
+            deleteIcon = null;
+          }
+
           return (
             <div className="comments-inside4-div" key={ind}>
+              {deleteIcon}
               <img src={el.profileImg} alt="testImg" />
               <div className="com-ins4-inside">
                 <h1 className="ins2-inside-h1 ins4-h1">{el.fullName}</h1>

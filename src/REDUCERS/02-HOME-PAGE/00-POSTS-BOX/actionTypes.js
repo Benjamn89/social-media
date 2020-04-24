@@ -124,6 +124,19 @@ const actionTypes = {
       type: "displayBtn",
     };
   },
+  deletePost: (pro) => {
+    return (dispatch) => {
+      client
+        .query(q.Delete(q.Ref(q.Collection("posts"), pro.ref)))
+        .then((ret) => dispatch(actionTypes.deletingPost(pro)));
+    };
+  },
+  deletingPost: (pro) => {
+    return {
+      type: "deletePost",
+      val: pro.copyPost,
+    };
+  },
 };
 
 export default actionTypes;
