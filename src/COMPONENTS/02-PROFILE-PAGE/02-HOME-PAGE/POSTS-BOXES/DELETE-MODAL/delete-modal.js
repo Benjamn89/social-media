@@ -2,7 +2,11 @@ import React from "react";
 import "./delete-modal.css";
 
 const cancel = (e) => {
-  if (e.key === "Escape" || e.target.innerHTML === "Cancel") {
+  if (
+    e.key === "Escape" ||
+    e.target.innerHTML === "Cancel" ||
+    e.target.className === "delete-modal-div"
+  ) {
     document.querySelector(".delete-modal-div").style.display = "none";
   }
 };
@@ -10,7 +14,12 @@ const cancel = (e) => {
 const DeleteModal = (props) => {
   console.log("DeleteModal -> RENDER");
   return (
-    <div className="delete-modal-div" tabIndex="0" onKeyDown={cancel}>
+    <div
+      className="delete-modal-div"
+      tabIndex="0"
+      onKeyDown={cancel}
+      onClick={cancel}
+    >
       <div className="delete-modal-inside-div">
         <p className="delete-modal-p">
           Are you sure you want to delete this post ?

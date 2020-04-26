@@ -87,8 +87,14 @@ const actionTypes = {
           dispatch(actionTypes.updatePost(postProperties.state));
           // Remove Spinner
           document
-            .querySelector(".posts-boxes-wrapper")
-            .classList.remove("showSpinner");
+            .querySelector(".posts-modal-inside")
+            .classList.remove("createPostSpinner");
+
+          // Close Modal
+          document.querySelector(".posts-modal").style.display = "none";
+
+          // Clean input value
+          document.querySelectorAll("#standard-basic")[0].value = "";
         });
     };
   },
@@ -128,10 +134,18 @@ const actionTypes = {
     return (dispatch) => {
       client
         .query(q.Delete(q.Ref(q.Collection("posts"), pro.ref)))
-        .then((ret) => dispatch(actionTypes.deletingPost(pro)));
+        .then((ret) => {
+          dispatch(actionTypes.deletingPost(pro));
+          // Remove the spinner before changing state
+          document
+            .querySelector(".delete-modal-inside-div")
+            .classList.remove("deletePostSpinner");
+        });
     };
   },
   deletingPost: (pro) => {
+    // Exit from the delete dialog
+    document.querySelector(".delete-modal-div").style.display = "none";
     return {
       type: "deletePost",
       val: pro.copyPost,

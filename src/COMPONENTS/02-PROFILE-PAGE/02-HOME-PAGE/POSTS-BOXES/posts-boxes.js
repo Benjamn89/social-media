@@ -37,6 +37,10 @@ class PostsBoxes extends Component {
   }
 
   savePost = (e) => {
+    // Load Spinner
+    document
+      .querySelector(".posts-modal-inside")
+      .classList.add("createPostSpinner");
     var text = document.querySelectorAll("#standard-basic")[0].value;
     if (text.length > 0) {
       const uniqeId = this.props.postsArray.posts.length;
@@ -53,18 +57,10 @@ class PostsBoxes extends Component {
         postedTime,
         uniqeId,
       };
-      // Remove Modal
-      document.querySelector(".posts-modal").style.display = "none";
-      // Clean input value
-      document.querySelectorAll("#standard-basic")[0].value = "";
-      // Load spinner
-      document
-        .querySelector(".posts-boxes-wrapper")
-        .classList.add("showSpinner");
+
       this.props.createNewPost(moveOnProperties);
     }
   };
-
   likeClick = (e) => {
     var id = e.target.getAttribute("index");
     var email = this.props.profileBoxState.email;
@@ -106,6 +102,11 @@ class PostsBoxes extends Component {
   };
 
   deletePost = (e) => {
+    // Showing the spinner while fetching
+    document
+      .querySelector(".delete-modal-inside-div")
+      .classList.add("deletePostSpinner");
+
     // Make a clone copy of the posts array
     const copyPost = JSON.parse(JSON.stringify(this.props.postsArray.posts));
     // Pick the post ref
@@ -165,7 +166,7 @@ class PostsBoxes extends Component {
                     index={ind}
                   />
                 </div>
-                <p className="in-feat-p">likes {el.likes.length}</p>
+                <p className="in-feat-p">{el.likes.length} likes</p>
                 <div className="wrap-feat-icon-div wrap-like-spe">
                   <Link onClick={this.clickComment} to="leaveComment">
                     <img
@@ -176,9 +177,15 @@ class PostsBoxes extends Component {
                     />
                   </Link>
                 </div>
-                <p className="in-feat-p2">
-                  comments <span>{el.comments.length}</span>
-                </p>
+                <Link
+                  className="in-feat-p2"
+                  onClick={this.clickComment}
+                  to="leaveComment"
+                >
+                  <p index={ind}>
+                    <span>{el.comments.length}</span> comments
+                  </p>
+                </Link>
               </div>
             </div>
           </div>

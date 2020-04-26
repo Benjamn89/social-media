@@ -9,7 +9,12 @@ class Modal extends Component {
   }
   render() {
     return (
-      <div onKeyDown={this.props.cancelModal} className="modal" tabIndex="0">
+      <div
+        onKeyDown={this.props.cancelModal}
+        className="modal"
+        tabIndex="0"
+        onClick={this.props.cancelModal}
+      >
         <div className="inside-modal">
           <h1 className="inside-modal-h1">Update Your Details</h1>
           <Inputs title="Your Location" />

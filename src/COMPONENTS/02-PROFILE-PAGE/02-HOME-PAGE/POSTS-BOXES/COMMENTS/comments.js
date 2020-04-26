@@ -40,15 +40,18 @@ class Comments extends Component {
 
       this.props.getPost(proObj);
     } else {
-      //Temporaray solution
-      window.history.back();
+      this.props.history.push("/");
     }
   }
 
   goBack = (e) => {
-    if (e.key === "Escape" || e.target.innerHTML === "+") {
+    if (
+      e.key === "Escape" ||
+      e.target.innerHTML === "+" ||
+      e.target.className === "comments-div"
+    ) {
       document.body.style.overflow = "";
-      window.history.back();
+      this.props.history.push("/");
     }
   };
 
@@ -113,7 +116,7 @@ class Comments extends Component {
       // Remove it from the array
       copyLikesPost.splice(indexOfLike, 1);
     } else {
-      // Add the email to the likes arrag
+      // Add the email to the likes array
       copyLikesPost.push(email);
     }
     // Creating the object property to be forwarded
@@ -127,12 +130,30 @@ class Comments extends Component {
   };
 
   openDeleteDialog = (e) => {
-    // var index = e.target.getAttribute("index");
-    // var doc = document.querySelectorAll(".comments-inside4-div").length;
-    // var fit = Math.abs(index - doc + 1);
-    // var cssDoc = document.querySelectorAll(".post-delete-div");
-    // console.log(cssDoc);
-    console.log("Open Dialog");
+    if (e.target.className === "post-delete-div") {
+      e.target.children[1].classList.toggle("test-delete");
+    } else {
+      // Show spinner
+      document
+        .querySelector(".comments-inside4-div")
+        .classList.add("deleteCommentSpinner");
+      // Save the comment index
+      var commentIndex = e.target.getAttribute("index");
+      // Make a copy of the comments array
+      var commentsArray = JSON.parse(
+        JSON.stringify(this.props.commentsReducer.copyPost.comments)
+      );
+      // Remove the index array from the copy of the comments aray
+      commentsArray.splice(commentIndex, 1);
+
+      //Make an object to forward to actionTypes
+      var objPro = {
+        commentsArray,
+        ref: this.props.commentsReducer.copyPost.ref,
+      };
+      // Send the action type
+      this.props.deleteCommentRequest(objPro);
+    }
   };
 
   render() {
@@ -176,11 +197,7 @@ class Comments extends Component {
                 index={ind}
               >
                 <img className="post-delete-btn" src={Delete} alt="deletebtn" />
-                <div
-                  index={ind}
-                  onClick={() => console.log("TESTING")}
-                  className="popup-delete"
-                >
+                <div index={ind} className="popup-delete">
                   You Sure?
                 </div>
               </div>
@@ -220,9 +237,7 @@ class Comments extends Component {
             />
             <div className="com-ins2-inside">
               <div className="wrap-x-button">
-                <span onClick={this.goBack} className="x-button">
-                  +
-                </span>
+                <span className="x-button">+</span>
               </div>
               <h1 className="ins2-inside-h1">{postRef.fullName}</h1>
               <p className="ins2-inside-time">{postRef.displayTime}</p>
@@ -236,7 +251,7 @@ class Comments extends Component {
                     alt="com-unlike"
                   />
                 </div>
-                <p className="com-ins2-icon-p">Likes {postRef.likes.length}</p>
+                <p className="com-ins2-icon-p">{postRef.likes.length} Likes</p>
                 <div className="com-wrap-icon">
                   <img
                     className="com-wrap-icon-img"
@@ -245,7 +260,7 @@ class Comments extends Component {
                   />
                 </div>
                 <p className="com-ins2-icon-p">
-                  Comments {postRef.comments.length}
+                  {postRef.comments.length} Comments
                 </p>
               </div>
             </div>
@@ -263,7 +278,12 @@ class Comments extends Component {
 
     console.log("Comments -> REDNER!!!");
     return (
-      <div className="comments-div" tabIndex="0" onKeyDown={this.goBack}>
+      <div
+        className="comments-div"
+        tabIndex="0"
+        onKeyDown={this.goBack}
+        onClick={this.goBack}
+      >
         {renderPost}
       </div>
     );
@@ -284,6 +304,8 @@ const mapDispatchToProps = (dispatch) => {
     getPost: (properties) => dispatch(actionTypes.getPost(properties)),
     postComment: (properties) => dispatch(actionTypes.postComment(properties)),
     likeClick: (properties) => dispatch(actionTypes.likeClick(properties)),
+    deleteCommentRequest: (properties) =>
+      dispatch(actionTypes.deleteCommentRequest(properties)),
   };
 };
 

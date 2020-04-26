@@ -33,6 +33,17 @@ const reducer = (state = initialState, action) => {
       copyPost: newCopyPost,
     };
   }
+  if (action.type === "deleteComment") {
+    // Copy the post that need to be changed
+    var newCopyPost = JSON.parse(JSON.stringify(state.copyPost));
+    // Changing the comments array
+    newCopyPost.comments = action.val;
+    return {
+      ...state,
+      updatedPost: !state.updatedPost,
+      copyPost: newCopyPost,
+    };
+  }
   return state;
 };
 

@@ -83,7 +83,11 @@ class ProfileBox extends Component {
 
   // Cancel Model On click
   cancelModal = (e) => {
-    if (e.key === "Escape" || e.target.innerHTML === "Cancel") {
+    if (
+      e.key === "Escape" ||
+      e.target.innerHTML === "Cancel" ||
+      e.target.className === "modal"
+    ) {
       document.querySelector(".modal").style.display = "none";
     }
   };

@@ -80,6 +80,11 @@
 .in-sin-div-features img {
   height: 20px;
 }
+.in-feat-p2 {
+  color: black;
+  text-decoration: none;
+  transform: translateY(1px);
+}
 .in-feat-p2 span {
   margin-left: 5px;
 }
@@ -96,9 +101,13 @@
 }
 .wrap-like-spe {
   line-height: 2.2;
+  transform: translateY(-3.2px);
 }
 .wrap-feat-icon-div:hover {
   background-color: #dff9fb;
+}
+.wrap-like-spe:hover {
+  background-color: transparent;
 }
 .f-i-d-i2 {
   transform: translateY(1.5px) translateX(0.3px);
@@ -119,6 +128,37 @@
   transform: translateY(-15px);
   font-size: 15px;
 }
+
+/* Create Post Spinner  */
+.createPostSpinner {
+  position: absolute;
+  z-index: 300;
+  pointer-events: none;
+}
+.createPostSpinner::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  border: 5px solid #bdc3c7;
+  border-top-color: #c0392b;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  margin-left: -30px;
+  margin-top: 90px;
+  animation: createPostSpinner 0.5s linear infinite;
+  z-index: 200;
+  opacity: 0.7;
+}
+/* Animate Spinner  */
+@keyframes createPostSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media only screen and (max-width: 980px) {
   .posts-boxes-wrapper {
     width: 90%;

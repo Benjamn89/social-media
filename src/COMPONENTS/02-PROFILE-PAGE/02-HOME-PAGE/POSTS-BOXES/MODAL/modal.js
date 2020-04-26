@@ -9,13 +9,22 @@ class Modal extends Component {
   }
 
   cancelModal = (e) => {
-    if (e.key === "Escape" || e.target.innerHTML === "Cancel") {
+    if (
+      e.key === "Escape" ||
+      e.target.innerHTML === "Cancel" ||
+      e.target.className === "posts-modal"
+    ) {
       document.querySelector(".posts-modal").style.display = "none";
     }
   };
   render() {
     return (
-      <div className="posts-modal" tabIndex="0" onKeyDown={this.cancelModal}>
+      <div
+        className="posts-modal"
+        tabIndex="0"
+        onKeyDown={this.cancelModal}
+        onClick={this.cancelModal}
+      >
         <div className="posts-modal-inside">
           <h1 className="pos-mod-h1">Publish New Post</h1>
           <Input title="Share Something..." />

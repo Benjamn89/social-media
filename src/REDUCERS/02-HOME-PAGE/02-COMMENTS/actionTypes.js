@@ -61,6 +61,31 @@ const actionTypes = {
       val: likesArray,
     };
   },
+  deleteCommentRequest: (properties) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("posts"), properties.ref), {
+            data: {
+              comments: properties.commentsArray,
+            },
+          })
+        )
+        .then((ret) => {
+          // Remove spinner
+          document
+            .querySelector(".comments-inside4-div")
+            .classList.remove("deleteCommentSpinner");
+          dispatch(actionTypes.deleteComment(properties.commentsArray));
+        });
+    };
+  },
+  deleteComment: (commentsArray) => {
+    return {
+      type: "deleteComment",
+      val: commentsArray,
+    };
+  },
 };
 
 export default actionTypes;

@@ -147,7 +147,7 @@
   color: black;
 }
 
-/* .popup-delete {
+.popup-delete {
   height: 30px;
   width: 100px;
   border: solid 0.5px;
@@ -159,36 +159,39 @@
   transform: scale(0);
   transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   user-select: none;
+  border-color: black;
 }
 .test-delete:hover {
-  background-color: violet;
+  color: #c0392b;
+  background-color: #fff;
 }
 .test-delete {
   transform: scale(1);
-} */
-/* Style the delete button */
-/* .comment-delete-div::before {
+}
+
+/* Test Spinner */
+.deleteCommentSpinner {
+  pointer-events: none;
+}
+.deleteCommentSpinner::before {
   content: "";
-  position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  left: -6px;
-  top: -7px;
-  transition: 0.2s;
-  transform: scaleY(0);
-  border: solid 1.5px #c0392b;
-  transform-origin: 100% 50%;
-}
-.comment-delete-div:hover::before {
-  transform: scaleY(1);
-}
-.comment-delete-div {
+  text-align: center;
+  border: 5px solid #bdc3c7;
+  border-top-color: #c0392b;
   position: absolute;
-  right: 20px;
-  top: 15px;
+  left: 50%;
+  top: -50%;
+  margin-left: -30px;
+  margin-top: 90px;
+  animation: deleteCommentSpinner 0.5s linear infinite;
+  opacity: 0.7;
 }
-.comment-delete-btn {
-  max-height: 20px;
-  max-width: 20px;
-} */
+/* Animate Spinner  */
+@keyframes deleteCommentSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
