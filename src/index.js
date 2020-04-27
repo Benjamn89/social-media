@@ -14,6 +14,7 @@ import NavbarReducer from "./REDUCERS/01-NAVBAR/navbar-reducer";
 import PostsReducer from "./REDUCERS/02-HOME-PAGE/00-POSTS-BOX/posts-box-reducer";
 import ProfileBoxReducer from "./REDUCERS/02-HOME-PAGE/01-PROFILE-BOX/profile-box-reducer";
 import CommentsReducer from "./REDUCERS/02-HOME-PAGE/02-COMMENTS/comments-reducer";
+import ProfilePageReducer from "./REDUCERS/03-PROFILE-PGAE/profile-page-reducer";
 
 // combined reducers
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   PostsReducer,
   ProfileBoxReducer,
   CommentsReducer,
+  ProfilePageReducer,
 });
 
 // create logger for thunk

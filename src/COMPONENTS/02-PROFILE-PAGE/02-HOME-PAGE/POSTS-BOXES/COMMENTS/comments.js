@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./comments.css";
+// Import Modal(Styles)
 import Input from "./inputStyle";
+// Import Functions
+import TimeChecking from "../../../../FUNCTIONS/time-checking";
 // import media
 import CommentIcon from "../../../../../media/comments.png";
 import LikeIcon from "../../../../../media/heart-like.png";
@@ -11,6 +14,10 @@ import { connect } from "react-redux";
 import actionTypes from "../../../../../REDUCERS/02-HOME-PAGE/02-COMMENTS/actionTypes";
 
 class Comments extends Component {
+  state = {
+    render: false,
+  };
+
   shouldComponentUpdate(nP, nS) {
     console.log("SCP -> Comments");
     var thisProps = this.props.commentsReducer;
@@ -40,7 +47,9 @@ class Comments extends Component {
 
       this.props.getPost(proObj);
     } else {
-      this.props.history.push("/");
+      this.setState({
+        render: !this.state.render,
+      });
     }
   }
 
@@ -167,26 +176,7 @@ class Comments extends Component {
       if (commentsArray.length > 0) {
         renderComments = commentsArray.map((el, ind) => {
           // Running checking time to be displayed
-          const now = new Date();
-          const time = now.getTime();
-          var newTime = time - el.postedTime;
-
-          if (newTime < 5000) {
-            newTime = "Right now...";
-          }
-          if (newTime < 59000) {
-            newTime = `Few sec ago`;
-          }
-          if (newTime > 59000 && newTime < 3540000) {
-            newTime = `Few min ago`;
-          }
-          if (newTime > 3540000 && newTime < 86400000) {
-            newTime = `Few hours ago`;
-          }
-          if (newTime > 86400000) {
-            let timePast = Math.floor(newTime / 86400000);
-            newTime = `${timePast} days ago`;
-          }
+          var time = TimeChecking(el.postedTime, "Right Now...");
 
           // Ckecing if the login user in each comment and display the delete icon addrdnly
           if (el.email === this.props.profileBox.email) {
@@ -212,7 +202,7 @@ class Comments extends Component {
               <img src={el.profileImg} alt="testImg" />
               <div className="com-ins4-inside">
                 <h1 className="ins2-inside-h1 ins4-h1">{el.fullName}</h1>
-                <p className="ins2-inside-time">{newTime}</p>
+                <p className="ins2-inside-time">{time}</p>
                 <p className="ins2-inside-body ins4-body">{el.body}</p>
               </div>
             </div>
@@ -225,6 +215,9 @@ class Comments extends Component {
       checkLikes = postRef.likes.find((el) => {
         return el === this.props.profileBox.email;
       });
+
+      // Check the displayed time on the titled post
+      var postTime = TimeChecking(postRef.postedTime, "value");
 
       // Render the single post
       renderPost = (
@@ -240,7 +233,7 @@ class Comments extends Component {
                 <span className="x-button">+</span>
               </div>
               <h1 className="ins2-inside-h1">{postRef.fullName}</h1>
-              <p className="ins2-inside-time">{postRef.displayTime}</p>
+              <p className="ins2-inside-time">{postTime}</p>
               <p className="ins2-inside-body">{postRef.text}</p>
               <div>
                 <div className="com-wrap-icon c-w-i-div">

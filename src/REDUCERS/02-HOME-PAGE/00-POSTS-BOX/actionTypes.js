@@ -31,22 +31,6 @@ const actionTypes = {
             ret.data.map((el) => {
               // Enter the ref inside my array storing data
               el.data.ref = el.ref.value.id;
-              const now = new Date();
-              const time = now.getTime();
-              var newTime = time - el.data.postedTime;
-              if (newTime < 59000) {
-                el.data.displayTime = `Few sec ago`;
-              }
-              if (newTime > 59000 && newTime < 3540000) {
-                el.data.displayTime = `Few min ago`;
-              }
-              if (newTime > 3540000 && newTime < 86400000) {
-                el.data.displayTime = `Few hours ago`;
-              }
-              if (newTime > 86400000) {
-                let timePast = Math.floor(newTime / 86400000);
-                el.data.displayTime = `${timePast} days ago`;
-              }
               return storeArr.push(el.data);
             });
             dispatch(actionTypes.renderPosts(storeArr, email));

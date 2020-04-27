@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import "./posts-boxes.css";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+// Import React tools
 import actionTypes from "../../../../REDUCERS/02-HOME-PAGE/00-POSTS-BOX/actionTypes";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+// Import Components
+import SinglePost from "./single-post";
 // Import modals
 import DeleteModal from "./DELETE-MODAL/delete-modal";
 import Modal from "./MODAL/modal";
+import TimeChecking from "../../../FUNCTIONS/time-checking";
 // Import Media
 import UnlikeHeart from "../../../../media/heart-unlike.png";
 import LikeHeart from "../../../../media/heart-like.png";
@@ -91,6 +95,8 @@ class PostsBoxes extends Component {
     var id = e.target.getAttribute("index");
     this.props.setCommentRef(id);
     document.body.style.overflow = "hidden";
+    // Direct to the comment page
+    this.props.history.push("/leaveComment");
   };
 
   openDeleteDialog = (e) => {
@@ -131,7 +137,7 @@ class PostsBoxes extends Component {
       fetchedPosts = this.props.postsArray.posts.map((el, ind) => {
         // Create variable to show the delete icon
         var deleteIcon;
-        // Checking if the user who login like this post or not to change the the like icon
+        // Checking if the user who login like the post
         var checkLikes = el.likes.find((el) => {
           return el === this.props.postsArray.email;
         });
@@ -149,46 +155,26 @@ class PostsBoxes extends Component {
           );
         }
 
+        // Running checking time function
+        var time = TimeChecking(el.postedTime, "Right Now...");
+
         return (
-          <div className="post-div" key={ind + 1}>
+          <SinglePost
+            key={ind + 1}
+            imageUrl={el.imageUrl}
+            fullName={el.fullName}
+            displayTime={time}
+            text={el.text}
+            likeClick={this.likeClick}
+            likeIcon={checkLikes ? LikeHeart : UnlikeHeart}
+            index={ind}
+            likesLength={el.likes.length}
+            clickComment={this.clickComment}
+            commentsImage={Comments}
+            commentsLength={el.comments.length}
+          >
             {deleteIcon}
-            <img className="post-div-img" src={el.imageUrl} alt="tmppfoimg" />
-            <div className="inside-single-div">
-              <p className="in-sin-p1">{el.fullName}</p>
-              <p className="in-sin-p2">{el.displayTime}</p>
-              <p className="in-sin-p3">{el.text}</p>
-              <div className="in-sin-div-features">
-                <div className="wrap-feat-icon-div">
-                  <img
-                    onClick={this.likeClick}
-                    src={checkLikes ? LikeHeart : UnlikeHeart}
-                    alt="unlike"
-                    index={ind}
-                  />
-                </div>
-                <p className="in-feat-p">{el.likes.length} likes</p>
-                <div className="wrap-feat-icon-div wrap-like-spe">
-                  <Link onClick={this.clickComment} to="leaveComment">
-                    <img
-                      className="f-i-d-i2"
-                      src={Comments}
-                      alt="comments"
-                      index={ind}
-                    />
-                  </Link>
-                </div>
-                <Link
-                  className="in-feat-p2"
-                  onClick={this.clickComment}
-                  to="leaveComment"
-                >
-                  <p index={ind}>
-                    <span>{el.comments.length}</span> comments
-                  </p>
-                </Link>
-              </div>
-            </div>
-          </div>
+          </SinglePost>
         );
       });
       fetchedPosts.reverse();
@@ -225,4 +211,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsBoxes);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(PostsBoxes));
