@@ -14,6 +14,10 @@ const actionTypes = {
     };
   },
   getPost: (data, ref) => {
+    // Remove Spinner
+    document
+      .querySelector(".comments-div")
+      .classList.remove("createPostSpinner");
     return {
       type: "getPost",
       ref,

@@ -14,12 +14,15 @@ import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
 import Unlike from "../../../media/heart-unlike.png";
 import Like from "../../../media/heart-like.png";
 import Comment from "../../../media/comments.png";
+import Delete from "../../../media/delete.png";
 
 // Titles array (codeless)
 const titles = ["Info", "Posts", "Friends"];
 
 class MyProfile extends Component {
   componentDidMount() {
+    // Focus on the center div to have the option to exit immdltly on Esc press
+    document.querySelector(".my-profile-div").focus();
     // Reset State
     this.props.resetState();
     // Set the activeBtn to the info section
@@ -27,7 +30,7 @@ class MyProfile extends Component {
   }
 
   cancellProfile = (e) => {
-    if (e.target.className === "my-profile-div") {
+    if (e.target.className === "my-profile-div" || e.key === "Escape") {
       this.props.history.push("/");
     }
   };
@@ -45,7 +48,7 @@ class MyProfile extends Component {
       // Add the active btn style to the choosen on
       e.target.parentNode.children[1].classList.add("active-btn-span");
       // Create variable to check if the client allready click on the posts view section
-      if (thisState.userPosts.length > 1) {
+      if (thisState.userPosts.length > 0) {
         visitPost = true;
       }
       // Create obj to pass to the actionTypes
@@ -93,7 +96,6 @@ class MyProfile extends Component {
 
   clickComment = () => {
     console.log("comment click");
-    this.props.history.push("/leaveComment");
   };
 
   render() {
@@ -141,7 +143,16 @@ class MyProfile extends Component {
             clickComment={this.clickComment}
             commentsImage={Comment}
             commentsLength={el.comments.length}
-          ></SinglePost>
+          >
+            {/* // Display the delete icon on each post */}
+            <div
+              className="post-delete-div"
+              onClick={this.openDeleteDialog}
+              index={ind}
+            >
+              <img className="post-delete-btn" src={Delete} alt="deletebtn" />
+            </div>
+          </SinglePost>
         );
       });
       // Reverse the array to display from top to bottom
@@ -152,7 +163,12 @@ class MyProfile extends Component {
     }
 
     return (
-      <div className="my-profile-div" onClick={this.cancellProfile}>
+      <div
+        className="my-profile-div"
+        onClick={this.cancellProfile}
+        onKeyDown={this.cancellProfile}
+        tabIndex="0"
+      >
         <div className="my-profile-inside">
           <h1 className="my-pro-title">
             {this.props.profileBoxState.fullName}

@@ -32,6 +32,9 @@ class Comments extends Component {
   }
 
   componentDidMount() {
+    // Load Spinner while fetching the post
+    document.querySelector(".comments-div").classList.add("createPostSpinner");
+    // Focus on the center div for cancel immidtly on Esc press
     document.querySelector(".comments-div").focus();
     // Save the post ref from the url
     const ref = this.props.match.params.user;
