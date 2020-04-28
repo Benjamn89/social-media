@@ -32,7 +32,10 @@ class PostsBoxes extends Component {
       nP.postsArray.addLike !== thisProps.addLike
     ) {
       return true;
-    } else if (nP.commentsState !== this.props.commentsState) {
+    } else if (
+      nP.commentsState !== this.props.commentsState ||
+      nP.profilePageState !== this.props.profilePageState
+    ) {
       this.props.loadPosts();
       return false;
     } else {
@@ -196,6 +199,7 @@ const mapStateToProps = (state) => {
     postsArray: state.PostsReducer,
     profileBoxState: state.ProfileBoxReducer,
     commentsState: state.CommentsReducer.updatedPost,
+    profilePageState: state.ProfilePageReducer.updatedLikes,
   };
 };
 

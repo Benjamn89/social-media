@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import "./container.css";
-import Navbar from "../00-NAVBAR/navbar";
-import Comment from "../02-HOME-PAGE/POSTS-BOXES/COMMENTS/comments";
+// Import Redux
 import { connect } from "react-redux";
+import actionTypes from "../../../REDUCERS/01-NAVBAR/actionTypes";
+// Import Routing
+import { Switch, Route } from "react-router-dom";
+// Import Components
+import Comment from "../02-HOME-PAGE/POSTS-BOXES/COMMENTS/comments";
+import Navbar from "../00-NAVBAR/navbar";
 import MyProfile from "../01-MY-PROFILE/my-profile";
 import HomePage from "../02-HOME-PAGE/home-page";
-import { Switch, Route } from "react-router-dom";
-import actionTypes from "../../../REDUCERS/01-NAVBAR/actionTypes";
+import Testing from "../../TESTING/testing";
 
 class ContainerProfile extends Component {
   signOut = (e) => {
@@ -22,6 +26,7 @@ class ContainerProfile extends Component {
         <Switch>
           <Route exact path="/profile" component={MyProfile} />
           <Route exact path="/leaveComment" component={Comment} />
+          <Route exact path="/testing/:user" component={Testing} />
         </Switch>
       </div>
     );

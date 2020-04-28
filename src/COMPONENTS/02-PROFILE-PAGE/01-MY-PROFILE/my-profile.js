@@ -12,6 +12,7 @@ import Info from "./00-INFO/info";
 import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
 //Import Media
 import Unlike from "../../../media/heart-unlike.png";
+import Like from "../../../media/heart-like.png";
 import Comment from "../../../media/comments.png";
 
 // Titles array (codeless)
@@ -19,20 +20,10 @@ const titles = ["Info", "Posts", "Friends"];
 
 class MyProfile extends Component {
   componentDidMount() {
-    // Create short cut for the titles elements
-    var title = $(".m-p-b-s");
-    // Create short cut for the currentMode state
-    var currentMode = this.props.profilePageState.currentSection;
-    // Set the active buttons base on the currentMode state
-    if (currentMode === "Info") {
-      $(title[0]).addClass("active-btn-span");
-    }
-    if (currentMode === "Posts") {
-      $(title[1]).addClass("active-btn-span");
-    }
-    if (currentMode === "Friends") {
-      $(title[2]).addClass("active-btn-span");
-    }
+    // Reset State
+    this.props.resetState();
+    // Set the activeBtn to the info section
+    document.querySelectorAll(".m-p-b-s")[0].classList.add("active-btn-span");
   }
 
   cancellProfile = (e) => {
@@ -67,8 +58,37 @@ class MyProfile extends Component {
     }
   };
 
-  likeClick = () => {
-    console.log("like click");
+  likeClick = (e) => {
+    // Save the post index
+    const index = e.target.getAttribute("index");
+    // Make a clone copy of the posts
+    var posts = JSON.parse(
+      JSON.stringify(this.props.profilePageState.userPosts)
+    );
+    // Make shortcut of the user email
+    const email = this.props.profileBoxState.email;
+    // Checking if the user like is own post and change accordlny
+    var checkLike = posts[index].likes.find((el) => {
+      return el === email;
+    });
+    // Remove the email from the likes array if checkLike returned true
+    if (checkLike) {
+      // Save the index of the email inside the likes array
+      var indexOfLike = posts[index].likes.indexOf(email);
+      posts[index].likes.splice(indexOfLike, 1);
+    } else {
+      // Push the email if checkLike returned undefiend
+      posts[index].likes.push(email);
+    }
+
+    // Create obj to forward it to the action type
+    const objPro = {
+      ref: posts[index].ref,
+      posts,
+      index,
+    };
+    // Call the actionType
+    this.props.updateLikeAction(objPro);
   };
 
   clickComment = () => {
@@ -102,6 +122,11 @@ class MyProfile extends Component {
         // Running time checking
         var time = TimeChecking(el.postedTime, "value");
 
+        // Check if user like his own post
+        var checkLikes = el.likes.find((el) => {
+          return el === this.props.profileBoxState.email;
+        });
+
         return (
           <SinglePost
             key={ind}
@@ -110,7 +135,7 @@ class MyProfile extends Component {
             displayTime={time}
             text={el.text}
             likeClick={this.likeClick}
-            likeIcon={Unlike}
+            likeIcon={checkLikes ? Like : Unlike}
             index={ind}
             likesLength={el.likes.length}
             clickComment={this.clickComment}
@@ -150,6 +175,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     actionChangeMode: (pro) => dispatch(actionTypes.actionChangeMode(pro)),
+    resetState: () => dispatch(actionTypes.resetState()),
+    updateLikeAction: (pro) => dispatch(actionTypes.updateLikeAction(pro)),
   };
 };
 

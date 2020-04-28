@@ -6,6 +6,12 @@ const client = new faunadb.Client({
 });
 
 const actionTypes = {
+  resetState: () => {
+    return {
+      type: "resetState",
+    };
+  },
+
   actionChangeMode: (pro) => {
     // Check if to fetch based on visitPost that got forward
     if (pro.visitPost) {
@@ -49,6 +55,27 @@ const actionTypes = {
   changeMode: (pro) => {
     return {
       type: "changeMode",
+      val: pro,
+    };
+  },
+  updateLikeAction: (pro) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("posts"), pro.ref), {
+            data: {
+              likes: pro.posts[pro.index].likes,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(actionTypes.updateLike(pro.posts));
+        });
+    };
+  },
+  updateLike: (pro) => {
+    return {
+      type: "updateLike",
       val: pro,
     };
   },

@@ -12,7 +12,6 @@ const actionTypes = {
       val: id,
     };
   },
-
   // Retrive all stored posts from database
   loadPosts: () => {
     return (dispatch) => {
