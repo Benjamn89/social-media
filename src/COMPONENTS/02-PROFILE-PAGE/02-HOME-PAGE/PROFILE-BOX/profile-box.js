@@ -62,6 +62,12 @@ class ProfileBox extends Component {
   establishFetch = () => {
     var location = document.querySelectorAll("#standard-basic")[1].value;
     var web = document.querySelectorAll("#standard-basic")[2].value;
+    if (web === "") {
+      web = "EDIT";
+    }
+    if (location === "") {
+      location = "EDIT";
+    }
     if (
       location !== this.props.profileBoxState.location ||
       web !== this.props.profileBoxState.website

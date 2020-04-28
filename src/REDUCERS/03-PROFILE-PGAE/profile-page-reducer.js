@@ -2,6 +2,7 @@ const initialState = {
   currentSection: "Info",
   userPosts: [],
   updatedLikes: 0,
+  wasFetched: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ const reducer = (state = initialState, action) => {
       ...state,
       userPosts: action.val.initialArr,
       currentSection: action.val.sectionName,
+      wasFetched: true,
     };
   }
   if (action.type === "changeModeLess") {
@@ -22,6 +24,13 @@ const reducer = (state = initialState, action) => {
     };
   }
   if (action.type === "updateLike") {
+    return {
+      ...state,
+      userPosts: action.val,
+      updatedLikes: state.updatedLikes + 1,
+    };
+  }
+  if (action.type === "deletePostFromProfile") {
     return {
       ...state,
       userPosts: action.val,

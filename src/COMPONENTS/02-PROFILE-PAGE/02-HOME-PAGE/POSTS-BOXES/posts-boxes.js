@@ -134,7 +134,19 @@ class PostsBoxes extends Component {
     this.props.deletePost(objPro);
   };
 
+  exitDeleteModal = (e) => {
+    if (
+      e.key === "Escape" ||
+      e.target.innerHTML === "Cancel" ||
+      e.target.className === "delete-modal-div"
+    ) {
+      document.querySelector(".delete-modal-div").style.display = "none";
+    }
+  };
+
   render() {
+    console.log("PostsBoxes -> REDNER!!!");
+    // Initial variables
     var fetchedPosts = null;
 
     if (this.props.postsArray.posts.length > 0) {
@@ -183,11 +195,9 @@ class PostsBoxes extends Component {
       });
       fetchedPosts.reverse();
     }
-
-    console.log("PostsBoxes -> REDNER!!!");
     return (
       <div className="posts-boxes-wrapper">
-        <DeleteModal delete={this.deletePost} />
+        <DeleteModal cancel={this.exitDeleteModal} delete={this.deletePost} />
         <Modal establishFetch={this.savePost} />
         {fetchedPosts}
       </div>

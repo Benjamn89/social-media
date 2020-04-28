@@ -79,6 +79,26 @@ const actionTypes = {
       val: pro,
     };
   },
+
+  deletePostAction: (pro) => {
+    return (dispatch) => {
+      client
+        .query(q.Delete(q.Ref(q.Collection("posts"), pro.ref)))
+        .then(() => dispatch(actionTypes.deletePostFromProfile(pro.posts)));
+    };
+  },
+  deletePostFromProfile: (newPosts) => {
+    // Remoe Spinner
+    document
+      .querySelectorAll(".delete-modal-inside-div")[1]
+      .classList.remove("deleteCommentSpinner");
+    // Exit delete modal
+    document.querySelectorAll(".delete-modal-div")[1].style.display = "none";
+    return {
+      type: "deletePostFromProfile",
+      val: newPosts,
+    };
+  },
 };
 
 export default actionTypes;

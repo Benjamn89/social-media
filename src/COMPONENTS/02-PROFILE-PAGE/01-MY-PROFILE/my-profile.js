@@ -8,13 +8,17 @@ import $ from "jquery";
 import TimeChecking from "../../FUNCTIONS/time-checking";
 // Import Components
 import Info from "./00-INFO/info";
-// import Posts from "./02-POSTS/posts";
 import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
+// Import Modals
+import DeleteModal from "../02-HOME-PAGE/POSTS-BOXES/DELETE-MODAL/delete-modal";
 //Import Media
 import Unlike from "../../../media/heart-unlike.png";
 import Like from "../../../media/heart-like.png";
 import Comment from "../../../media/comments.png";
 import Delete from "../../../media/delete.png";
+
+// Global variables
+var index;
 
 // Titles array (codeless)
 const titles = ["Info", "Posts", "Friends"];
@@ -29,12 +33,6 @@ class MyProfile extends Component {
     document.querySelectorAll(".m-p-b-s")[0].classList.add("active-btn-span");
   }
 
-  cancellProfile = (e) => {
-    if (e.target.className === "my-profile-div" || e.key === "Escape") {
-      this.props.history.push("/");
-    }
-  };
-
   activeBtn = (e) => {
     if (e.target.className === "my-pro-p") {
       // Load Spinner
@@ -48,7 +46,7 @@ class MyProfile extends Component {
       // Add the active btn style to the choosen on
       e.target.parentNode.children[1].classList.add("active-btn-span");
       // Create variable to check if the client allready click on the posts view section
-      if (thisState.userPosts.length > 0) {
+      if (thisState.wasFetched) {
         visitPost = true;
       }
       // Create obj to pass to the actionTypes
@@ -103,6 +101,59 @@ class MyProfile extends Component {
     this.props.history.push(`/comment/${ref}`);
   };
 
+  cancellProfile = (e) => {
+    if (e.key && e.target.className === "my-profile-div") {
+      if (e.key === "Escape") {
+        this.props.history.push("/");
+      }
+    } else {
+      if (e.target.className === "my-profile-div") {
+        this.props.history.push("/");
+      }
+    }
+  };
+
+  openDeleteDialog = (e) => {
+    // Open the dialog box
+    document.querySelectorAll(".delete-modal-div")[1].style.display = "flex";
+    // Focus for quick exit
+    document.querySelectorAll(".delete-modal-div")[1].focus();
+    // Save the post index into the global variable index
+    index = e.target.getAttribute("index");
+  };
+
+  exitDeleteModal = (e) => {
+    if (
+      e.key === "Escape" ||
+      e.target.innerHTML === "Cancel" ||
+      e.target.className === "delete-modal-div"
+    ) {
+      document.querySelectorAll(".delete-modal-div")[1].style.display = "none";
+    }
+  };
+
+  deletePost = (e) => {
+    // Load Spinner
+    document
+      .querySelectorAll(".delete-modal-inside-div")[1]
+      .classList.add("deleteCommentSpinner");
+    // Save the post ref by the help of the index global variable we saved in the open dialog
+    var ref = this.props.profilePageState.userPosts[index].ref;
+    // Make a clone copy of the posts
+    var posts = JSON.parse(
+      JSON.stringify(this.props.profilePageState.userPosts)
+    );
+    // Remove the posts from the copy posts Array (with the help of the global var index)
+    posts.splice(index, 1);
+    // Create obj to pass it to the action
+    const opjPro = {
+      ref,
+      posts,
+    };
+    // Send actionType for deleting the post
+    this.props.deletePostAction(opjPro);
+  };
+
   render() {
     console.log("ProfilePage -> REDNER!!!");
     // Initial global variable
@@ -125,43 +176,51 @@ class MyProfile extends Component {
       currentSection = <Info />;
     }
     if (thisState.currentSection === "Posts") {
-      currentSection = thisState.userPosts.map((el, ind) => {
-        // Running time checking
-        var time = TimeChecking(el.postedTime, "value");
+      if (thisState.userPosts.length > 0) {
+        currentSection = thisState.userPosts.map((el, ind) => {
+          // Running time checking
+          var time = TimeChecking(el.postedTime, "Right Now...");
 
-        // Check if user like his own post
-        var checkLikes = el.likes.find((el) => {
-          return el === this.props.profileBoxState.email;
-        });
+          // Check if user like his own post
+          var checkLikes = el.likes.find((el) => {
+            return el === this.props.profileBoxState.email;
+          });
 
-        return (
-          <SinglePost
-            key={ind}
-            imageUrl={el.imageUrl}
-            fullName={el.fullName}
-            displayTime={time}
-            text={el.text}
-            likeClick={this.likeClick}
-            likeIcon={checkLikes ? Like : Unlike}
-            index={ind}
-            likesLength={el.likes.length}
-            clickComment={this.clickComment}
-            commentsImage={Comment}
-            commentsLength={el.comments.length}
-          >
-            {/* // Display the delete icon on each post */}
-            <div
-              className="post-delete-div"
-              onClick={this.openDeleteDialog}
+          return (
+            <SinglePost
+              key={ind}
+              imageUrl={el.imageUrl}
+              fullName={el.fullName}
+              displayTime={time}
+              text={el.text}
+              likeClick={this.likeClick}
+              likeIcon={checkLikes ? Like : Unlike}
               index={ind}
+              likesLength={el.likes.length}
+              clickComment={this.clickComment}
+              commentsImage={Comment}
+              commentsLength={el.comments.length}
             >
-              <img className="post-delete-btn" src={Delete} alt="deletebtn" />
-            </div>
-          </SinglePost>
+              {/* // Display the delete icon on each post */}
+              <div
+                className="post-delete-div"
+                onClick={this.openDeleteDialog}
+                index={ind}
+              >
+                <img className="post-delete-btn" src={Delete} alt="deletebtn" />
+              </div>
+            </SinglePost>
+          );
+        });
+        // Reverse the array to display from top to bottom
+        currentSection.reverse();
+      } else {
+        currentSection = (
+          <div className="no-post-profile-div">
+            <h1>There are no posts to show.</h1>
+          </div>
         );
-      });
-      // Reverse the array to display from top to bottom
-      currentSection.reverse();
+      }
     }
     if (thisState.currentSection === "Friends") {
       currentSection = null;
@@ -174,6 +233,7 @@ class MyProfile extends Component {
         onKeyDown={this.cancellProfile}
         tabIndex="0"
       >
+        <DeleteModal delete={this.deletePost} cancel={this.exitDeleteModal} />
         <div className="my-profile-inside">
           <h1 className="my-pro-title">
             {this.props.profileBoxState.fullName}
@@ -198,6 +258,7 @@ const mapDispatchToProps = (dispatch) => {
     actionChangeMode: (pro) => dispatch(actionTypes.actionChangeMode(pro)),
     resetState: () => dispatch(actionTypes.resetState()),
     updateLikeAction: (pro) => dispatch(actionTypes.updateLikeAction(pro)),
+    deletePostAction: (pro) => dispatch(actionTypes.deletePostAction(pro)),
   };
 };
 

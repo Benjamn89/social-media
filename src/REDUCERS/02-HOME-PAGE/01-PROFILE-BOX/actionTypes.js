@@ -21,7 +21,8 @@ const actionTypes = {
         )
         .then((res) => {
           // Establish the new url of the profile image
-          newImgUrl = `https://firebasestorage.googleapis.com/v0/b/sted-7c8ac.appspot.com/o/renamed-${storeInputPick.name}?alt=media`;
+          newImgUrl = `https://firebasestorage.googleapis.com/v0/b/sted-7c8ac.appspot.com/o/${storeInputPick.name}?alt=media`;
+          // newImgUrl = `https://firebasestorage.googleapis.com/v0/b/sted-7c8ac.appspot.com/o/renamed-${storeInputPick.name}?alt=media`;
           // Update the database with the new Url
           client.query(
             q.Update(q.Ref(q.Collection("Users"), refDoc), {

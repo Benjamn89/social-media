@@ -49,7 +49,7 @@ class Comments extends Component {
       e.target.className === "comments-div"
     ) {
       document.body.style.overflow = "";
-      this.props.history.push("/");
+      this.props.history.goBack();
     }
   };
 

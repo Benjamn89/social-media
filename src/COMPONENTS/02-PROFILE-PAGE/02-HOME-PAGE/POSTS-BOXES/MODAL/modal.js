@@ -9,10 +9,12 @@ class Modal extends Component {
   }
 
   cancelModal = (e) => {
+    if (e.type === "keydown" && e.key === "Escape") {
+      document.querySelector(".posts-modal").style.display = "none";
+    }
     if (
-      e.key === "Escape" ||
       e.target.innerHTML === "Cancel" ||
-      e.target.className === "posts-modal"
+      (e.target.className === "posts-modal" && e.type === "click")
     ) {
       document.querySelector(".posts-modal").style.display = "none";
     }
