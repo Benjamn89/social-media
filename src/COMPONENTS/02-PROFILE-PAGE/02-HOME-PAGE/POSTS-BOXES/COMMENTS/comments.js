@@ -33,24 +33,10 @@ class Comments extends Component {
 
   componentDidMount() {
     document.querySelector(".comments-div").focus();
-
-    if (this.props.postRef) {
-      const postIndex = this.props.postRef;
-      const copyPost = JSON.parse(
-        JSON.stringify(this.props.postArray[postIndex])
-      );
-
-      const proObj = {
-        postIndex: this.props.postRef,
-        copyPost,
-      };
-
-      this.props.getPost(proObj);
-    } else {
-      this.setState({
-        render: !this.state.render,
-      });
-    }
+    // Save the post ref from the url
+    const ref = this.props.match.params.user;
+    // Call the actionType
+    this.props.getPostAction(ref);
   }
 
   goBack = (e) => {
@@ -77,7 +63,7 @@ class Comments extends Component {
       const now = new Date();
       const postedTime = now.getTime();
 
-      const postIndex = this.props.postRef;
+      // const postIndex = this.props.postRef;
       const copyPost = JSON.parse(
         JSON.stringify(this.props.commentsReducer.copyPost)
       );
@@ -89,15 +75,19 @@ class Comments extends Component {
         postedTime,
         displayTime: "Right now...",
       };
-      const postRef = this.props.postArray[postIndex].ref;
 
+      // Save the ref of the post
+      const postRef = this.props.commentsReducer.postRef;
+      // Push the comment into the copy array
       copyPost.comments.push(theComment);
 
+      // Save the properties to be forwarded to the action
       const proObj = {
         inputValue,
         postRef,
         copyPost,
       };
+      // Call the actionType
       this.props.postComment(proObj);
     }
   };
@@ -112,7 +102,7 @@ class Comments extends Component {
       JSON.stringify(commentsReducer.copyPost.likes)
     );
     // Copy the post ref
-    const ref = commentsReducer.copyPost.ref;
+    const ref = commentsReducer.postRef;
     // Check if email exists
     var validateEmail = copyLikesPost.find((el) => {
       return el === email;
@@ -158,7 +148,7 @@ class Comments extends Component {
       //Make an object to forward to actionTypes
       var objPro = {
         commentsArray,
-        ref: this.props.commentsReducer.copyPost.ref,
+        ref: this.props.commentsReducer.postRef,
       };
       // Send the action type
       this.props.deleteCommentRequest(objPro);
@@ -166,7 +156,7 @@ class Comments extends Component {
   };
 
   render() {
-    if (this.props.commentsReducer.postIndex) {
+    if (this.props.commentsReducer.postRef) {
       // Initial Variables
       var renderPost, commentsArray, renderComments, checkLikes, deleteIcon;
       var postRef = this.props.commentsReducer.copyPost;
@@ -286,15 +276,13 @@ class Comments extends Component {
 const mapStateToProps = (state) => {
   return {
     commentsReducer: state.CommentsReducer,
-    postRef: state.PostsReducer.commentsRef,
-    postArray: state.PostsReducer.posts,
     profileBox: state.ProfileBoxReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPost: (properties) => dispatch(actionTypes.getPost(properties)),
+    getPostAction: (ref) => dispatch(actionTypes.getPostAction(ref)),
     postComment: (properties) => dispatch(actionTypes.postComment(properties)),
     likeClick: (properties) => dispatch(actionTypes.likeClick(properties)),
     deleteCommentRequest: (properties) =>

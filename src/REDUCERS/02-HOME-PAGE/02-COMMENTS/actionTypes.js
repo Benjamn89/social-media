@@ -6,11 +6,18 @@ const client = new faunadb.Client({
 });
 
 const actionTypes = {
-  getPost: (properties) => {
+  getPostAction: (ref) => {
+    return (dispatch) => {
+      client
+        .query(q.Get(q.Ref(q.Collection("posts"), ref)))
+        .then((ret) => dispatch(actionTypes.getPost(ret.data, ref)));
+    };
+  },
+  getPost: (data, ref) => {
     return {
       type: "getPost",
-      index: properties.postIndex,
-      copyPost: properties.copyPost,
+      ref,
+      copyPost: data,
     };
   },
   postComment: (properties) => {

@@ -1,6 +1,6 @@
 const initialState = {
   getPost: false,
-  postIndex: null,
+  postRef: null,
   copyPost: null,
   updatedPost: false,
 };
@@ -10,7 +10,7 @@ const reducer = (state = initialState, action) => {
     return {
       ...state,
       getPost: !state.getPost,
-      postIndex: action.index,
+      postRef: action.ref,
       copyPost: action.copyPost,
     };
   }

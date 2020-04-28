@@ -95,11 +95,12 @@ class PostsBoxes extends Component {
   };
 
   clickComment = (e) => {
+    // Save the post index
     var id = e.target.getAttribute("index");
-    this.props.setCommentRef(id);
-    document.body.style.overflow = "hidden";
-    // Direct to the comment page
-    this.props.history.push("/leaveComment");
+    // Save the ref of the clicked post
+    var ref = this.props.postsArray.posts[id].ref;
+    // Direct to the comment component
+    this.props.history.push(`/comment/${ref}/`);
   };
 
   openDeleteDialog = (e) => {
