@@ -94,8 +94,13 @@ class MyProfile extends Component {
     this.props.updateLikeAction(objPro);
   };
 
-  clickComment = () => {
-    console.log("comment click");
+  clickComment = (e) => {
+    // Save index of the post
+    const index = e.target.getAttribute("index");
+    // Save the ref to the post
+    const ref = this.props.profilePageState.userPosts[index].ref;
+    // Direct to the comment page
+    this.props.history.push(`/comment/${ref}`);
   };
 
   render() {
