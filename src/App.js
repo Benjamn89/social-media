@@ -13,9 +13,12 @@ const App = (props) => {
     var localS =
       typeof window !== "undefined" && localStorage.getItem("myData");
     var parseLocal = JSON.parse(localS);
-    if (parseLocal.key === "false" || now.getTime() > parseLocal.time) {
-      return false;
+    if (parseLocal) {
+      if (parseLocal.key === "false" || now.getTime() > parseLocal.time) {
+        return false;
+      }
     }
+
     return true;
   };
 
