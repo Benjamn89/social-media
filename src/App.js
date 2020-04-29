@@ -12,15 +12,18 @@ const App = (props) => {
     var now = new Date();
     var localS =
       typeof window !== "undefined" && localStorage.getItem("myData");
+    console.log(localS);
+    if (!localS) {
+      return false;
+    }
     var parseLocal = JSON.parse(localS);
 
-    if (parseLocal) {
-      if (parseLocal.key === "false" || now.getTime() > parseLocal.time) {
-        return true;
-      }
+    if (parseLocal.key === "false" || now.getTime() > parseLocal.time) {
+      return false;
     }
+
     console.log(parseLocal);
-    return false;
+    return true;
   };
 
   return (
