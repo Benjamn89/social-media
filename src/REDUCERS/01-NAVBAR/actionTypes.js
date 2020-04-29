@@ -4,7 +4,8 @@ const actionTypes = {
       key: false,
       time: null,
     };
-    localStorage.setItem("myData", JSON.stringify(localS));
+    typeof window !== "undefined" &&
+      localStorage.setItem("myData", JSON.stringify(localS));
     return {
       type: "signOut",
     };

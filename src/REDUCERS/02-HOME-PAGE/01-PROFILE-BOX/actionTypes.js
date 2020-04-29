@@ -48,7 +48,8 @@ const actionTypes = {
   // Retrive the data of the logging user
   retriveLoginData: () => {
     return (dispatch) => {
-      var localS = localStorage.getItem("myData");
+      var localS =
+        typeof window !== "undefined" && localStorage.getItem("myData");
       var parseLocal = JSON.parse(localS);
       // Start fetching logging data
       client

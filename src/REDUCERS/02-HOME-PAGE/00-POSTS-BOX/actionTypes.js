@@ -16,7 +16,9 @@ const actionTypes = {
   loadPosts: () => {
     return (dispatch) => {
       var storeArr = [];
-      var localS = JSON.parse(localStorage.getItem("myData"));
+      var localS = JSON.parse(
+        typeof window !== "undefined" && localStorage.getItem("myData")
+      );
       var email = localS.email;
       client
         .query(

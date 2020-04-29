@@ -99,7 +99,8 @@ const actionTypes = {
                     email,
                     ref,
                   };
-                  localStorage.setItem("myData", JSON.stringify(storeKey));
+                  typeof window !== "undefined" &&
+                    localStorage.setItem("myData", JSON.stringify(storeKey));
                   // Passord ok -> procceed for rciving a token
                   client
                     .query(

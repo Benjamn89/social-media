@@ -10,7 +10,8 @@ const App = (props) => {
 
   var keyValidity = () => {
     var now = new Date();
-    var localS = localStorage.getItem("myData");
+    var localS =
+      typeof window !== "undefined" && localStorage.getItem("myData");
     var parseLocal = JSON.parse(localS);
     if (parseLocal.key === "false" || now.getTime() > parseLocal.time) {
       return false;
