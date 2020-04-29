@@ -6,10 +6,11 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 // Import Components
 import SinglePost from "./single-post";
-// Import modals
+// Import modals/ functions
 import DeleteModal from "./DELETE-MODAL/delete-modal";
 import Modal from "./MODAL/modal";
 import TimeChecking from "../../../FUNCTIONS/time-checking";
+import ShowLikesBox from "../../../FUNCTIONS/showLikes";
 // Import Media
 import UnlikeHeart from "../../../../media/heart-unlike.png";
 import LikeHeart from "../../../../media/heart-like.png";
@@ -174,6 +175,15 @@ class PostsBoxes extends Component {
         // Running checking time function
         var time = TimeChecking(el.postedTime, "Right Now...");
 
+        // Display the users who like the post
+        var whoLikes = el.likes.map((user, userInd) => {
+          return (
+            <p key={userInd}>
+              {userInd + 1}. {user}
+            </p>
+          );
+        });
+
         return (
           <SinglePost
             key={ind + 1}
@@ -188,6 +198,8 @@ class PostsBoxes extends Component {
             clickComment={this.clickComment}
             commentsImage={Comments}
             commentsLength={el.comments.length}
+            showLikes={ShowLikesBox}
+            whoLikes={whoLikes}
           >
             {deleteIcon}
           </SinglePost>

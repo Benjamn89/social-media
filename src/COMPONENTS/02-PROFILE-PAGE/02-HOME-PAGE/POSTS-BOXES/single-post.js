@@ -18,8 +18,14 @@ const SinglePost = (props) => {
               alt="unlike"
               index={props.index}
             />
+            <div className="in-likes-box">{props.whoLikes}</div>
           </div>
-          <p className="in-feat-p">{props.likesLength} likes</p>
+          <p className="in-feat-p" onClick={props.showLikes}>
+            <span index={props.index} className="i-f-p-l-s">
+              {props.likesLength} likes
+            </span>
+          </p>
+
           <div className="wrap-feat-icon-div wrap-like-spe">
             <img
               onClick={props.clickComment}
@@ -34,7 +40,7 @@ const SinglePost = (props) => {
             onClick={props.clickComment}
             index={props.index}
           >
-            <span>{props.commentsLength}</span> comments
+            <span index={props.index}>{props.commentsLength}</span> comments
           </p>
         </div>
       </div>

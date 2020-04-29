@@ -12,7 +12,6 @@ const App = (props) => {
     var now = new Date();
     var localS =
       typeof window !== "undefined" && localStorage.getItem("myData");
-    console.log(localS);
     if (!localS) {
       return false;
     }
@@ -21,8 +20,6 @@ const App = (props) => {
     if (parseLocal.key === "false" || now.getTime() > parseLocal.time) {
       return false;
     }
-
-    console.log(parseLocal);
     return true;
   };
 
