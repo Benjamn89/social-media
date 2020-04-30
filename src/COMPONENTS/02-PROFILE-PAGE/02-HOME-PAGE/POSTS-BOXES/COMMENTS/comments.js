@@ -4,6 +4,7 @@ import "./comments.css";
 import Input from "./inputStyle";
 // Import Functions
 import TimeChecking from "../../../../FUNCTIONS/time-checking";
+import ShowLikes from "../../../../FUNCTIONS/show-likes-comments";
 // import media
 import CommentIcon from "../../../../../media/comments.png";
 import LikeIcon from "../../../../../media/heart-like.png";
@@ -43,13 +44,15 @@ class Comments extends Component {
   }
 
   goBack = (e) => {
-    if (
-      e.key === "Escape" ||
-      e.target.innerHTML === "+" ||
-      e.target.className === "comments-div"
-    ) {
+    if (e.type === "keydown" && e.key === "Escape") {
       document.body.style.overflow = "";
       this.props.history.goBack();
+    }
+    if (e.type === "click") {
+      if (e.target.className === "comments-div" || e.target.innerHTML === "+") {
+        document.body.style.overflow = "";
+        this.props.history.goBack();
+      }
     }
   };
 
@@ -101,25 +104,34 @@ class Comments extends Component {
     // Shorcut logging email
     const email = this.props.profileBox.email;
     // Copy the likes array
-    const copyLikesPost = JSON.parse(
+    var copyLikesPost = JSON.parse(
       JSON.stringify(commentsReducer.copyPost.likes)
     );
     // Copy the post ref
     const ref = commentsReducer.postRef;
     // Check if email exists
     var validateEmail = copyLikesPost.find((el) => {
-      return el === email;
+      return el.email === email;
     });
 
     // Run commands based on if the email exists or not
     if (validateEmail) {
-      // Picking the index of the email inside the array
-      var indexOfLike = copyLikesPost.indexOf(email);
-      // Remove it from the array
-      copyLikesPost.splice(indexOfLike, 1);
+      // Remove the index array with filter function and save it
+      var filterArray = copyLikesPost.filter((fl) => {
+        return fl.email !== email;
+      });
+      // Copy the filterd array to the copy like array
+      copyLikesPost = filterArray;
     } else {
+      // Copy login user full name
+      const fullName = this.props.profileBox.fullName;
+      // Create obj to push to the likes array
+      const obj = {
+        email,
+        fullName,
+      };
       // Add the email to the likes array
-      copyLikesPost.push(email);
+      copyLikesPost.push(obj);
     }
     // Creating the object property to be forwarded
     const objPro = {
@@ -206,11 +218,20 @@ class Comments extends Component {
       }
       // Check the likes array
       checkLikes = postRef.likes.find((el) => {
-        return el === this.props.profileBox.email;
+        return el.email === this.props.profileBox.email;
       });
 
       // Check the displayed time on the titled post
       var postTime = TimeChecking(postRef.postedTime, "value");
+
+      // Display the likes array in the box on click
+      var likesNames = postRef.likes.map((user, userInd) => {
+        return (
+          <p key={userInd}>
+            {userInd + 1}. {user.fullName}
+          </p>
+        );
+      });
 
       // Render the single post
       renderPost = (
@@ -236,8 +257,11 @@ class Comments extends Component {
                     src={checkLikes ? LikeIcon : UnlikeIcno}
                     alt="com-unlike"
                   />
+                  <div className="com-in-likes-box">{likesNames}</div>
                 </div>
-                <p className="com-ins2-icon-p">{postRef.likes.length} Likes</p>
+                <p className="com-ins2-icon-p" onClick={ShowLikes}>
+                  {postRef.likes.length} Likes
+                </p>
                 <div className="com-wrap-icon">
                   <img
                     className="com-wrap-icon-img"
@@ -245,7 +269,7 @@ class Comments extends Component {
                     alt="com-com"
                   />
                 </div>
-                <p className="com-ins2-icon-p">
+                <p className="com-ins2-icon-p2">
                   {postRef.comments.length} Comments
                 </p>
               </div>

@@ -70,21 +70,36 @@ class PostsBoxes extends Component {
     }
   };
   likeClick = (e) => {
+    // Create shortcut for the profilebox state
+    const profileBoxS = this.props.profileBoxState;
+
     var id = e.target.getAttribute("index");
-    var email = this.props.profileBoxState.email;
+    var email = profileBoxS.email;
+    var fullName = profileBoxS.fullName;
     var copyPosts = JSON.parse(JSON.stringify(this.props.postsArray));
     var post = copyPosts.posts[id];
 
     var validateEmail = post.likes.find((el) => {
-      return el === email;
+      return el.email === email;
     });
 
     if (validateEmail) {
-      var indexOfLike = post.likes.indexOf(email);
-      copyPosts.posts[id].likes.splice(indexOfLike, 1);
+      // Remove the index array with filter function and save it
+      var filterArray = copyPosts.posts[id].likes.filter((fl) => {
+        return fl.email !== email;
+      });
+      // Copy the filterd array into the copy post
+      copyPosts.posts[id].likes = filterArray;
     } else {
-      copyPosts.posts[id].likes.push(email);
+      // Create obj to push on the likes array
+      const likesObj = {
+        email,
+        fullName,
+      };
+      // Push the obj into the copy post like array
+      copyPosts.posts[id].likes.push(likesObj);
     }
+
     var updatedLike = copyPosts.posts[id].likes;
     var properties = {
       email,
@@ -156,7 +171,7 @@ class PostsBoxes extends Component {
         var deleteIcon;
         // Checking if the user who login like the post
         var checkLikes = el.likes.find((el) => {
-          return el === this.props.postsArray.email;
+          return el.email === this.props.postsArray.email;
         });
 
         // Checking if the logged user is the post creator for showing the delete btn
@@ -179,7 +194,7 @@ class PostsBoxes extends Component {
         var whoLikes = el.likes.map((user, userInd) => {
           return (
             <p key={userInd}>
-              {userInd + 1}. {user}
+              {userInd + 1}. {user.fullName}
             </p>
           );
         });

@@ -35,6 +35,8 @@ const actionTypes = {
               return storeArr.push(el.data);
             });
             dispatch(actionTypes.renderPosts(storeArr, email));
+          } else {
+            dispatch(actionTypes.renderPosts([], email));
           }
         });
     };

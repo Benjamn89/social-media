@@ -8,7 +8,7 @@ const exitLikeBox = (e) => {
       .querySelector(".in-likes-box-show")
       .classList.remove("in-likes-box-show");
     // Remove the body click listener
-    document.body.removeEventListener("click", exitLikeBox);
+    document.removeEventListener("click", exitLikeBox);
   }
 };
 
@@ -26,11 +26,11 @@ var ShowLikes = (e) => {
     // Toggle the like box
     doc.classList.toggle("in-likes-box-show");
     // Add evnet listener to the body of exit the like box
-    document.body.addEventListener("click", exitLikeBox);
+    document.addEventListener("click", exitLikeBox);
   }
   // Remove the body event listener if there is no like box opened
   if (!document.querySelector(".in-likes-box-show")) {
-    document.body.removeEventListener("click", exitLikeBox);
+    document.removeEventListener("click", exitLikeBox);
   }
 };
 

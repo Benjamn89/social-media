@@ -6,6 +6,7 @@ import "./my-profile.css";
 import $ from "jquery";
 // Import Functions
 import TimeChecking from "../../FUNCTIONS/time-checking";
+import ShowLikesBox from "../../FUNCTIONS/showLikes";
 // Import Components
 import Info from "./00-INFO/info";
 import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
@@ -70,16 +71,24 @@ class MyProfile extends Component {
     const email = this.props.profileBoxState.email;
     // Checking if the user like is own post and change accordlny
     var checkLike = posts[index].likes.find((el) => {
-      return el === email;
+      return el.email === email;
     });
     // Remove the email from the likes array if checkLike returned true
     if (checkLike) {
-      // Save the index of the email inside the likes array
-      var indexOfLike = posts[index].likes.indexOf(email);
-      posts[index].likes.splice(indexOfLike, 1);
+      // Remove the email for the likes array
+      var filterArray = posts[index].likes.filter((fl) => {
+        return fl.email !== email;
+      });
+      // Save the updated array into the posts array
+      posts[index].likes = filterArray;
     } else {
+      // Create Obj and push it into the likes array
+      var obj = {
+        email,
+        fullName: this.props.profileBoxState.fullName,
+      };
       // Push the email if checkLike returned undefiend
-      posts[index].likes.push(email);
+      posts[index].likes.push(obj);
     }
 
     // Create obj to forward it to the action type
@@ -183,7 +192,16 @@ class MyProfile extends Component {
 
           // Check if user like his own post
           var checkLikes = el.likes.find((el) => {
-            return el === this.props.profileBoxState.email;
+            return el.email === this.props.profileBoxState.email;
+          });
+
+          // Display the users who like the post
+          var whoLikes = el.likes.map((user, userInd) => {
+            return (
+              <p key={userInd}>
+                {userInd + 1}. {user.fullName}
+              </p>
+            );
           });
 
           return (
@@ -200,6 +218,8 @@ class MyProfile extends Component {
               clickComment={this.clickComment}
               commentsImage={Comment}
               commentsLength={el.comments.length}
+              whoLikes={whoLikes}
+              showLikes={ShowLikesBox}
             >
               {/* // Display the delete icon on each post */}
               <div

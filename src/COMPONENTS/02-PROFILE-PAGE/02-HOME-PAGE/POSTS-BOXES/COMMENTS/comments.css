@@ -10,6 +10,9 @@
   justify-content: center;
   align-items: center;
 }
+.comments-div * {
+  transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
 .comments-inside-div {
   background: #fff;
   height: 600px;
@@ -167,6 +170,39 @@
 }
 .test-delete {
   transform: scale(1);
+}
+
+.com-ins2-icon-p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Like Box */
+.com-in-likes-box {
+  position: absolute;
+  height: 100px;
+  width: 150px;
+  top: -100px;
+  left: 0;
+  border: solid 0.3px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  transform: scaleY(0);
+}
+.com-in-likes-box-show {
+  transform: scaleY(1);
+}
+.com-in-likes-box p {
+  line-height: 1.7;
+  letter-spacing: 1.2px;
+  color: white;
+}
+.com-in-likes-box::-webkit-scrollbar {
+  width: 0.4em;
 }
 
 /* Test Spinner */
