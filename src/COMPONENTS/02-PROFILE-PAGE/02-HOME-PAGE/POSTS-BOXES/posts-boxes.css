@@ -39,6 +39,7 @@
   transform: scaleY(0);
   border: solid 1.5px #c0392b;
   transform-origin: 100% 50%;
+  transition: 0.2s;
 }
 .post-delete-div:hover::before {
   transform: scaleY(1);
@@ -114,7 +115,10 @@
 /* Style the text inside the posts box */
 .in-sin-p1 {
   font-weight: bold;
-  color: #18dcff;
+  cursor: pointer;
+}
+.in-sin-p1:hover {
+  color: #2ea3f2;
 }
 .in-sin-p2 {
   transform: translateY(-10px) translateX(10px);

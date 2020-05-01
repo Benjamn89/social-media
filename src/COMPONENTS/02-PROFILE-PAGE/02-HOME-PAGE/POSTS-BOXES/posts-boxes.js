@@ -160,6 +160,15 @@ class PostsBoxes extends Component {
     }
   };
 
+  moveToUser = (e) => {
+    // Save the post index
+    const index = e.target.getAttribute("index");
+    // Save user ref
+    const ref = this.props.postsArray.posts[index].userRef;
+    // Direct to the user profile
+    this.props.history.push(`users/${ref}`);
+  };
+
   render() {
     console.log("PostsBoxes -> REDNER!!!");
     // Initial variables
@@ -215,6 +224,7 @@ class PostsBoxes extends Component {
             commentsLength={el.comments.length}
             showLikes={ShowLikesBox}
             whoLikes={whoLikes}
+            moveToUser={this.moveToUser}
           >
             {deleteIcon}
           </SinglePost>

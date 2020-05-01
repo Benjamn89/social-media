@@ -1,5 +1,10 @@
 import React from "react";
 
+// import media
+import Location from "../../media/location.png";
+import Website from "../../media/website.png";
+import Calender from "../../media/calender.png";
+
 const profileBox = (props) => {
   console.log("Profile Box Function -> RENDER!!!");
   return (
@@ -19,16 +24,16 @@ const profileBox = (props) => {
       </div>
       <div className="profile-box-div-info">
         <div className="row-div-inside">
-          <img src={props.Location} alt="location" />
+          <img src={Location} alt="location" />
 
           <p className="location-p">{props.locationText}</p>
         </div>
         <div className="row-div-inside">
-          <img src={props.Website} alt="website" />
+          <img src={Website} alt="website" />
           <p className="website-p"> {props.websiteText} </p>
         </div>
         <div className="row-div-inside">
-          <img src={props.Calender} alt="calender" />
+          <img src={Calender} alt="calender" />
           joined {props.timeStampMonth} {props.timeStampYear}
         </div>
         <div className="wrap-img-pen2">

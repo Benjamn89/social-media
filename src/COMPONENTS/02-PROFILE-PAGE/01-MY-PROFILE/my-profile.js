@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import actionTypes from "../../../REDUCERS/03-PROFILE-PGAE/actionTypes";
 import "./my-profile.css";
-import $ from "jquery";
 // Import Functions
 import TimeChecking from "../../FUNCTIONS/time-checking";
 import ShowLikesBox from "../../FUNCTIONS/showLikes";
@@ -43,7 +42,9 @@ class MyProfile extends Component {
       // Shortcut to this state
       const thisState = this.props.profilePageState;
       // Remove the active class from the last btn
-      $(".active-btn-span").removeClass("active-btn-span");
+      document
+        .querySelector(".active-btn-span")
+        .classList.remove("active-btn-span");
       // Add the active btn style to the choosen on
       e.target.parentNode.children[1].classList.add("active-btn-span");
       // Create variable to check if the client allready click on the posts view section
@@ -113,11 +114,11 @@ class MyProfile extends Component {
   cancellProfile = (e) => {
     if (e.key && e.target.className === "my-profile-div") {
       if (e.key === "Escape") {
-        this.props.history.push("/");
+        this.props.history.goBack();
       }
     } else {
       if (e.target.className === "my-profile-div") {
-        this.props.history.push("/");
+        this.props.history.goBack();
       }
     }
   };

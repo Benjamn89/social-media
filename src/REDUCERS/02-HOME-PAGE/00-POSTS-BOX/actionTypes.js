@@ -50,6 +50,12 @@ const actionTypes = {
     };
   },
   createNewPost: (postProperties) => {
+    // Retrive the user ref for the localStorage for saving it inside the post
+    var localS = JSON.parse(
+      typeof window !== "undefined" && localStorage.getItem("myData")
+    );
+    const userRef = localS.ref;
+
     return (dispatch) => {
       client
         .query(
@@ -65,6 +71,7 @@ const actionTypes = {
               imageUrl: postProperties.url,
               uniqeId: postProperties.uniqeId,
               ref: "",
+              userRef,
             },
           })
         )

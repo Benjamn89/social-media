@@ -4,10 +4,6 @@ import "./info.css";
 import { connect } from "react-redux";
 // Import Components
 import ProfileBox from "../../../FUNCTIONS/profile-box";
-// Import Media
-import Location from "../../../../media/location.png";
-import Website from "../../../../media/website.png";
-import Calender from "../../../../media/calender.png";
 
 class Info extends Component {
   render() {
@@ -24,11 +20,8 @@ class Info extends Component {
             fullName={profileBoxState.fullName}
             pickImage={null}
             click={null}
-            Location={Location}
             locationText={profileBoxState.location}
-            Website={Website}
             websiteText={profileBoxState.website}
-            Calender={Calender}
             timeStampMonth={profileBoxState.timeStamp.month}
             timeStampYear={profileBoxState.timeStamp.year}
             openModal={null}

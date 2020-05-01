@@ -7,7 +7,9 @@ const SinglePost = (props) => {
       {props.children}
       <img className="post-div-img" src={props.imageUrl} alt="tmppfoimg" />
       <div className="inside-single-div">
-        <p className="in-sin-p1">{props.fullName}</p>
+        <p index={props.index} onClick={props.moveToUser} className="in-sin-p1">
+          {props.fullName}
+        </p>
         <p className="in-sin-p2">{props.displayTime}</p>
         <p className="in-sin-p3">{props.text}</p>
         <div className="in-sin-div-features">
