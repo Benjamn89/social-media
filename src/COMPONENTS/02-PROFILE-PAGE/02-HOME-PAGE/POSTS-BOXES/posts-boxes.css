@@ -115,10 +115,10 @@
 /* Style the text inside the posts box */
 .in-sin-p1 {
   font-weight: bold;
-  cursor: pointer;
 }
-.in-sin-p1:hover {
+.in-sin-p1-span:hover {
   color: #2ea3f2;
+  cursor: pointer;
 }
 .in-sin-p2 {
   transform: translateY(-10px) translateX(10px);

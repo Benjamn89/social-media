@@ -4,6 +4,7 @@ const initialState = {
   Info: {},
   Posts: [],
   email: "",
+  updatedLike: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +38,22 @@ const reducer = (state = initialState, action) => {
       Info: {},
       Posts: [],
       currentView: "",
+    };
+  }
+  if (action.type === "updateLikeUsers") {
+    return {
+      ...state,
+      Posts: action.val,
+      allowR: !state.allowR,
+      updatedLike: !state.updatedLike,
+    };
+  }
+  if (action.type === "deletePostFromUsers") {
+    return {
+      ...state,
+      Posts: action.val,
+      updatedLike: !state.updatedLike,
+      allowR: !state.allowR,
     };
   }
   return state;

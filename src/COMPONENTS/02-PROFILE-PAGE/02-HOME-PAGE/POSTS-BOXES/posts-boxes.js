@@ -35,7 +35,8 @@ class PostsBoxes extends Component {
       return true;
     } else if (
       nP.commentsState !== this.props.commentsState ||
-      nP.profilePageState !== this.props.profilePageState
+      nP.profilePageState !== this.props.profilePageState ||
+      nP.usersUpdatedLike !== this.props.usersUpdatedLike
     ) {
       this.props.loadPosts();
       return false;
@@ -248,6 +249,7 @@ const mapStateToProps = (state) => {
     profileBoxState: state.ProfileBoxReducer,
     commentsState: state.CommentsReducer.updatedPost,
     profilePageState: state.ProfilePageReducer.updatedLikes,
+    usersUpdatedLike: state.UsersReducer.updatedLike,
   };
 };
 

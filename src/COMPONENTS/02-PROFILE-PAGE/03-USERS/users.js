@@ -14,6 +14,9 @@ import Unlike from "../../../media/heart-unlike.png";
 import Delete from "../../../media/delete.png";
 import Comment from "../../../media/comments.png";
 
+// Global variables
+var index;
+
 class Users extends Component {
   shouldComponentUpdate(nP, nS) {
     if (nP.thisState.allowR !== this.props.thisState.allowR) {
@@ -54,6 +57,8 @@ class Users extends Component {
       console.log("Return running");
       return this.props.changeSecWithNoFetch(title);
     }
+    // Load Spinner
+    document.querySelector(".my-pro-view-div").classList.add("showSpinner");
     // Save user email
     const email = this.props.thisState.Info.email;
     // Create obj for actiontypes
@@ -63,6 +68,95 @@ class Users extends Component {
     };
     // Send action Type
     this.props.fetchPostsFromUsers(objPro);
+  };
+
+  likeClick = (e) => {
+    // Save the post index
+    const index = e.target.getAttribute("index");
+    // Make a clone copy of the posts
+    var posts = JSON.parse(JSON.stringify(this.props.thisState.Posts));
+    // Make shortcut of the user email
+    const email = this.props.thisState.email;
+    // Checking if the user like is own post and change accordlny
+    var checkLike = posts[index].likes.find((el) => {
+      return el.email === email;
+    });
+    // Remove the email from the likes array if checkLike returned true
+    if (checkLike) {
+      // Remove the email for the likes array
+      var filterArray = posts[index].likes.filter((fl) => {
+        return fl.email !== email;
+      });
+      // Save the updated array into the posts array
+      posts[index].likes = filterArray;
+    } else {
+      // Create Obj and push it into the likes array
+      var obj = {
+        email,
+        fullName: this.props.loginFullName,
+      };
+      // Push the email if checkLike returned undefiend
+      posts[index].likes.push(obj);
+    }
+
+    // Create obj to forward it to the action type
+    const objPro = {
+      ref: posts[index].ref,
+      posts,
+      index,
+    };
+    // Call the actionType
+    this.props.updateLikeUsersAction(objPro);
+  };
+
+  clickComment = (e) => {
+    // Save index of the post
+    const index = e.target.getAttribute("index");
+    // Save the ref to the post
+    const ref = this.props.thisState.Posts[index].ref;
+    // Direct to the comment page
+    this.props.history.push(`/comment/${ref}`);
+    // Reset the state
+    this.props.resetStateUsers();
+  };
+
+  openDeleteDialog = (e) => {
+    // Open the dialog box
+    document.querySelectorAll(".delete-modal-div")[1].style.display = "flex";
+    // Focus for quick exit
+    document.querySelectorAll(".delete-modal-div")[1].focus();
+    // Save the post index into the global variable index
+    index = e.target.getAttribute("index");
+  };
+
+  exitDeleteModal = (e) => {
+    if (
+      e.key === "Escape" ||
+      e.target.innerHTML === "Cancel" ||
+      e.target.className === "delete-modal-div"
+    ) {
+      document.querySelectorAll(".delete-modal-div")[1].style.display = "none";
+    }
+  };
+
+  deletePost = (e) => {
+    // Load Spinner
+    document
+      .querySelectorAll(".delete-modal-inside-div")[1]
+      .classList.add("deleteCommentSpinner");
+    // Save the post ref by the help of the index global variable we saved in the open dialog
+    var ref = this.props.thisState.Posts[index].ref;
+    // Make a clone copy of the posts
+    var posts = JSON.parse(JSON.stringify(this.props.thisState.Posts));
+    // Remove the posts from the copy posts Array (with the help of the global var index)
+    posts.splice(index, 1);
+    // Create obj to pass it to the action
+    const opjPro = {
+      ref,
+      posts,
+    };
+    // Send actionType for deleting the post
+    this.props.deletePostUsersAction(opjPro);
   };
 
   render() {
@@ -172,6 +266,8 @@ class Users extends Component {
         history={this.history}
         currentSection={currentView}
         activeBtn={this.activeBtn}
+        exitDeleteModal={this.exitDeleteModal}
+        deletePost={this.deletePost}
       />
     );
   }
@@ -180,6 +276,7 @@ class Users extends Component {
 const mapStateToProps = (state) => {
   return {
     thisState: state.UsersReducer,
+    loginFullName: state.ProfileBoxReducer.fullName,
   };
 };
 
@@ -191,6 +288,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionTypes.fetchPostsFromUsers(pro)),
     changeSecWithNoFetch: (title) =>
       dispatch(actionTypes.changeSecWithNoFetch(title)),
+    updateLikeUsersAction: (pro) =>
+      dispatch(actionTypes.updateLikeUsersAction(pro)),
+    deletePostUsersAction: (pro) =>
+      dispatch(actionTypes.deletePostUsersAction(pro)),
   };
 };
 

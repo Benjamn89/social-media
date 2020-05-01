@@ -49,14 +49,19 @@ const actionTypes = {
         )
         .then((ret) => {
           ret.data.map((el) => {
+            // Retrive the post ref
+            var ref = el.ref.value.id;
+            // Inject the post ref to the db
+            el.data.ref = ref;
             return storeArr.push(el.data);
           });
-          console.log(storeArr);
           dispatch(actionTypes.renderPostsFromUsers(storeArr, pro));
         });
     };
   },
   renderPostsFromUsers: (posts, pro) => {
+    // Remove Spinner
+    document.querySelector(".my-pro-view-div").classList.remove("showSpinner");
     return {
       type: "renderPostsFromUsers",
       val: posts,
@@ -67,6 +72,46 @@ const actionTypes = {
     return {
       type: "changeSecWithNoFetch",
       val: title,
+    };
+  },
+  updateLikeUsersAction: (pro) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("posts"), pro.ref), {
+            data: {
+              likes: pro.posts[pro.index].likes,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(actionTypes.updateLikeUsers(pro.posts));
+        });
+    };
+  },
+  updateLikeUsers: (posts) => {
+    return {
+      type: "updateLikeUsers",
+      val: posts,
+    };
+  },
+  deletePostUsersAction: (pro) => {
+    return (dispatch) => {
+      client
+        .query(q.Delete(q.Ref(q.Collection("posts"), pro.ref)))
+        .then(() => dispatch(actionTypes.deletePostFromUsers(pro.posts)));
+    };
+  },
+  deletePostFromUsers: (newPosts) => {
+    // Remoe Spinner
+    document
+      .querySelectorAll(".delete-modal-inside-div")[1]
+      .classList.remove("deleteCommentSpinner");
+    // Exit delete modal
+    document.querySelectorAll(".delete-modal-div")[1].style.display = "none";
+    return {
+      type: "deletePostFromUsers",
+      val: newPosts,
     };
   },
 };
