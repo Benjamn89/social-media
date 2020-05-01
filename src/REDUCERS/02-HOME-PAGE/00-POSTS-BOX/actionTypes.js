@@ -20,6 +20,7 @@ const actionTypes = {
         typeof window !== "undefined" && localStorage.getItem("myData")
       );
       var email = localS.email;
+      var ref = localS.ref;
       client
         .query(
           q.Map(
@@ -34,19 +35,20 @@ const actionTypes = {
               el.data.ref = el.ref.value.id;
               return storeArr.push(el.data);
             });
-            dispatch(actionTypes.renderPosts(storeArr, email));
+            dispatch(actionTypes.renderPosts(storeArr, email, ref));
           } else {
-            dispatch(actionTypes.renderPosts([], email));
+            dispatch(actionTypes.renderPosts([], email, ref));
           }
         });
     };
   },
   // Sending the loaded posts to the reducer for rendering on the screen
-  renderPosts: (storeArr, email) => {
+  renderPosts: (storeArr, email, ref) => {
     return {
       type: "renderPosts",
       val: storeArr,
       email,
+      ref,
     };
   },
   createNewPost: (postProperties) => {

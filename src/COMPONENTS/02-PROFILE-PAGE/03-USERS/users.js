@@ -94,6 +94,7 @@ class Users extends Component {
       var obj = {
         email,
         fullName: this.props.loginFullName,
+        ref: this.props.loginRef,
       };
       // Push the email if checkLike returned undefiend
       posts[index].likes.push(obj);
@@ -277,6 +278,7 @@ const mapStateToProps = (state) => {
   return {
     thisState: state.UsersReducer,
     loginFullName: state.ProfileBoxReducer.fullName,
+    loginRef: state.PostsReducer.ref,
   };
 };
 

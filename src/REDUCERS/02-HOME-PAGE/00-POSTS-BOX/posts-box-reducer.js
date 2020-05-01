@@ -5,6 +5,7 @@ const initialState = {
   email: null,
   commentsModal: false,
   commentsRef: null,
+  ref: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +21,7 @@ const reducer = (state = initialState, action) => {
       changePost: !state.changePost,
       posts: action.val,
       email: action.email,
+      ref: action.ref,
     };
   }
   if (action.type === "updatePost") {

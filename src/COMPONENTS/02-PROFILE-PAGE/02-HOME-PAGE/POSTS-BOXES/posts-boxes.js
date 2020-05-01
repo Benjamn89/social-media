@@ -77,6 +77,7 @@ class PostsBoxes extends Component {
     var id = e.target.getAttribute("index");
     var email = profileBoxS.email;
     var fullName = profileBoxS.fullName;
+    var ref = this.props.postsArray.ref;
     var copyPosts = JSON.parse(JSON.stringify(this.props.postsArray));
     var post = copyPosts.posts[id];
 
@@ -96,6 +97,7 @@ class PostsBoxes extends Component {
       const likesObj = {
         email,
         fullName,
+        ref,
       };
       // Push the obj into the copy post like array
       copyPosts.posts[id].likes.push(likesObj);
@@ -162,10 +164,20 @@ class PostsBoxes extends Component {
   };
 
   moveToUser = (e) => {
+    // Initial ref
+    var ref;
     // Save the post index
     const index = e.target.getAttribute("index");
-    // Save user ref
-    const ref = this.props.postsArray.posts[index].userRef;
+    // Check from where the click sent to pick the user profile correctly
+    if (e.target.className === "in-sin-p1-span") {
+      // Save user ref
+      ref = this.props.postsArray.posts[index].userRef;
+    } else {
+      var postIndex = e.target.parentNode.parentNode.children[0].getAttribute(
+        "index"
+      );
+      ref = this.props.postsArray.posts[postIndex].likes[index].ref;
+    }
     // Direct to the user profile
     this.props.history.push(`users/${ref}`);
   };
@@ -203,7 +215,12 @@ class PostsBoxes extends Component {
         // Display the users who like the post
         var whoLikes = el.likes.map((user, userInd) => {
           return (
-            <p key={userInd}>
+            <p
+              key={userInd}
+              onClick={this.moveToUser}
+              index={userInd}
+              className="who-likes-p"
+            >
               {userInd + 1}. {user.fullName}
             </p>
           );

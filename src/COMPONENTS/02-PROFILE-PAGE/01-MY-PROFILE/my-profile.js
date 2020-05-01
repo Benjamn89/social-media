@@ -79,6 +79,7 @@ class MyProfile extends Component {
       var obj = {
         email,
         fullName: this.props.profileBoxState.fullName,
+        ref: this.props.loginRef,
       };
       // Push the email if checkLike returned undefiend
       posts[index].likes.push(obj);
@@ -238,6 +239,7 @@ const mapStateToProps = (state) => {
   return {
     profileBoxState: state.ProfileBoxReducer,
     profilePageState: state.ProfilePageReducer,
+    loginRef: state.PostsReducer.ref,
   };
 };
 
