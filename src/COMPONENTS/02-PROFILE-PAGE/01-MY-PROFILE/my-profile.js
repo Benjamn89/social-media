@@ -9,8 +9,7 @@ import ShowLikesBox from "../../FUNCTIONS/showLikes";
 // Import Components
 import Info from "./00-INFO/info";
 import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
-// Import Modals
-import DeleteModal from "../02-HOME-PAGE/POSTS-BOXES/DELETE-MODAL/delete-modal";
+import UserProfile from "../../FUNCTIONS/userProfile";
 //Import Media
 import Unlike from "../../../media/heart-unlike.png";
 import Like from "../../../media/heart-like.png";
@@ -20,17 +19,10 @@ import Delete from "../../../media/delete.png";
 // Global variables
 var index;
 
-// Titles array (codeless)
-const titles = ["Info", "Posts", "Friends"];
-
 class MyProfile extends Component {
   componentDidMount() {
-    // Focus on the center div to have the option to exit immdltly on Esc press
-    document.querySelector(".my-profile-div").focus();
     // Reset State
     this.props.resetState();
-    // Set the activeBtn to the info section
-    document.querySelectorAll(".m-p-b-s")[0].classList.add("active-btn-span");
   }
 
   activeBtn = (e) => {
@@ -111,18 +103,6 @@ class MyProfile extends Component {
     this.props.history.push(`/comment/${ref}`);
   };
 
-  cancellProfile = (e) => {
-    if (e.key && e.target.className === "my-profile-div") {
-      if (e.key === "Escape") {
-        this.props.history.goBack();
-      }
-    } else {
-      if (e.target.className === "my-profile-div") {
-        this.props.history.goBack();
-      }
-    }
-  };
-
   openDeleteDialog = (e) => {
     // Open the dialog box
     document.querySelectorAll(".delete-modal-div")[1].style.display = "flex";
@@ -164,22 +144,16 @@ class MyProfile extends Component {
     this.props.deletePostAction(opjPro);
   };
 
+  history = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     console.log("ProfilePage -> REDNER!!!");
     // Initial global variable
     var currentSection;
     // Short cut to the profilePage state
     var thisState = this.props.profilePageState;
-
-    // Display the 3 titles from the initial array outside the class
-    var titlesDiv = titles.map((el, ind) => {
-      return (
-        <div onClick={this.activeBtn} className="my-pro-btn-btn" key={ind}>
-          <p className="my-pro-p">{el}</p>
-          <span className="m-p-b-s"></span>
-        </div>
-      );
-    });
 
     // Display the section that the user click on
     if (thisState.currentSection === "Info") {
@@ -248,21 +222,14 @@ class MyProfile extends Component {
     }
 
     return (
-      <div
-        className="my-profile-div"
-        onClick={this.cancellProfile}
-        onKeyDown={this.cancellProfile}
-        tabIndex="0"
-      >
-        <DeleteModal delete={this.deletePost} cancel={this.exitDeleteModal} />
-        <div className="my-profile-inside">
-          <h1 className="my-pro-title">
-            {this.props.profileBoxState.fullName}
-          </h1>
-          <div className="my-pro-btn-div">{titlesDiv}</div>
-          <div className="my-pro-view-div">{currentSection}</div>
-        </div>
-      </div>
+      <UserProfile
+        fullName={this.props.profileBoxState.fullName}
+        history={this.history}
+        currentSection={currentSection}
+        activeBtn={this.activeBtn}
+        deletePost={this.deletePost}
+        exitDeleteModal={this.exitDeleteModal}
+      />
     );
   }
 }
