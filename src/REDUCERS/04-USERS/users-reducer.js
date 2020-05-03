@@ -15,6 +15,7 @@ const reducer = (state = initialState, action) => {
       allowR: !state.allowR,
       currentView: action.view,
       email: action.email,
+      Posts: [],
     };
   }
   if (action.type === "renderPostsFromUsers") {

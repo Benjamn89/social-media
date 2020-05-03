@@ -2,7 +2,11 @@ const exitLikeBox = (e) => {
   // Shortcut event.target.className
   const eClass = e.target.className;
   // Exit from the likes box if the user click outside the box
-  if (eClass !== "in-likes-box in-likes-box-show" && eClass !== "i-f-p-l-s") {
+  if (
+    eClass !== "in-likes-box in-likes-box-show" &&
+    eClass !== "i-f-p-l-s" &&
+    document.querySelector(".in-likes-box-show")
+  ) {
     // Remove the like box
     document
       .querySelector(".in-likes-box-show")

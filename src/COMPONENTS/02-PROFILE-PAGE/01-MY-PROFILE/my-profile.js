@@ -149,6 +149,27 @@ class MyProfile extends Component {
     this.props.history.goBack();
   };
 
+  moveToUser = (e) => {
+    // Save the like index
+    const likeIndex = e.target.getAttribute("index");
+    // S the post index
+    const postIndex = e.target.parentNode.parentNode.children[0].getAttribute(
+      "index"
+    );
+    // S the user ref
+    const ref = this.props.profilePageState.userPosts[postIndex].likes[
+      likeIndex
+    ].ref;
+
+    // Direct to the proile page if the user login in click on his name
+    if (ref === this.props.loginRef) {
+      return null;
+    }
+
+    // Direct to the user page
+    this.props.history.push(`users/${ref}`);
+  };
+
   render() {
     console.log("ProfilePage -> REDNER!!!");
     // Initial global variable
@@ -174,7 +195,7 @@ class MyProfile extends Component {
           // Display the users who like the post
           var whoLikes = el.likes.map((user, userInd) => {
             return (
-              <p key={userInd}>
+              <p key={userInd} onClick={this.moveToUser} index={userInd}>
                 {userInd + 1}. {user.fullName}
               </p>
             );

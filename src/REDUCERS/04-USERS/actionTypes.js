@@ -13,6 +13,15 @@ const actionTypes = {
   },
 
   fetchUserData: (userRef) => {
+    // Load Spinner
+    document.querySelector(".my-profile-div").classList.add("showSpinner");
+    // Remove the active class from the last btn
+    document
+      .querySelector(".active-btn-span")
+      .classList.remove("active-btn-span");
+    // Set the activeBtn to the info section
+    document.querySelectorAll(".m-p-b-s")[0].classList.add("active-btn-span");
+
     // Save the loged user inside the UserReducer state
     const localS = JSON.parse(
       typeof window !== "undefined" && localStorage.getItem("myData")

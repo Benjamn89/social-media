@@ -166,7 +166,7 @@ class PostsBoxes extends Component {
   moveToUser = (e) => {
     // Initial ref
     var ref;
-    // Save the post index
+    // Save the like index
     const index = e.target.getAttribute("index");
     // Check from where the click sent to pick the user profile correctly
     if (e.target.className === "in-sin-p1-span") {
@@ -177,6 +177,11 @@ class PostsBoxes extends Component {
         "index"
       );
       ref = this.props.postsArray.posts[postIndex].likes[index].ref;
+    }
+
+    // Direct to the proile page if the user login in click on his name
+    if (ref === this.props.postsArray.ref) {
+      return this.props.history.push("/profile");
     }
     // Direct to the user profile
     this.props.history.push(`users/${ref}`);
@@ -215,12 +220,7 @@ class PostsBoxes extends Component {
         // Display the users who like the post
         var whoLikes = el.likes.map((user, userInd) => {
           return (
-            <p
-              key={userInd}
-              onClick={this.moveToUser}
-              index={userInd}
-              className="who-likes-p"
-            >
+            <p key={userInd} onClick={this.moveToUser} index={userInd}>
               {userInd + 1}. {user.fullName}
             </p>
           );

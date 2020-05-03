@@ -22,12 +22,13 @@ class Users extends Component {
     if (nP.thisState.allowR !== this.props.thisState.allowR) {
       return true;
     }
+    if (this.props.match.params.user !== nP.match.params.user) {
+      this.props.fetchUserData(nP.match.params.user);
+    }
     return false;
   }
 
   componentDidMount() {
-    // Load Spinner
-    document.querySelector(".my-profile-div").classList.add("showSpinner");
     // Save the user ref for loading data
     const userRef = this.props.match.params.user;
     // Send actionType for fething the data based on the user Ref
@@ -37,7 +38,7 @@ class Users extends Component {
   history = () => {
     // Reset the state
     this.props.resetStateUsers();
-    this.props.history.goBack();
+    this.props.history.push("/");
   };
 
   activeBtn = (e) => {
@@ -160,6 +161,25 @@ class Users extends Component {
     this.props.deletePostUsersAction(opjPro);
   };
 
+  moveToUser = (e) => {
+    // Save the like index
+    const likeIndex = e.target.getAttribute("index");
+    // Save the post index
+    const postIndex = e.target.parentNode.parentNode.children[0].getAttribute(
+      "index"
+    );
+    // Save the user ref
+    const ref = this.props.thisState.Posts[postIndex].likes[likeIndex].ref;
+
+    // Direct to profile if the user click on his name
+    if (ref === this.props.loginRef) {
+      return this.props.history.push("/profile");
+    }
+
+    // Direct to the user oage
+    this.props.history.push(`/users/${ref}`);
+  };
+
   render() {
     console.log("Users -> REDNER!!!");
     // thisState shortCut
@@ -209,7 +229,7 @@ class Users extends Component {
           // Display the users who like the post
           var whoLikes = el.likes.map((user, userInd) => {
             return (
-              <p key={userInd}>
+              <p key={userInd} onClick={this.moveToUser} index={userInd}>
                 {userInd + 1}. {user.fullName}
               </p>
             );

@@ -177,6 +177,10 @@
   line-height: 1.7;
   letter-spacing: 1.2px;
   color: white;
+  cursor: pointer;
+}
+.in-likes-box p:hover {
+  text-decoration: underline;
 }
 .in-likes-box::-webkit-scrollbar {
   width: 0.4em;
