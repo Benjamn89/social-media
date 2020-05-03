@@ -1,0 +1,50 @@
+.friends-div {
+  /* border: solid 0.5px; */
+}
+.friends-inside-d {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  height: 50px;
+  justify-content: space-around;
+  align-items: center;
+  border: solid 0.5px #f1f2f6;
+  border-radius: 1px;
+}
+.friends-inside-d:hover {
+  background-color: #f1f2f6;
+}
+.friends-image {
+  height: 80%;
+  border-radius: 50%;
+}
+.friends-p {
+  font-weight: 500;
+}
+.friends-btn {
+  height: 60%;
+  background-color: #c0392b;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px;
+  letter-spacing: 2px;
+  position: relative;
+}
+.friends-btn-hover::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 4.5px;
+  background-color: #fff;
+  height: 1px;
+  width: 90%;
+  transition: 0.3s;
+  transform: scaleX(0);
+  transform-origin: 0% 100%;
+}
+.friends-btn-hover:hover::after {
+  transform: scaleX(1);
+}

@@ -10,6 +10,7 @@ import ShowLikesBox from "../../FUNCTIONS/showLikes";
 import Info from "./00-INFO/info";
 import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
 import UserProfile from "../../FUNCTIONS/userProfile";
+import Friends from "../../FUNCTIONS/friends";
 //Import Media
 import Unlike from "../../../media/heart-unlike.png";
 import Like from "../../../media/heart-like.png";
@@ -240,7 +241,12 @@ class MyProfile extends Component {
       }
     }
     if (thisState.currentSection === "Friends") {
-      currentSection = null;
+      currentSection = (
+        <Friends
+          imgUrl={this.props.profileBoxState.url}
+          fullName="Binyamin Tal"
+        />
+      );
     }
 
     return (
