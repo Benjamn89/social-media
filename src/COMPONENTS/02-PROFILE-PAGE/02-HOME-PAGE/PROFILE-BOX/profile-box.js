@@ -20,8 +20,14 @@ class ProfileBox extends Component {
   }
 
   shouldComponentUpdate(nP, nS) {
+    console.log("ProfileBox SCP");
     var tProps = this.props.profileBoxState;
-    if (tProps !== nP.profileBoxState) {
+    var nProps = nP.profileBoxState;
+    if (
+      tProps.url !== nProps.url ||
+      tProps.location !== nProps.location ||
+      tProps.website !== nProps.website
+    ) {
       return true;
     } else {
       return false;

@@ -11,6 +11,7 @@
   align-items: center;
   border: solid 0.5px #f1f2f6;
   border-radius: 1px;
+  margin-bottom: 15px;
 }
 .friends-inside-d:hover {
   background-color: #f1f2f6;
@@ -47,4 +48,23 @@
 }
 .friends-btn-hover:hover::after {
   transform: scaleX(1);
+}
+
+@media only screen and (max-width: 1050px) {
+  .friends-inside-d {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 725px) {
+  .friends-inside-d {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .friends-btn {
+    width: 70px;
+    height: 80%;
+  }
 }

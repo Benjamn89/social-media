@@ -110,6 +110,12 @@ const actionTypes = {
       },
     };
   },
+  updateFriendsBoxProfile: (friendsArr) => {
+    return {
+      type: "updateFriendsBoxProfile",
+      val: friendsArr,
+    };
+  },
 };
 
 export default actionTypes;

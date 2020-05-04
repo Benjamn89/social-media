@@ -8,6 +8,7 @@ import ProfileBox from "../../FUNCTIONS/profile-box";
 import SinglePost from "../02-HOME-PAGE/POSTS-BOXES/single-post";
 import TimeChecking from "../../FUNCTIONS/time-checking";
 import ShowLikesBox from "../../FUNCTIONS/showLikes";
+import Friends from "../../FUNCTIONS/friends";
 // Import media
 import Like from "../../../media/heart-like.png";
 import Unlike from "../../../media/heart-unlike.png";
@@ -165,6 +166,16 @@ class Users extends Component {
   };
 
   moveToUser = (e) => {
+    if (e.target.className === "friends-btn friends-btn-hover") {
+      const ref = this.props.thisState.profileUser.friends[
+        e.target.getAttribute("index")
+      ].ref;
+      if (ref === this.props.loginRef) {
+        return this.props.history.push("/profile");
+      }
+      return this.props.history.push(`/users/${ref}`);
+    }
+
     // Save the like index
     const likeIndex = e.target.getAttribute("index");
     // Save the post index
@@ -214,7 +225,7 @@ class Users extends Component {
     const thisState = this.props.thisState;
     // Save the user full name
     try {
-      var fullName = this.props.thisState.loginUser.fullName;
+      var fullName = this.props.thisState.profileUser.fullName;
     } catch {}
     // Create the currentView var
     var currentView;
@@ -319,6 +330,19 @@ class Users extends Component {
           </div>
         );
       }
+    }
+    if (thisState.currentView === "Friends") {
+      currentView = thisState.profileUser.friends.map((el, ind) => {
+        return (
+          <Friends
+            imgUrl={el.image}
+            fullName={el.fullName}
+            index={ind}
+            key={ind}
+            moveToUser={this.moveToUser}
+          />
+        );
+      });
     }
     return (
       <UserProfile

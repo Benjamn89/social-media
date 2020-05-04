@@ -11,7 +11,13 @@ const Friends = (props) => {
       <div className="friends-inside-d">
         <img src={props.imgUrl} alt="friendsImg" className="friends-image" />
         <p className="friends-p">{props.fullName}</p>
-        <button className="friends-btn friends-btn-hover">View Profile</button>
+        <button
+          className="friends-btn friends-btn-hover"
+          onClick={props.moveToUser}
+          index={props.index}
+        >
+          View Profile
+        </button>
         {removeFriends}
       </div>
     </div>

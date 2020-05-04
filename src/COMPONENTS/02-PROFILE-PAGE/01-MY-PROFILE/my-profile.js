@@ -22,8 +22,7 @@ var index;
 
 class MyProfile extends Component {
   componentDidMount() {
-    // Reset State
-    this.props.resetState();
+    console.log("ComponentDidMount");
   }
 
   activeBtn = (e) => {
@@ -147,10 +146,20 @@ class MyProfile extends Component {
   };
 
   history = () => {
+    this.props.resetState();
     this.props.history.goBack();
   };
 
   moveToUser = (e) => {
+    if (e.target.className === "friends-btn friends-btn-hover") {
+      const ref = this.props.profileBoxState.friends[
+        e.target.getAttribute("index")
+      ].ref;
+
+      this.props.resetState();
+      this.props.history.push(`users/${ref}`);
+      return null;
+    }
     // Save the like index
     const likeIndex = e.target.getAttribute("index");
     // S the post index
@@ -168,6 +177,7 @@ class MyProfile extends Component {
     }
 
     // Direct to the user page
+    this.props.resetState();
     this.props.history.push(`users/${ref}`);
   };
 
@@ -245,7 +255,15 @@ class MyProfile extends Component {
         currentSection = <h1>No Friends</h1>;
       } else {
         currentSection = this.props.profileBoxState.friends.map((el, ind) => {
-          return <Friends imgUrl={el.image} fullName={el.fullName} key={ind} />;
+          return (
+            <Friends
+              imgUrl={el.image}
+              fullName={el.fullName}
+              key={ind}
+              moveToUser={this.moveToUser}
+              index={ind}
+            />
+          );
         });
       }
     }

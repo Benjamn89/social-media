@@ -1,3 +1,4 @@
+import boxActionTypes from "../02-HOME-PAGE/01-PROFILE-BOX/actionTypes";
 // Create db connection
 const faunadb = require("faunadb"),
   q = faunadb.query;
@@ -162,6 +163,7 @@ const actionTypes = {
         )
         .then((ret) => {
           dispatch(actionTypes.updateFriendsUserRender(ret.data));
+          dispatch(boxActionTypes.updateFriendsBoxProfile(ret.data.friends));
         });
     };
   },

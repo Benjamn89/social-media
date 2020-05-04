@@ -22,6 +22,12 @@ const reducer = (state = initialState, action) => {
       website: action.val.web,
     };
   }
+  if (action.type === "updateFriendsBoxProfile") {
+    return {
+      ...state,
+      friends: action.val,
+    };
+  }
   return state;
 };
 

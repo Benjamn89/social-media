@@ -45,14 +45,12 @@ const actionTypes = {
             sectionName: pro.sectionName,
           };
           dispatch(actionTypes.changeMode(objPro));
-          // Remove Spinner
-          document
-            .querySelector(".my-pro-view-div")
-            .classList.remove("showSpinner");
         });
     };
   },
   changeMode: (pro) => {
+    // Remove Spinner
+    document.querySelector(".my-pro-view-div").classList.remove("showSpinner");
     return {
       type: "changeMode",
       val: pro,
