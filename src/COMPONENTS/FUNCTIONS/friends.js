@@ -4,7 +4,12 @@ import "./friends.css";
 const Friends = (props) => {
   var removeFriends;
   if (props.removeFriends) {
-    removeFriends = null;
+    removeFriends = (
+      <div className="friends-x-btn-div">
+        <div className="friends-i-1"></div>
+        <div className="friends-i-2"></div>
+      </div>
+    );
   }
   return (
     <div className="friends-div">
@@ -18,8 +23,8 @@ const Friends = (props) => {
         >
           View Profile
         </button>
-        {removeFriends}
       </div>
+      {removeFriends}
     </div>
   );
 };

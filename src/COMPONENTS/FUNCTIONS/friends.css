@@ -1,8 +1,11 @@
 .friends-div {
-  /* border: solid 0.5px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 70px;
 }
 .friends-inside-d {
-  margin: auto;
   display: flex;
   flex-direction: row;
   width: 60%;
@@ -11,7 +14,6 @@
   align-items: center;
   border: solid 0.5px #f1f2f6;
   border-radius: 1px;
-  margin-bottom: 15px;
 }
 .friends-inside-d:hover {
   background-color: #f1f2f6;
@@ -48,6 +50,33 @@
 }
 .friends-btn-hover:hover::after {
   transform: scaleX(1);
+}
+.friends-x-btn-div {
+  margin-left: 20px;
+
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.friends-x-btn-div div {
+  height: 1px;
+  width: 45%;
+  background-color: #5f6368;
+  position: absolute;
+}
+.friends-i-1 {
+  transform: rotate(45deg);
+}
+.friends-i-2 {
+  transform: rotate(-45deg);
+}
+.friends-x-btn-div:hover {
+  cursor: pointer;
+  background-color: #dcdde1;
 }
 
 @media only screen and (max-width: 1050px) {
