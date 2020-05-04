@@ -24,6 +24,8 @@
 }
 .friends-p {
   font-weight: 500;
+  width: 150px;
+  padding-left: 15px;
 }
 .friends-btn {
   height: 60%;
@@ -53,7 +55,6 @@
 }
 .friends-x-btn-div {
   margin-left: 20px;
-
   border-radius: 50%;
   height: 30px;
   width: 30px;
@@ -70,9 +71,11 @@
 }
 .friends-i-1 {
   transform: rotate(45deg);
+  pointer-events: none;
 }
 .friends-i-2 {
   transform: rotate(-45deg);
+  pointer-events: none;
 }
 .friends-x-btn-div:hover {
   cursor: pointer;

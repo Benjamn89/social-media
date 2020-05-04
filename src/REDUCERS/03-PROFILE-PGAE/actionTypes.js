@@ -1,3 +1,5 @@
+import boxActionTypes from "../02-HOME-PAGE/01-PROFILE-BOX/actionTypes";
+
 // Create db connection
 const faunadb = require("faunadb"),
   q = faunadb.query;
@@ -95,6 +97,21 @@ const actionTypes = {
     return {
       type: "deletePostFromProfile",
       val: newPosts,
+    };
+  },
+  removeFriendsFromProfile: (pro) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("Users"), pro.loginRef), {
+            data: {
+              friends: pro.copyFriendsArr,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(boxActionTypes.updateFriendsBoxProfile(pro.copyFriendsArr));
+        });
     };
   },
 };

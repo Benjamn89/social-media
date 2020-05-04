@@ -181,6 +181,18 @@ class MyProfile extends Component {
     this.props.history.push(`users/${ref}`);
   };
 
+  removeFriendBtn = (e) => {
+    const profileBoxShort = this.props.profileBoxState;
+    const loginRef = profileBoxShort.refToProDoc;
+    var copyFriendsArr = JSON.parse(JSON.stringify(profileBoxShort.friends));
+    copyFriendsArr.splice(e.target.getAttribute("index"), 1);
+    const obj = {
+      loginRef,
+      copyFriendsArr,
+    };
+    this.props.removeFriendsFromProfile(obj);
+  };
+
   render() {
     console.log("ProfilePage -> REDNER!!!");
     // Initial global variable
@@ -263,6 +275,7 @@ class MyProfile extends Component {
               moveToUser={this.moveToUser}
               index={ind}
               removeFriends={true}
+              removeFriendBtn={this.removeFriendBtn}
             />
           );
         });
@@ -297,6 +310,8 @@ const mapDispatchToProps = (dispatch) => {
     resetState: () => dispatch(actionTypes.resetState()),
     updateLikeAction: (pro) => dispatch(actionTypes.updateLikeAction(pro)),
     deletePostAction: (pro) => dispatch(actionTypes.deletePostAction(pro)),
+    removeFriendsFromProfile: (pro) =>
+      dispatch(actionTypes.removeFriendsFromProfile(pro)),
   };
 };
 

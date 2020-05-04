@@ -5,7 +5,11 @@ const Friends = (props) => {
   var removeFriends;
   if (props.removeFriends) {
     removeFriends = (
-      <div className="friends-x-btn-div">
+      <div
+        onClick={props.removeFriendBtn}
+        className="friends-x-btn-div"
+        index={props.index}
+      >
         <div className="friends-i-1"></div>
         <div className="friends-i-2"></div>
       </div>
