@@ -2,6 +2,7 @@ const initialState = {
   allowR: false,
   currentView: "",
   updatedLike: false,
+  watched: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,7 @@ const reducer = (state = initialState, action) => {
       profileUser: action.val.profileUser,
       currentView: action.view,
       allowR: !state.allowR,
+      watched: false,
     };
   }
   if (action.type === "renderPostsFromUsers") {
@@ -20,6 +22,7 @@ const reducer = (state = initialState, action) => {
       Posts: action.val,
       currentView: action.section,
       allowR: !state.allowR,
+      watched: true,
     };
   }
   if (action.type === "changeSecWithNoFetch") {

@@ -13,7 +13,13 @@ const actionTypes = {
     };
   },
 
-  fetchUserData: (loginRef, profileRef) => {
+  fetchUserData: (profileRef) => {
+    // Load Spinner
+    document.querySelector(".my-profile-div").classList.add("showSpinner");
+    var localS =
+      typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("myData"));
+    var loginRef = localS.ref;
     var loginUser, profileUser;
     return (dispatch) => {
       Promise.all([
@@ -39,7 +45,13 @@ const actionTypes = {
     };
   },
 
-  fetchUserDirect: (profileRef, loginRef) => {
+  fetchUserDirect: (profileRef) => {
+    // Load Spinner
+    document.querySelector(".my-profile-div").classList.add("showSpinner");
+    var localS =
+      typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("myData"));
+    var loginRef = localS.ref;
     var profileUser, loginUser;
     return (dispatch) => {
       Promise.all([

@@ -262,6 +262,7 @@ class MyProfile extends Component {
               key={ind}
               moveToUser={this.moveToUser}
               index={ind}
+              removeFriends={true}
             />
           );
         });

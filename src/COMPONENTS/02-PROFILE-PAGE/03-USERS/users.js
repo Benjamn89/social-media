@@ -24,21 +24,23 @@ class Users extends Component {
       return true;
     }
     if (this.props.match.params.user !== nP.match.params.user) {
+      // Remove the active class from the last btn
+      document
+        .querySelector(".active-btn-span")
+        .classList.remove("active-btn-span");
+
+      document.querySelector(".m-p-b-s").classList.add("active-btn-span");
+
       this.props.fetchUserData(nP.match.params.user);
     }
     return false;
   }
 
   componentDidMount() {
-    var localS =
-      typeof window !== "undefined" &&
-      JSON.parse(localStorage.getItem("myData"));
-    // Load Spinner
-    document.querySelector(".my-profile-div").classList.add("showSpinner");
     if (this.props.history.action === "PUSH") {
-      this.props.fetchUserData(localS.ref, this.props.match.params.user);
+      this.props.fetchUserData(this.props.match.params.user);
     } else {
-      this.props.fetchUserDirect(this.props.match.params.user, localS.ref);
+      this.props.fetchUserDirect(this.props.match.params.user);
     }
   }
 
@@ -58,7 +60,7 @@ class Users extends Component {
     // Add the active btn style to the choosen on
     e.target.parentNode.children[1].classList.add("active-btn-span");
     // Check if the user allready fetch the section
-    if (this.props.thisState.Posts) {
+    if (this.props.thisState.watched) {
       console.log("Return running");
       return this.props.changeSecWithNoFetch(title);
     }
@@ -173,7 +175,8 @@ class Users extends Component {
       if (ref === this.props.loginRef) {
         return this.props.history.push("/profile");
       }
-      return this.props.history.push(`/users/${ref}`);
+      this.props.history.push(`/users/${ref}`);
+      return null;
     }
 
     // Save the like index
@@ -371,8 +374,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     resetStateUsers: () => dispatch(actionTypes.resetStateUsers()),
-    fetchUserData: (loginRef, profileRef) =>
-      dispatch(actionTypes.fetchUserData(loginRef, profileRef)),
+    fetchUserData: (profileRef) =>
+      dispatch(actionTypes.fetchUserData(profileRef)),
     fetchPostsFromUsers: (pro) =>
       dispatch(actionTypes.fetchPostsFromUsers(pro)),
     changeSecWithNoFetch: (title) =>
@@ -383,8 +386,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionTypes.deletePostUsersAction(pro)),
     updateFriendsUserAction: (obj) =>
       dispatch(actionTypes.updateFriendsUserAction(obj)),
-    fetchUserDirect: (profileRef, loginRef) =>
-      dispatch(actionTypes.fetchUserDirect(profileRef, loginRef)),
+    fetchUserDirect: (profileRef) =>
+      dispatch(actionTypes.fetchUserDirect(profileRef)),
   };
 };
 
