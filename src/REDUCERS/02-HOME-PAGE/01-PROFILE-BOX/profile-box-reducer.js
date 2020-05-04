@@ -1,11 +1,5 @@
 const initialState = {
   url: false,
-  fullName: null,
-  refToProDoc: null,
-  timeStamp: null,
-  location: "Edit",
-  website: "Edit",
-  email: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -18,13 +12,7 @@ const reducer = (state = initialState, action) => {
   if (action.type === "renLogingData") {
     return {
       ...state,
-      url: action.dataObj.image,
-      fullName: action.dataObj.fullName,
-      refToProDoc: action.refToProDoc,
-      timeStamp: action.timeStamp,
-      location: action.dataObj.location,
-      website: action.dataObj.web,
-      email: action.dataObj.email,
+      ...action.dataObj,
     };
   }
   if (action.type === "renderProInfo") {

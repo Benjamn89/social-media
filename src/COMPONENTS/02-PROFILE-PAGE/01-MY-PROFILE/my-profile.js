@@ -241,12 +241,13 @@ class MyProfile extends Component {
       }
     }
     if (thisState.currentSection === "Friends") {
-      currentSection = (
-        <Friends
-          imgUrl={this.props.profileBoxState.url}
-          fullName="Binyamin Tal"
-        />
-      );
+      if (this.props.profileBoxState.friends.length < 1) {
+        currentSection = <h1>No Friends</h1>;
+      } else {
+        currentSection = this.props.profileBoxState.friends.map((el, ind) => {
+          return <Friends imgUrl={el.image} fullName={el.fullName} key={ind} />;
+        });
+      }
     }
 
     return (
@@ -257,6 +258,7 @@ class MyProfile extends Component {
         activeBtn={this.activeBtn}
         deletePost={this.deletePost}
         exitDeleteModal={this.exitDeleteModal}
+        friends={true}
       />
     );
   }

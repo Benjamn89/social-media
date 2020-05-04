@@ -1,9 +1,6 @@
 const initialState = {
   allowR: false,
   currentView: "",
-  Info: {},
-  Posts: [],
-  email: "",
   updatedLike: false,
 };
 
@@ -11,11 +8,10 @@ const reducer = (state = initialState, action) => {
   if (action.type === "renderUserData") {
     return {
       ...state,
-      Info: action.val,
-      allowR: !state.allowR,
+      loginUser: action.val.loginUser,
+      profileUser: action.val.profileUser,
       currentView: action.view,
-      email: action.email,
-      Posts: [],
+      allowR: !state.allowR,
     };
   }
   if (action.type === "renderPostsFromUsers") {
@@ -35,10 +31,9 @@ const reducer = (state = initialState, action) => {
   }
   if (action.type === "resetStateUsers") {
     return {
-      ...state,
-      Info: {},
-      Posts: [],
+      ...state.allowR,
       currentView: "",
+      Posts: null,
     };
   }
   if (action.type === "updateLikeUsers") {
@@ -55,6 +50,13 @@ const reducer = (state = initialState, action) => {
       Posts: action.val,
       updatedLike: !state.updatedLike,
       allowR: !state.allowR,
+    };
+  }
+  if (action.type === "updateFriendsUserRender") {
+    return {
+      ...state,
+      allowR: !state.allowR,
+      loginUser: action.val,
     };
   }
   return state;

@@ -54,6 +54,7 @@ const actionTypes = {
                     time,
                     location: "EDIT",
                     website: "EDIT",
+                    friends: [],
                   },
                 })
               )

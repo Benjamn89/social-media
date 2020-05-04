@@ -22,7 +22,6 @@ const actionTypes = {
         .then((res) => {
           // Establish the new url of the profile image
           newImgUrl = `https://firebasestorage.googleapis.com/v0/b/sted-7c8ac.appspot.com/o/${storeInputPick.name}?alt=media`;
-          // newImgUrl = `https://firebasestorage.googleapis.com/v0/b/sted-7c8ac.appspot.com/o/renamed-${storeInputPick.name}?alt=media`;
           // Update the database with the new Url
           client.query(
             q.Update(q.Ref(q.Collection("Users"), refDoc), {
@@ -63,10 +62,13 @@ const actionTypes = {
           };
           var dataObj = {
             fullName: ret.data.fullName,
-            image: ret.data.profileImg,
+            url: ret.data.profileImg,
             location: ret.data.location,
-            web: ret.data.website,
+            website: ret.data.website,
             email: ret.data.email,
+            friends: ret.data.friends,
+            timeStamp,
+            refToProDoc: parseLocal.ref,
           };
           dispatch(
             actionTypes.renLogingData(dataObj, parseLocal.ref, timeStamp)

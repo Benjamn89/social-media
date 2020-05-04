@@ -29,10 +29,16 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    // Save the user ref for loading data
-    const userRef = this.props.match.params.user;
-    // Send actionType for fething the data based on the user Ref
-    this.props.fetchUserData(userRef);
+    var localS =
+      typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem("myData"));
+    // Load Spinner
+    document.querySelector(".my-profile-div").classList.add("showSpinner");
+    if (this.props.history.action === "PUSH") {
+      this.props.fetchUserData(localS.ref, this.props.match.params.user);
+    } else {
+      this.props.fetchUserDirect(this.props.match.params.user, localS.ref);
+    }
   }
 
   history = () => {
@@ -51,17 +57,14 @@ class Users extends Component {
     // Add the active btn style to the choosen on
     e.target.parentNode.children[1].classList.add("active-btn-span");
     // Check if the user allready fetch the section
-    if (
-      this.props.thisState[title].length > 0 ||
-      this.props.thisState[title].fullName
-    ) {
+    if (this.props.thisState.Posts) {
       console.log("Return running");
       return this.props.changeSecWithNoFetch(title);
     }
     // Load Spinner
     document.querySelector(".my-pro-view-div").classList.add("showSpinner");
     // Save user email
-    const email = this.props.thisState.Info.email;
+    const email = this.props.thisState.profileUser.email;
     // Create obj for actiontypes
     const objPro = {
       email,
@@ -77,7 +80,7 @@ class Users extends Component {
     // Make a clone copy of the posts
     var posts = JSON.parse(JSON.stringify(this.props.thisState.Posts));
     // Make shortcut of the user email
-    const email = this.props.thisState.email;
+    const email = this.props.thisState.loginUser.email;
     // Checking if the user like is own post and change accordlny
     var checkLike = posts[index].likes.find((el) => {
       return el.email === email;
@@ -94,8 +97,8 @@ class Users extends Component {
       // Create Obj and push it into the likes array
       var obj = {
         email,
-        fullName: this.props.loginFullName,
-        ref: this.props.loginRef,
+        fullName: this.props.thisState.loginUser.fullName,
+        ref: this.props.profileBox.refToProDoc,
       };
       // Push the email if checkLike returned undefiend
       posts[index].likes.push(obj);
@@ -180,39 +183,75 @@ class Users extends Component {
     this.props.history.push(`/users/${ref}`);
   };
 
+  addFriend = () => {
+    // Add Spinner
+    document.querySelector(".no-friends-div").classList.add("showSpinner2");
+    const profileBox = JSON.parse(
+      JSON.stringify(this.props.thisState.profileUser)
+    );
+    // Make copy of the friends array
+    var friendsArr = JSON.parse(
+      JSON.stringify(this.props.thisState.loginUser.friends)
+    );
+    const objToPush = {
+      email: profileBox.email,
+      fullName: profileBox.fullName,
+      ref: profileBox.ref,
+      image: profileBox.profileImg,
+    };
+    friendsArr.push(objToPush);
+    const obj = {
+      friendsArr,
+      ref: this.props.thisState.loginUser.ref,
+    };
+
+    this.props.updateFriendsUserAction(obj);
+  };
+
   render() {
     console.log("Users -> REDNER!!!");
     // thisState shortCut
     const thisState = this.props.thisState;
     // Save the user full name
-    const fullName = thisState.Info.fullName;
+    try {
+      var fullName = this.props.thisState.loginUser.fullName;
+    } catch {}
     // Create the currentView var
     var currentView;
 
+    if (this.props.thisState.loginUser) {
+      // Checking relation
+      var checkFriends = this.props.thisState.loginUser.friends.find((el) => {
+        return el.email === this.props.thisState.profileUser.email;
+      });
+    }
+
     // Create the profileBox
     if (thisState.currentView === "Info") {
-      // Set the titles var to be displyed
-      const titlesToDisplay = {
-        location: thisState.Info.location,
-        website: thisState.Info.website,
-        image: thisState.Info.profileImg,
-      };
-      // Time Stamp
-      var splitTime = thisState.Info.time.split(" ");
-      var timeStamp = {
-        year: splitTime[3],
-        month: splitTime[1],
-        day: splitTime[2],
-      };
-      currentView = (
-        <ProfileBox
-          locationText={titlesToDisplay.location}
-          websiteText={titlesToDisplay.website}
-          timeStampMonth={timeStamp.month}
-          timeStampYear={timeStamp.year}
-          profileUrl={titlesToDisplay.image}
-        />
-      );
+      if (checkFriends) {
+        // Set the titles var to be displyed
+        const titlesToDisplay = {
+          location: thisState.profileUser.location,
+          website: thisState.profileUser.website,
+          image: thisState.profileUser.profileImg,
+        };
+        // Time Stamp
+        var splitTime = thisState.profileUser.time.split(" ");
+        var timeStamp = {
+          year: splitTime[3],
+          month: splitTime[1],
+          day: splitTime[2],
+        };
+        currentView = (
+          <ProfileBox
+            locationText={titlesToDisplay.location}
+            websiteText={titlesToDisplay.website}
+            timeStampMonth={timeStamp.month}
+            timeStampYear={timeStamp.year}
+            profileUrl={titlesToDisplay.image}
+          />
+        );
+      }
     }
 
     if (thisState.currentView === "Posts") {
@@ -223,7 +262,7 @@ class Users extends Component {
 
           // Check if user like his own post
           var checkLikes = el.likes.find((el) => {
-            return el.email === this.props.thisState.email;
+            return el.email === this.props.thisState.loginUser.email;
           });
 
           // Display the users who like the post
@@ -289,6 +328,9 @@ class Users extends Component {
         activeBtn={this.activeBtn}
         exitDeleteModal={this.exitDeleteModal}
         deletePost={this.deletePost}
+        friends={checkFriends}
+        addFriend={this.addFriend}
+        name={fullName}
       />
     );
   }
@@ -297,7 +339,7 @@ class Users extends Component {
 const mapStateToProps = (state) => {
   return {
     thisState: state.UsersReducer,
-    loginFullName: state.ProfileBoxReducer.fullName,
+    profileBox: state.ProfileBoxReducer,
     loginRef: state.PostsReducer.ref,
   };
 };
@@ -305,7 +347,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     resetStateUsers: () => dispatch(actionTypes.resetStateUsers()),
-    fetchUserData: (userRef) => dispatch(actionTypes.fetchUserData(userRef)),
+    fetchUserData: (loginRef, profileRef) =>
+      dispatch(actionTypes.fetchUserData(loginRef, profileRef)),
     fetchPostsFromUsers: (pro) =>
       dispatch(actionTypes.fetchPostsFromUsers(pro)),
     changeSecWithNoFetch: (title) =>
@@ -314,6 +357,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionTypes.updateLikeUsersAction(pro)),
     deletePostUsersAction: (pro) =>
       dispatch(actionTypes.deletePostUsersAction(pro)),
+    updateFriendsUserAction: (obj) =>
+      dispatch(actionTypes.updateFriendsUserAction(obj)),
+    fetchUserDirect: (profileRef, loginRef) =>
+      dispatch(actionTypes.fetchUserDirect(profileRef, loginRef)),
   };
 };
 

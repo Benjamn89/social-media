@@ -12,37 +12,64 @@ const actionTypes = {
     };
   },
 
-  fetchUserData: (userRef) => {
-    // Load Spinner
-    document.querySelector(".my-profile-div").classList.add("showSpinner");
-    // Remove the active class from the last btn
-    document
-      .querySelector(".active-btn-span")
-      .classList.remove("active-btn-span");
-    // Set the activeBtn to the info section
-    document.querySelectorAll(".m-p-b-s")[0].classList.add("active-btn-span");
-
-    // Save the loged user inside the UserReducer state
-    const localS = JSON.parse(
-      typeof window !== "undefined" && localStorage.getItem("myData")
-    );
-    const email = localS.email;
-
+  fetchUserData: (loginRef, profileRef) => {
+    var loginUser, profileUser;
     return (dispatch) => {
-      client.query(q.Get(q.Ref(q.Collection("Users"), userRef))).then((ret) => {
-        // Call the reducer for changing the state
-        dispatch(actionTypes.renderUserData(ret.data, email));
+      Promise.all([
+        client
+          .query(q.Get(q.Ref(q.Collection("Users"), loginRef)))
+          .then((ret) => {
+            ret.data.ref = ret.ref.value.id;
+            return (loginUser = ret.data);
+          }),
+        client
+          .query(q.Get(q.Ref(q.Collection("Users"), profileRef)))
+          .then((ret) => {
+            ret.data.ref = ret.ref.value.id;
+            return (profileUser = ret.data);
+          }),
+      ]).then((sucess) => {
+        const obj = {
+          profileUser,
+          loginUser,
+        };
+        dispatch(actionTypes.renderUserData(obj));
       });
     };
   },
-  renderUserData: (obj, email) => {
+
+  fetchUserDirect: (profileRef, loginRef) => {
+    var profileUser, loginUser;
+    return (dispatch) => {
+      Promise.all([
+        client
+          .query(q.Get(q.Ref(q.Collection("Users"), profileRef)))
+          .then((ret) => {
+            ret.data.ref = ret.ref.value.id;
+            return (profileUser = ret.data);
+          }),
+        client
+          .query(q.Get(q.Ref(q.Collection("Users"), loginRef)))
+          .then((ret) => {
+            ret.data.ref = ret.ref.value.id;
+            return (loginUser = ret.data);
+          }),
+      ]).then((sucess) => {
+        const obj = {
+          loginUser,
+          profileUser,
+        };
+        dispatch(actionTypes.renderUserData(obj));
+      });
+    };
+  },
+  renderUserData: (obj) => {
     // Remove spinner
     document.querySelector(".my-profile-div").classList.remove("showSpinner");
     return {
       type: "renderUserData",
       val: obj,
       view: "Info",
-      email,
     };
   },
   fetchPostsFromUsers: (pro) => {
@@ -121,6 +148,29 @@ const actionTypes = {
     return {
       type: "deletePostFromUsers",
       val: newPosts,
+    };
+  },
+  updateFriendsUserAction: (obj) => {
+    return (dispatch) => {
+      client
+        .query(
+          q.Update(q.Ref(q.Collection("Users"), obj.ref), {
+            data: {
+              friends: obj.friendsArr,
+            },
+          })
+        )
+        .then((ret) => {
+          dispatch(actionTypes.updateFriendsUserRender(ret.data));
+        });
+    };
+  },
+  updateFriendsUserRender: (data) => {
+    // Remove Spinner
+    document.querySelector(".no-friends-div").classList.remove("showSpinner2");
+    return {
+      type: "updateFriendsUserRender",
+      val: data,
     };
   },
 };

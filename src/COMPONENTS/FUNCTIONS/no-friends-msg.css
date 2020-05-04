@@ -1,0 +1,16 @@
+.no-friends-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+.no-friends-h1 {
+  font-size: 15px;
+}
+.no-friends-img {
+  padding-top: 50px;
+  cursor: pointer;
+}
