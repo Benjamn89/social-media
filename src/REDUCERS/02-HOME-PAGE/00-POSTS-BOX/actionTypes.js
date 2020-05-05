@@ -29,26 +29,37 @@ const actionTypes = {
           )
         )
         .then((ret) => {
+          var secondArr = false;
           if (ret.data.length > 0) {
             ret.data.map((el) => {
               // Enter the ref inside my array storing data
               el.data.ref = el.ref.value.id;
               return storeArr.push(el.data);
             });
-            dispatch(actionTypes.renderPosts(storeArr, email, ref));
+
+            if (storeArr.length > 4) {
+              // copy of the result array
+              var copyArr = JSON.parse(JSON.stringify(storeArr));
+              const firstArr = copyArr.slice(copyArr.length - 5);
+              copyArr.splice(copyArr.length - 5, copyArr.length);
+              storeArr = firstArr;
+              secondArr = copyArr;
+            }
+            dispatch(actionTypes.renderPosts(storeArr, email, ref, secondArr));
           } else {
-            dispatch(actionTypes.renderPosts([], email, ref));
+            dispatch(actionTypes.renderPosts([], email, ref, []));
           }
         });
     };
   },
   // Sending the loaded posts to the reducer for rendering on the screen
-  renderPosts: (storeArr, email, ref) => {
+  renderPosts: (storeArr, email, ref, secondArr) => {
     return {
       type: "renderPosts",
       val: storeArr,
       email,
       ref,
+      secondArr,
     };
   },
   createNewPost: (postProperties) => {
@@ -145,6 +156,12 @@ const actionTypes = {
     return {
       type: "deletePost",
       val: pro.copyPost,
+    };
+  },
+  loadSecondArr: (posts) => {
+    return {
+      type: "loadSecondArr",
+      val: posts,
     };
   },
 };

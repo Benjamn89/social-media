@@ -1,5 +1,6 @@
 const initialState = {
   posts: [],
+  secondArr: [],
   changePost: false,
   addLike: false,
   email: null,
@@ -22,6 +23,7 @@ const reducer = (state = initialState, action) => {
       posts: action.val,
       email: action.email,
       ref: action.ref,
+      secondArr: action.secondArr,
     };
   }
   if (action.type === "updatePost") {
@@ -49,6 +51,14 @@ const reducer = (state = initialState, action) => {
       ...state,
       posts: action.val,
       changePost: !state.changePost,
+    };
+  }
+  if (action.type === "loadSecondArr") {
+    return {
+      ...state,
+      changePost: !state.changePost,
+      posts: action.val,
+      secondArr: false,
     };
   }
   return state;

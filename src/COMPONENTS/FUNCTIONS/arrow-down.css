@@ -1,0 +1,35 @@
+.arrow-down-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin: 20px auto;
+}
+.arrow-down-div:hover {
+  cursor: pointer;
+  background-color: #dcdde1;
+}
+
+.loadPostsSpinner {
+  opacity: 0.5;
+  position: relative;
+  z-index: 300;
+}
+.loadPostsSpinner::before {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #bdc3c7;
+  border-top-color: #c0392b;
+  position: absolute;
+  left: -3x;
+  top: -3px;
+  animation: spinner 0.5s linear infinite;
+  z-index: 200;
+}
+.move-arrow-down {
+  transform: translateX(-1500px);
+}

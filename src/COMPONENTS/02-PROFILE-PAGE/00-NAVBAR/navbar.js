@@ -16,7 +16,7 @@ const Navbar = (props) => {
       <img src={NavLogo} alt="nav-img" />
       <div className="nav-inside-div">
         <p onClick={openModal} className="nav-inside-p nav-p3">
-          +
+          New Post
         </p>
         <Link className="nav-inside-p" to="profile">
           <p className="nav-inside-p nav-p1">Profile</p>

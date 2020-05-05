@@ -11,6 +11,7 @@ import DeleteModal from "./DELETE-MODAL/delete-modal";
 import Modal from "./MODAL/modal";
 import TimeChecking from "../../../FUNCTIONS/time-checking";
 import ShowLikesBox from "../../../FUNCTIONS/showLikes";
+import LoadPosts from "../../../FUNCTIONS/load-posts";
 // Import Media
 import UnlikeHeart from "../../../../media/heart-unlike.png";
 import LikeHeart from "../../../../media/heart-like.png";
@@ -187,6 +188,35 @@ class PostsBoxes extends Component {
     this.props.history.push(`users/${ref}`);
   };
 
+  loadSecondArr = () => {
+    // Load spinner
+    document.querySelector(".arrow-down-div").classList.add("loadPostsSpinner");
+
+    setTimeout(() => {
+      document
+        .querySelector(".arrow-down-div")
+        .classList.remove("loadPostsSpinner");
+      setTimeout(() => {
+        document
+          .querySelector(".arrow-down-div")
+          .classList.add("move-arrow-down");
+        setTimeout(() => {
+          var copyPosts = JSON.parse(
+            JSON.stringify(this.props.postsArray.posts)
+          );
+          var copySecond = JSON.parse(
+            JSON.stringify(this.props.postsArray.secondArr)
+          );
+          copySecond.reverse();
+          copySecond.map((el) => {
+            return copyPosts.unshift(el);
+          });
+          this.props.loadSecondArr(copyPosts);
+        }, 500);
+      }, 200);
+    }, 1000);
+  };
+
   render() {
     console.log("PostsBoxes -> REDNER!!!");
     // Initial variables
@@ -255,6 +285,10 @@ class PostsBoxes extends Component {
         <DeleteModal cancel={this.exitDeleteModal} delete={this.deletePost} />
         <Modal establishFetch={this.savePost} />
         {fetchedPosts}
+        <LoadPosts
+          secondArr={this.props.postsArray.secondArr.length > 0}
+          clickLoadPosts={this.loadSecondArr}
+        />
       </div>
     );
   }
@@ -279,6 +313,7 @@ const mapDispatchToProps = (dispatch) => {
     setCommentRef: (ref) => dispatch(actionTypes.setCommentRef(ref)),
     addComment: () => dispatch(actionTypes.addComment()),
     deletePost: (properties) => dispatch(actionTypes.deletePost(properties)),
+    loadSecondArr: (posts) => dispatch(actionTypes.loadSecondArr(posts)),
   };
 };
 
