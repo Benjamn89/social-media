@@ -1,6 +1,6 @@
 Welcome To Sted.
 
-A site who built for being displayed in my portfolio as a medium/ big size project.
+A site who built for being displayed in my portfolio as a medium/ big size project. </br>
 The site simulates a social network.
 
 
