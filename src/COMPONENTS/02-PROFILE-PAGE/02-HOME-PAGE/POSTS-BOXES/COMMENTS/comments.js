@@ -69,10 +69,10 @@ class Comments extends Component {
       const now = new Date();
       const postedTime = now.getTime();
 
-      // const postIndex = this.props.postRef;
       const copyPost = JSON.parse(
         JSON.stringify(this.props.commentsReducer.copyPost)
       );
+
       const theComment = {
         body: inputValue,
         profileImg: profileBox.url,
@@ -80,6 +80,7 @@ class Comments extends Component {
         fullName: profileBox.fullName,
         postedTime,
         displayTime: "Right now...",
+        ref: this.props.profileBox.refToProDoc,
       };
 
       // Save the ref of the post
@@ -170,6 +171,24 @@ class Comments extends Component {
     }
   };
 
+  moveToUser = (e) => {
+    const eClass = e.target.className;
+    const thisState = this.props.commentsReducer;
+    var ref;
+    if (eClass === "ins2-inside-h1") {
+      ref = thisState.copyPost.userRef;
+    } else if (eClass === "ins2-inside-h1 ins4-h1") {
+      ref = thisState.copyPost.comments[e.target.getAttribute("index")].ref;
+    } else if (eClass === "likes-comment-p") {
+      ref = thisState.copyPost.likes[e.target.getAttribute("index")].ref;
+    }
+
+    if (ref === this.props.profileBox.refToProDoc) {
+      return this.props.history.push("/profile");
+    }
+    this.props.history.push(`/users/${ref}`);
+  };
+
   render() {
     if (this.props.commentsReducer.postRef) {
       // Initial Variables
@@ -206,7 +225,13 @@ class Comments extends Component {
               {deleteIcon}
               <img src={el.profileImg} alt="testImg" />
               <div className="com-ins4-inside">
-                <h1 className="ins2-inside-h1 ins4-h1">{el.fullName}</h1>
+                <h1
+                  className="ins2-inside-h1 ins4-h1"
+                  index={ind}
+                  onClick={this.moveToUser}
+                >
+                  {el.fullName}
+                </h1>
                 <p className="ins2-inside-time">{time}</p>
                 <p className="ins2-inside-body ins4-body">{el.body}</p>
               </div>
@@ -227,7 +252,12 @@ class Comments extends Component {
       // Display the likes array in the box on click
       var likesNames = postRef.likes.map((user, userInd) => {
         return (
-          <p key={userInd}>
+          <p
+            key={userInd}
+            className="likes-comment-p"
+            index={userInd}
+            onClick={this.moveToUser}
+          >
             {userInd + 1}. {user.fullName}
           </p>
         );
@@ -246,7 +276,9 @@ class Comments extends Component {
               <div className="wrap-x-button">
                 <span className="x-button">+</span>
               </div>
-              <h1 className="ins2-inside-h1">{postRef.fullName}</h1>
+              <h1 className="ins2-inside-h1" onClick={this.moveToUser}>
+                {postRef.fullName}
+              </h1>
               <p className="ins2-inside-time">{postTime}</p>
               <p className="ins2-inside-body">{postRef.text}</p>
               <div>

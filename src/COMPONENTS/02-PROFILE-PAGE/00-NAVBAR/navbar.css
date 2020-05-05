@@ -1,5 +1,5 @@
 nav {
-  height: 6vh;
+  height: 8vh;
   width: 100%;
   background-color: #c0392b;
   display: flex;
@@ -66,7 +66,9 @@ nav img {
 .nav-p1:hover::after {
   transform: scaleX(1);
 }
-
+.nav-p3 {
+  font-weight: bold;
+}
 /* Transfrom border on hover */
 .nav-p2::before {
   content: "";

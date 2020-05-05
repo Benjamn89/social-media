@@ -23,7 +23,7 @@ const Navbar = (props) => {
         </Link>
 
         <p className="nav-inside-p nav-p2" onClick={props.signOut}>
-          SignOut
+          LogOut
         </p>
       </div>
     </nav>

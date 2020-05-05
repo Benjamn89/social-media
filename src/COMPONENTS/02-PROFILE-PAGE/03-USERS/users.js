@@ -329,23 +329,27 @@ class Users extends Component {
       } else {
         currentView = (
           <div className="no-post-profile-div">
-            <h1>There are no posts to show.</h1>
+            <h1>There are no posts to show</h1>
           </div>
         );
       }
     }
     if (thisState.currentView === "Friends") {
-      currentView = thisState.profileUser.friends.map((el, ind) => {
-        return (
-          <Friends
-            imgUrl={el.image}
-            fullName={el.fullName}
-            index={ind}
-            key={ind}
-            moveToUser={this.moveToUser}
-          />
-        );
-      });
+      if (thisState.profileUser.friends.length < 1) {
+        currentView = <h1 className="no-friends-to-show">No Friends</h1>;
+      } else {
+        currentView = thisState.profileUser.friends.map((el, ind) => {
+          return (
+            <Friends
+              imgUrl={el.image}
+              fullName={el.fullName}
+              index={ind}
+              key={ind}
+              moveToUser={this.moveToUser}
+            />
+          );
+        });
+      }
     }
     return (
       <UserProfile

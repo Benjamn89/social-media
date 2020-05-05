@@ -66,6 +66,12 @@
 .active-btn-span {
   transform: translateY(0);
 }
+.no-friends-to-show {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .no-post-profile-div {
   /* border: solid 0.5px; */

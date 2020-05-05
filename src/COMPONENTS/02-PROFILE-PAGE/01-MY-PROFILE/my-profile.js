@@ -182,13 +182,16 @@ class MyProfile extends Component {
   };
 
   removeFriendBtn = (e) => {
+    e.target.classList.add("friendsSpinner");
+    const index = e.target.getAttribute("index");
     const profileBoxShort = this.props.profileBoxState;
     const loginRef = profileBoxShort.refToProDoc;
     var copyFriendsArr = JSON.parse(JSON.stringify(profileBoxShort.friends));
-    copyFriendsArr.splice(e.target.getAttribute("index"), 1);
+    copyFriendsArr.splice(index, 1);
     const obj = {
       loginRef,
       copyFriendsArr,
+      index,
     };
     this.props.removeFriendsFromProfile(obj);
   };
@@ -257,14 +260,14 @@ class MyProfile extends Component {
       } else {
         currentSection = (
           <div className="no-post-profile-div">
-            <h1>There are no posts to show.</h1>
+            <h1>There are no posts to show</h1>
           </div>
         );
       }
     }
     if (thisState.currentSection === "Friends") {
       if (this.props.profileBoxState.friends.length < 1) {
-        currentSection = <h1>No Friends</h1>;
+        currentSection = <h1 className="no-friends-to-show">No Friends</h1>;
       } else {
         currentSection = this.props.profileBoxState.friends.map((el, ind) => {
           return (

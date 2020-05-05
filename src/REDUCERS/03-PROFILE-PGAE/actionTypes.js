@@ -110,7 +110,21 @@ const actionTypes = {
           })
         )
         .then((ret) => {
-          dispatch(boxActionTypes.updateFriendsBoxProfile(pro.copyFriendsArr));
+          console.log(pro.index);
+          document
+            .querySelectorAll(".friends-inside-d")
+            [pro.index].classList.add("remove-friends");
+          document
+            .querySelectorAll(".friends-x-btn-div")
+            [pro.index].classList.remove("friendsSpinner");
+          setTimeout(() => {
+            document
+              .querySelectorAll(".friends-inside-d")
+              [pro.index].classList.remove("remove-friends");
+            dispatch(
+              boxActionTypes.updateFriendsBoxProfile(pro.copyFriendsArr)
+            );
+          }, 500);
         });
     };
   },

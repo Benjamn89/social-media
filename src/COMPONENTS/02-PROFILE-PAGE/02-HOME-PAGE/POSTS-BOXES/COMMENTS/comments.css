@@ -39,6 +39,10 @@
 .ins2-inside-h1 {
   font-size: 20px;
 }
+.ins2-inside-h1:hover {
+  cursor: pointer;
+  color: #2ea3f2;
+}
 .ins2-inside-time {
   font-size: 13px;
   color: #aaa69d;
@@ -224,6 +228,10 @@
   margin-top: 90px;
   animation: deleteCommentSpinner 0.5s linear infinite;
   opacity: 0.7;
+}
+
+.likes-comment-p:hover {
+  text-decoration: underline;
 }
 /* Animate Spinner  */
 @keyframes deleteCommentSpinner {
