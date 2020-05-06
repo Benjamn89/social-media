@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 const App = (props) => {
-  console.log("App -> RENDER!!!");
+  console.log("App render");
 
   var keyValidity = () => {
     var now = new Date();

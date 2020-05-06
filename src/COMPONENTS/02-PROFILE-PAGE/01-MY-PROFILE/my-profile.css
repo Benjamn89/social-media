@@ -21,6 +21,7 @@
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
+  position: relative;
 }
 .my-pro-title {
   margin: 25px 0;
@@ -29,7 +30,6 @@
   width: 90%;
   max-height: 60%;
   min-height: 60%;
-  /* border: solid 0.5px; */
 }
 /* 3 Titles */
 .my-pro-btn-div {

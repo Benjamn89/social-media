@@ -127,7 +127,8 @@
 }
 .in-sin-p3 {
   transform: translateY(-15px);
-  font-size: 15px;
+  font-size: 14.5px;
+  font-weight: 500;
 }
 
 /* Create Post Spinner  */

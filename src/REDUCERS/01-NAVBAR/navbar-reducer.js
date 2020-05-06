@@ -5,7 +5,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   if (action.type === "signOut") {
     return {
-      ...state,
       signOut: !state.signOut,
     };
   }
