@@ -7,7 +7,9 @@ nav {
   justify-content: center;
   align-items: center;
   position: relative;
+  transition: 0.3s;
 }
+
 nav *::after,
 nav *::before,
 nav * {
@@ -166,7 +168,18 @@ nav img {
   transform: scaleX(1);
 }
 
-@media only screen and (max-width: 650px) {
+/* Display the SideBar */
+
+@media only screen and (max-width: 700px) {
+  .nav-inside-div,
+  .nav-settings-div {
+    display: none;
+  }
+
+  nav img {
+    height: 70%;
+  }
+
   nav {
     justify-content: flex-end;
   }

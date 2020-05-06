@@ -2,13 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import actionTypes from "../../../REDUCERS/01-NAVBAR/actionTypes";
 import "./navbar.css";
+// Import Components
 import RemoveBox from "./remove-box";
+import SideBar from "./SIDE-NAVBAR/side-navbar";
 
 import NavLogo from "../../../media/sted.png";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Navbar extends Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+
   openModal = (e) => {
+    this.openSideNav();
     var el = document.querySelector(".posts-modal");
     el.style.display = "flex";
     el.focus();
@@ -20,6 +27,7 @@ class Navbar extends Component {
   };
 
   removeAccount = () => {
+    this.openSideNav();
     const el = document.querySelector(".remove-account-div");
     el.classList.add("r-a-d-c");
     el.focus();
@@ -41,6 +49,18 @@ class Navbar extends Component {
     this.props.removeProfileStedAction();
   };
 
+  openSideNav = () => {
+    // Turn around the arrow
+    document.querySelector(".side-nav-inside").classList.toggle("sni-click");
+    // Open the sid nav bar
+    document.querySelector(".actual-side-nav-div").classList.toggle("asnd");
+  };
+
+  moveToProfile = () => {
+    this.openSideNav();
+    this.props.history.push("/profile");
+  };
+
   render() {
     console.log("Navbar render");
     return (
@@ -50,9 +70,10 @@ class Navbar extends Component {
           <p onClick={this.openModal} className="nav-inside-p nav-p3">
             New Post
           </p>
-          <Link className="nav-inside-p" to="profile">
-            <p className="nav-inside-p nav-p1">Profile</p>
-          </Link>
+
+          <p className="nav-inside-p nav-p1" onClick={this.moveToProfile}>
+            Profile
+          </p>
 
           <p className="nav-inside-p nav-p2" onClick={this.props.signOut}>
             LogOut
@@ -70,6 +91,13 @@ class Navbar extends Component {
           cancelRemove={this.cancelRemove}
           removeProfile={this.removeProfile}
         />
+        <SideBar
+          openSideNav={this.openSideNav}
+          newPost={this.openModal}
+          profile={this.moveToProfile}
+          logOut={this.props.signOut}
+          removeAccount={this.removeAccount}
+        />
       </nav>
     );
   }
@@ -82,4 +110,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Navbar);
+export default connect(null, mapDispatchToProps)(withRouter(Navbar));
