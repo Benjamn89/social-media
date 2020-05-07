@@ -46,9 +46,9 @@
 .ins2-inside-time {
   font-size: 13px;
   color: #aaa69d;
-  margin-bottom: 15px;
 }
-.ins2-inside-body {
+.ins2-inside-body,
+.ins2-inside-time {
   margin-bottom: 15px;
 }
 .com-ins2-inside > div {
@@ -58,11 +58,10 @@
 .com-ins2-inside > div > p {
   margin-right: 10px;
 }
-/* FINISH STYLE THE HEADER DIV */
 .comments-inside3-div {
   text-align: center;
   padding: 20px;
-  border-top: solid 0.1px #f1f2f6;
+  border-top: 0.1px solid #f1f2f6;
 }
 .com-ins3-btn {
   padding: 8px;
@@ -79,8 +78,6 @@
 .com-ins3-btn:hover {
   background-color: #dff9fb;
 }
-
-/* Section 4 */
 .comments-inside4-div {
   padding: 15px;
   position: relative;
@@ -89,7 +86,7 @@
   justify-content: center;
   align-items: center;
   min-height: 20%;
-  border-top: solid 0.1px #f1f2f6;
+  border-top: 0.1px solid #f1f2f6;
 }
 .comments-inside4-div:hover {
   background-color: #f1f2f6;
@@ -114,10 +111,12 @@
   justify-content: center;
   align-items: center;
   transition: 0.3s;
+  -webkit-transform: translateY(-4px);
   transform: translateY(-4px);
   cursor: pointer;
 }
 .c-w-i-div {
+  -webkit-transform: translateY(-4.5px) translateX(-1px);
   transform: translateY(-4.5px) translateX(-1px);
 }
 .c-w-i-div:hover {
@@ -127,9 +126,9 @@
   height: 20px;
 }
 .c-w-i-i {
+  -webkit-transform: translateY(0.5px);
   transform: translateY(0.5px);
 }
-
 .wrap-x-button {
   width: 30px;
   height: 30px;
@@ -147,73 +146,74 @@
 }
 .x-button {
   font-size: 35px;
+  -webkit-transform: rotate(45deg) translateY(-4.5px);
   transform: rotate(45deg) translateY(-4.5px);
   color: #d1ccc0;
 }
 .x-button:hover {
-  color: black;
+  color: #000;
 }
-
 .popup-delete {
   height: 30px;
   width: 100px;
-  border: solid 0.5px;
   position: absolute;
   top: 30px;
   left: -50px;
   text-align: center;
   line-height: 1.7;
+  -webkit-transform: scale(0);
   transform: scale(0);
   transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
-  border-color: black;
+  border: 0.5px solid #000;
 }
 .test-delete:hover {
   color: #c0392b;
   background-color: #fff;
 }
 .test-delete {
+  -webkit-transform: scale(1);
   transform: scale(1);
 }
-
 .com-ins2-icon-p:hover {
   text-decoration: underline;
   cursor: pointer;
 }
-
-/* Like Box */
 .com-in-likes-box {
   position: absolute;
   height: 100px;
   width: 150px;
   top: -100px;
   left: 0;
-  border: solid 0.3px;
+  border: 0.3px solid;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
   align-items: baseline;
   justify-content: flex-start;
   overflow-y: scroll;
+  -webkit-transform: scaleY(0);
   transform: scaleY(0);
 }
 .com-in-likes-box-show {
+  -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
 .com-in-likes-box p {
   line-height: 1.7;
   letter-spacing: 1.2px;
-  color: white;
+  color: #fff;
 }
 .com-in-likes-box::-webkit-scrollbar {
   width: 0.4em;
 }
-
-/* Test Spinner */
 .deleteCommentSpinner {
   pointer-events: none;
 }
-.deleteCommentSpinner::before {
+.deleteCommentSpinner:before {
   content: "";
   width: 50px;
   height: 50px;
@@ -226,16 +226,22 @@
   top: -50%;
   margin-left: -30px;
   margin-top: 90px;
+  -webkit-animation: deleteCommentSpinner 0.5s linear infinite;
   animation: deleteCommentSpinner 0.5s linear infinite;
   opacity: 0.7;
 }
-
 .likes-comment-p:hover {
   text-decoration: underline;
 }
-/* Animate Spinner  */
+@-webkit-keyframes deleteCommentSpinner {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
 @keyframes deleteCommentSpinner {
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }

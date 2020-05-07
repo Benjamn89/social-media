@@ -1,9 +1,8 @@
 .log-in-div {
   height: 600px;
   width: 45%;
-  margin: auto;
-  border: solid 0.5px #ecf0f1;
-  margin-top: 50px;
+  border: 0.5px solid #ecf0f1;
+  margin: 50px auto auto;
   position: relative;
   transition: 0.5s;
 }
@@ -36,7 +35,7 @@
   font-size: 120%;
   padding-left: 5px;
   border-radius: 2px;
-  border: solid 0.5px #778ca3;
+  border: 0.5px solid #778ca3;
   outline: none;
   text-align: center;
 }
@@ -56,14 +55,11 @@
   height: 100px;
   border-radius: 4px;
 }
-
 .showSpinner2 {
   opacity: 0.5;
   position: relative;
 }
-
-/* Spinner on Loading */
-.showSpinner2::before {
+.showSpinner2:before {
   content: "";
   width: 50px;
   height: 50px;
@@ -76,22 +72,27 @@
   top: 55%;
   margin-left: -30px;
   margin-top: 90px;
+  -webkit-animation: spinner 0.5s linear infinite;
   animation: spinner 0.5s linear infinite;
   z-index: 10;
 }
-/* Animate Spinner  */
+@-webkit-keyframes spinner {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
 @keyframes spinner {
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }
 .text-for-warning {
   position: relative;
   padding-top: 25px;
 }
-
-/* Invalid username or pass msg */
-.invalid-msg::before {
+.invalid-msg:before {
   content: "Invalid email or Password";
   position: absolute;
   height: 35px;
@@ -104,15 +105,11 @@
   border-radius: 4px;
   cursor: default;
 }
-
-/* Media Query */
 @media only screen and (max-width: 980px) {
-  .showSpinner2::before {
+  .showSpinner2:before {
     margin-left: -30px;
   }
 }
-
-/* Media Query */
 @media only screen and (max-width: 900px) {
   .log-in-div {
     width: 80%;

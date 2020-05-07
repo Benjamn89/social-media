@@ -1,22 +1,23 @@
 .friends-div {
-  display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
   min-height: 70px;
 }
+.friends-div,
 .friends-inside-d {
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+.friends-inside-d {
   width: 60%;
   height: 50px;
   justify-content: space-around;
-  align-items: center;
-  border: solid 0.5px #f1f2f6;
+  border: 0.5px solid #f1f2f6;
   border-radius: 1px;
 }
 .remove-friends {
   transition: 0.5s ease-in-out;
+  -webkit-transform: scaleY(0);
   transform: scaleY(0);
 }
 .friends-inside-d:hover {
@@ -42,7 +43,7 @@
   letter-spacing: 2px;
   position: relative;
 }
-.friends-btn-hover::after {
+.friends-btn-hover:after {
   content: "";
   position: absolute;
   bottom: 3px;
@@ -51,10 +52,13 @@
   height: 1px;
   width: 90%;
   transition: 0.3s;
+  -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  transform-origin: 0% 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
 }
-.friends-btn-hover:hover::after {
+.friends-btn-hover:hover:after {
+  -webkit-transform: scaleX(1);
   transform: scaleX(1);
 }
 .friends-x-btn-div {
@@ -74,10 +78,12 @@
   position: absolute;
 }
 .friends-i-1 {
+  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   pointer-events: none;
 }
 .friends-i-2 {
+  -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
   pointer-events: none;
 }
@@ -85,12 +91,11 @@
   cursor: pointer;
   background-color: #dcdde1;
 }
-
 .friendsSpinner {
   opacity: 0.8;
   position: relative;
 }
-.friendsSpinner::before {
+.friendsSpinner:before {
   content: "";
   width: 30px;
   height: 30px;
@@ -100,21 +105,19 @@
   position: absolute;
   left: -2px;
   top: -1.5px;
+  -webkit-animation: spinner 0.5s linear infinite;
   animation: spinner 0.5s linear infinite;
 }
-
 @media only screen and (max-width: 1050px) {
   .friends-inside-d {
     width: 80%;
   }
 }
-
 @media only screen and (max-width: 725px) {
   .friends-inside-d {
     width: 100%;
   }
 }
-
 @media only screen and (max-width: 500px) {
   .friends-btn {
     width: 70px;

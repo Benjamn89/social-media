@@ -11,13 +11,12 @@
   cursor: pointer;
   background-color: #dcdde1;
 }
-
 .loadPostsSpinner {
   opacity: 0.5;
   position: relative;
   z-index: 300;
 }
-.loadPostsSpinner::before {
+.loadPostsSpinner:before {
   content: "";
   width: 50px;
   height: 50px;
@@ -27,9 +26,11 @@
   position: absolute;
   left: -3x;
   top: -3px;
+  -webkit-animation: spinner 0.5s linear infinite;
   animation: spinner 0.5s linear infinite;
   z-index: 200;
 }
 .move-arrow-down {
+  -webkit-transform: translateX(-1500px);
   transform: translateX(-1500px);
 }

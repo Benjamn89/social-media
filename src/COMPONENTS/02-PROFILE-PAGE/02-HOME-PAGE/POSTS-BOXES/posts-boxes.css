@@ -1,10 +1,8 @@
-/* Gadering Pointers */
-.in-sin-div-features img,
 .in-feat-p,
-.in-feat-p2 {
+.in-feat-p2,
+.in-sin-div-features img {
   cursor: pointer;
 }
-
 .posts-boxes-wrapper {
   width: 60%;
   background-color: #fff;
@@ -12,13 +10,11 @@
   flex-direction: column;
   justify-content: center;
 }
-
 .posts-boxes-wrapper * {
   transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
-
 .post-div {
-  border: solid 0.5px lightgrey;
+  border: 0.5px solid #d3d3d3;
   border-radius: 2px;
   height: auto;
   min-height: 15vh;
@@ -27,8 +23,7 @@
   margin-bottom: 10px;
   position: relative;
 }
-/* Style the x button */
-.post-delete-div::before {
+.post-delete-div:before {
   content: "";
   position: absolute;
   width: 30px;
@@ -36,12 +31,15 @@
   border-radius: 50%;
   left: -6px;
   top: -7px;
+  -webkit-transform: scaleY(0);
   transform: scaleY(0);
-  border: solid 1.5px #c0392b;
+  border: 1.5px solid #c0392b;
+  -webkit-transform-origin: 100% 50%;
   transform-origin: 100% 50%;
   transition: 0.2s;
 }
-.post-delete-div:hover::before {
+.post-delete-div:hover:before {
+  -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
 .post-delete-div {
@@ -53,7 +51,6 @@
   max-height: 20px;
   max-width: 20px;
 }
-
 .post-div-img {
   height: 99%;
   min-width: 170px;
@@ -65,14 +62,15 @@
   flex-direction: column;
   justify-content: space-evenly;
 }
-
-/* Style the likes/commnets div */
 .in-sin-div-features {
   display: flex;
   flex-direction: row;
 }
 .in-feat-p {
   margin-right: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 .in-sin-div-features {
@@ -87,11 +85,11 @@
 .i-f-p-l-s:hover {
   text-decoration: underline;
 }
-
 .wrap-feat-icon-div {
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  -webkit-transform: translateY(-4px);
   transform: translateY(-4px);
   margin-right: 4px;
   text-align: center;
@@ -99,6 +97,7 @@
 }
 .wrap-like-spe {
   line-height: 2.2;
+  -webkit-transform: translateY(-3.2px);
   transform: translateY(-3.2px);
 }
 .wrap-feat-icon-div:hover {
@@ -108,36 +107,34 @@
   background-color: transparent;
 }
 .f-i-d-i2 {
+  -webkit-transform: translateY(1.5px) translateX(0.3px);
   transform: translateY(1.5px) translateX(0.3px);
 }
-/* Style the likes/commnets div */
-
-/* Style the text inside the posts box */
 .in-sin-p1 {
-  font-weight: bold;
+  font-weight: 700;
 }
 .in-sin-p1-span:hover {
   color: #2ea3f2;
   cursor: pointer;
 }
 .in-sin-p2 {
+  -webkit-transform: translateY(-10px) translateX(10px);
   transform: translateY(-10px) translateX(10px);
   font-size: 13px;
   color: #aaa69d;
 }
 .in-sin-p3 {
+  -webkit-transform: translateY(-15px);
   transform: translateY(-15px);
   font-size: 14.5px;
   font-weight: 500;
 }
-
-/* Create Post Spinner  */
 .createPostSpinner {
   position: absolute;
   z-index: 300;
   pointer-events: none;
 }
-.createPostSpinner::before {
+.createPostSpinner:before {
   content: "";
   width: 50px;
   height: 50px;
@@ -150,34 +147,35 @@
   top: 10%;
   margin-left: -30px;
   margin-top: 90px;
+  -webkit-animation: createPostSpinner 0.5s linear infinite;
   animation: createPostSpinner 0.5s linear infinite;
   z-index: 200;
   opacity: 0.7;
 }
-
-/* Like Box */
 .in-likes-box {
   position: absolute;
   height: 100px;
   width: 150px;
   top: -100px;
   left: 0;
-  border: solid 0.3px;
+  border: 0.3px solid;
   background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
   align-items: baseline;
   justify-content: flex-start;
   overflow-y: scroll;
+  -webkit-transform: scaleY(0);
   transform: scaleY(0);
 }
 .in-likes-box-show {
+  -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
 .in-likes-box p {
   line-height: 1.7;
   letter-spacing: 1.2px;
-  color: white;
+  color: #fff;
   cursor: pointer;
 }
 .in-likes-box p:hover {
@@ -186,14 +184,18 @@
 .in-likes-box::-webkit-scrollbar {
   width: 0.4em;
 }
-
-/* Animate Spinner  */
-@keyframes createPostSpinner {
+@-webkit-keyframes createPostSpinner {
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }
-
+@keyframes createPostSpinner {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
 @media only screen and (max-width: 980px) {
   .posts-boxes-wrapper {
     width: 90%;
@@ -214,6 +216,7 @@
     max-width: 143px;
   }
   .inside-single-div {
+    -webkit-transform: translateX(0);
     transform: translateX(0);
     height: 100%;
     width: 100%;
@@ -223,7 +226,6 @@
     justify-content: center;
   }
 }
-
 @media only screen and (max-width: 635px) {
   .post-div {
     flex-direction: column;
@@ -238,5 +240,3 @@
     border-radius: 50%;
   }
 }
-
-/* @media screen and (max-width: 900px) and (min-width: 600px) */

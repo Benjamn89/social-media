@@ -11,11 +11,10 @@
   left: 0;
   display: none;
 }
-
 .delete-modal-inside-div {
   height: 100px;
   width: 400px;
-  background-color: white;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -37,16 +36,12 @@
 .delete-btn2 {
   color: #c0392b;
 }
-
-/* Delete Spinner */
-
-/* Spinner while creating user */
 .deletePostSpinner {
   position: absolute;
   z-index: 300;
   pointer-events: none;
 }
-.deletePostSpinner::before {
+.deletePostSpinner:before {
   content: "";
   width: 50px;
   height: 50px;
@@ -59,13 +54,20 @@
   top: 10%;
   margin-left: -30px;
   margin-top: 90px;
+  -webkit-animation: deletePostSpinner 0.5s linear infinite;
   animation: deletePostSpinner 0.5s linear infinite;
   z-index: 200;
   opacity: 0.7;
 }
-/* Animate Spinner  */
+@-webkit-keyframes deletePostSpinner {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
 @keyframes deletePostSpinner {
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }

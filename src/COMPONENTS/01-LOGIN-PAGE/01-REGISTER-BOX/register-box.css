@@ -1,13 +1,12 @@
 .register-box-div {
   height: 50vh;
   width: 80%;
-  border: solid 0.5px #ecf0f1;
+  border: 0.5px solid #ecf0f1;
   margin: 60px auto;
   display: grid;
   grid-template-columns: 4fr 3fr;
   transition: 0.5s;
 }
-
 .welcome-part-div {
   display: flex;
   flex-direction: column;
@@ -15,17 +14,17 @@
   align-items: center;
 }
 .part-one-text {
-  font-family: "Lora", serif;
+  font-family: Lora, serif;
   font-weight: 400;
 }
 .welcome-part-div ul {
+  -webkit-transform: translateY(-30px) translateX(-20px);
   transform: translateY(-30px) translateX(-20px);
 }
 .welcome-part-ul-title {
+  -webkit-transform: translateX(-25px);
   transform: translateX(-25px);
 }
-
-/* Media Query */
 @media only screen and (max-width: 980px) {
   .register-box-div {
     grid-template-columns: 1fr;
@@ -34,7 +33,7 @@
   .welcome-part-ul-title {
     margin-bottom: 20px;
   }
-  .showSpinner::before {
+  .showSpinner:before {
     margin-left: -50px;
   }
 }

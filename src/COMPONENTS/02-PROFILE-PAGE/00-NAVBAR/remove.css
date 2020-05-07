@@ -9,11 +9,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
+  -webkit-transform: scaleY(0);
   transform: scaleY(0);
   transition: 0.5s;
 }
 .r-a-d-c {
+  -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
 .remove-inside-div {

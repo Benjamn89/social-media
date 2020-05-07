@@ -1,23 +1,18 @@
-/* Sec wrapper */
 .posts-sec-wrapper {
   height: 40vh;
   width: 300px;
-  border: 2px solid lightgray;
+  border: 2px solid #d3d3d3;
   margin-left: 5px;
   border-radius: 4px;
   background-color: #fff;
 }
-
 .posts-sec-wrapper * {
   transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
-
-/* All cursor pointer  */
-.profile-box-pen-image,
-.edit-profile-bio {
+.edit-profile-bio,
+.profile-box-pen-image {
   cursor: pointer;
 }
-
 .inside-sec-two {
   display: flex;
   flex-direction: column;
@@ -26,7 +21,6 @@
   height: 100%;
   position: relative;
 }
-
 .profile-img {
   height: 150px;
   width: 150px;
@@ -45,15 +39,16 @@
   justify-content: center;
   align-items: center;
 }
-.wrap-img-pen:hover,
-.wrap-img-pen2:hover {
+.wrap-img-pen2:hover,
+.wrap-img-pen:hover {
   background-color: #dff9fb;
 }
 .wrap-img-pen {
+  -webkit-transform: translateY(-90px) translateX(90px);
   transform: translateY(-90px) translateX(90px);
 }
-.profile-box-pen-image,
-.edit-profile-bio {
+.edit-profile-bio,
+.profile-box-pen-image {
   height: 20px;
   outline: none;
 }
@@ -62,16 +57,14 @@
 }
 .website-a {
   text-decoration: none;
-  color: black;
+  color: #000;
 }
-
 .profile-box-div-info {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* border: solid 0.5px; */
 }
 .row-div-inside {
   display: flex;
@@ -83,14 +76,14 @@
   margin-right: 10px;
 }
 img[alt*="website"] {
+  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 .wrap-img-pen2 {
+  -webkit-transform: translateY(10px);
   transform: translateY(10px);
   align-self: center;
 }
-
-/* Media Query */
 @media only screen and (max-width: 900px) {
   .posts-sec-wrapper {
     width: 70%;
@@ -101,19 +94,19 @@ img[alt*="website"] {
     padding-top: 5px;
   }
   .profilebox-name-title-p {
+    -webkit-transform: translateY(5px);
     transform: translateY(5px);
   }
   .wrap-img-pen {
+    -webkit-transform: translateX(90px) translateY(-40px);
     transform: translateX(90px) translateY(-40px);
   }
 }
-
 @media only screen and (max-width: 450px) {
   .profile-box-div-info {
     left: 5%;
   }
 }
-
 @media only screen and (max-width: 380px) {
   .posts-sec-wrapper {
     height: 60vh;

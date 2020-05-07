@@ -10,7 +10,7 @@
 }
 .part-two-text {
   text-align: center;
-  font-family: "Lora", serif;
+  font-family: Lora, serif;
   font-weight: 400;
 }
 .part-two-form {
@@ -20,16 +20,14 @@
   align-items: center;
   height: 60%;
 }
-
 .part-two-form button,
 .part-two-form input {
   border-radius: 2px;
-  border: solid 0.5px #778ca3;
+  border: 0.5px solid #778ca3;
   outline: none;
   height: 30px;
   width: 90%;
 }
-
 .part-two-form input {
   font-size: 120%;
   padding-left: 5px;
@@ -47,9 +45,7 @@
   color: #0c2461;
   cursor: pointer;
 }
-
-/* Email exists warning */
-.email-warning::after {
+.email-warning:after {
   content: "This email address is already in use.";
   position: absolute;
   height: 35px;
@@ -62,14 +58,12 @@
   border-radius: 4px;
   cursor: default;
 }
-
-/* Spinner while creating user */
 .showSpinner {
   opacity: 0.5;
   position: relative;
   z-index: 300;
 }
-.showSpinner::before {
+.showSpinner:before {
   content: "";
   width: 50px;
   height: 50px;
@@ -82,19 +76,24 @@
   top: 20%;
   margin-left: -30px;
   margin-top: 90px;
+  -webkit-animation: spinner 0.5s linear infinite;
   animation: spinner 0.5s linear infinite;
   z-index: 200;
 }
-/* Animate Spinner  */
-@keyframes spinner {
+@-webkit-keyframes spinner {
   to {
-    transform: rotate(360deg);
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }
-
-/* Media Query */
+@keyframes spinner {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
 @media only screen and (max-width: 980px) {
-  .showSpinner::before {
+  .showSpinner:before {
     margin-left: -50px;
   }
 }
