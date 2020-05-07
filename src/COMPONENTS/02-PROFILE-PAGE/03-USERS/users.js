@@ -362,6 +362,7 @@ class Users extends Component {
         friends={checkFriends}
         addFriend={this.addFriend}
         name={fullName}
+        userExists={thisState.profileUser}
       />
     );
   }

@@ -35,13 +35,21 @@ const actionTypes = {
             ret.data.ref = ret.ref.value.id;
             return (profileUser = ret.data);
           }),
-      ]).then((sucess) => {
-        const obj = {
-          profileUser,
-          loginUser,
-        };
-        dispatch(actionTypes.renderUserData(obj));
-      });
+      ])
+        .then((sucess) => {
+          const obj = {
+            profileUser,
+            loginUser,
+          };
+          dispatch(actionTypes.renderUserData(obj));
+        })
+        .catch((err) => {
+          // Remove spinner
+          document
+            .querySelector(".my-profile-div")
+            .classList.remove("showSpinner");
+          console.log(err);
+        });
     };
   },
 

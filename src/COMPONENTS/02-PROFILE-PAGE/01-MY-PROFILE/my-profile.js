@@ -294,6 +294,7 @@ class MyProfile extends Component {
         deletePost={this.deletePost}
         exitDeleteModal={this.exitDeleteModal}
         friends={true}
+        userExists={true}
       />
     );
   }
