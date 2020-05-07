@@ -1,6 +1,6 @@
 .delete-modal-div {
-  position: absolute;
-  height: 100%;
+  position: fixed;
+  height: 100% !important;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   flex-direction: column;
