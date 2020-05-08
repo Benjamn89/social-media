@@ -2,9 +2,18 @@ nav {
   height: 8vh;
   width: 100%;
   background-color: #c0392b;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   position: relative;
 }
@@ -12,6 +21,7 @@ nav,
 nav *,
 nav :after,
 nav :before {
+  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 nav img {
@@ -20,7 +30,12 @@ nav img {
   left: 0;
 }
 .nav-inside-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
   margin-right: 35px;
 }
@@ -104,9 +119,18 @@ nav img {
   transform: scaleX(1);
 }
 .nav-settings-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   position: absolute;
   right: 20px;
@@ -183,6 +207,8 @@ nav img {
     height: 70%;
   }
   nav {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
     justify-content: flex-end;
   }
 }

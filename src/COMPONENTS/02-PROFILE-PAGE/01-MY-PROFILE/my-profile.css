@@ -1,4 +1,5 @@
 .my-profile-div * {
+  -webkit-transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .my-profile-div {
@@ -11,14 +12,23 @@
 }
 .my-profile-div,
 .my-profile-inside {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 .my-profile-inside {
   height: 60%;
   width: 80%;
   background-color: #fff;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   overflow-y: scroll;
   position: relative;
@@ -32,11 +42,20 @@
   min-height: 60%;
 }
 .my-pro-btn-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
   width: 300px;
   height: 40px;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
   align-items: flex-start;
   margin-bottom: 15px;
   overflow: hidden;
@@ -73,8 +92,14 @@
 .no-friends-to-show,
 .no-post-profile-div {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 .my-profile-no-exists,

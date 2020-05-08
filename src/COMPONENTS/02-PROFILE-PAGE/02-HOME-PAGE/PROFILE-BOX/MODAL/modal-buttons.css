@@ -9,6 +9,7 @@
   letter-spacing: 0.5px;
   color: #1976d2;
   font-weight: 700;
+  -webkit-transition: 0.3s;
   transition: 0.3s;
   padding: 6px 8px;
   border-radius: 4px;

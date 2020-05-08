@@ -6,13 +6,20 @@
   left: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   -webkit-transform-origin: 100% 0;
   transform-origin: 100% 0;
   -webkit-transform: scaleY(0);
   transform: scaleY(0);
+  -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 .r-a-d-c {
@@ -23,9 +30,18 @@
   height: 200px;
   width: 370px;
   background-color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 0 15px;
   border-radius: 4px;
@@ -41,9 +57,17 @@
 .remove-inside-btn-div {
   height: 50px;
   width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -ms-flex-pack: distribute;
   justify-content: space-around;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 .remove-inside-btn-div button {
@@ -55,6 +79,7 @@
   width: 40%;
 }
 .remove-inside-btn2 {
+  -webkit-transition: 0.2s;
   transition: 0.2s;
   color: #c0392b;
 }

@@ -7,6 +7,7 @@
   background-color: #fff;
 }
 .posts-sec-wrapper * {
+  -webkit-transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .edit-profile-bio,
@@ -14,9 +15,18 @@
   cursor: pointer;
 }
 .inside-sec-two {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   height: 100%;
   position: relative;
@@ -35,8 +45,14 @@
   height: 30px;
   width: 30px;
   border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 .wrap-img-pen2:hover,
@@ -60,14 +76,28 @@
   color: #000;
 }
 .profile-box-div-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   width: 100%;
 }
 .row-div-inside {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
   flex-direction: row;
   margin-top: 10px;
 }
@@ -82,6 +112,8 @@ img[alt*="website"] {
 .wrap-img-pen2 {
   -webkit-transform: translateY(10px);
   transform: translateY(10px);
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
   align-self: center;
 }
 @media only screen and (max-width: 900px) {
@@ -90,6 +122,8 @@ img[alt*="website"] {
     margin-bottom: 20px;
   }
   .inside-sec-two {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
     justify-content: flex-start;
     padding-top: 5px;
   }
