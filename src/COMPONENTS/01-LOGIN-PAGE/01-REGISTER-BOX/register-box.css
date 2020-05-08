@@ -9,6 +9,8 @@
   grid-template-columns: 4fr 3fr;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  opacity: 0;
+  animation: loadOnLogIn 0.3s forwards;
 }
 .welcome-part-div {
   display: -webkit-box;
