@@ -10,6 +10,8 @@
   -webkit-box-pack: space-evenly;
   -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  font-family: Lora, serif;
+  font-weight: 400;
 }
 .welcome-part-div li {
   list-style: disc;
@@ -52,6 +54,9 @@
 .part-two-form button {
   height: 35px;
   position: relative;
+}
+.part-two-form label {
+  transform: translateY(15px);
 }
 .part-two-p {
   margin-top: 35px;
@@ -111,5 +116,8 @@
 @media only screen and (max-width: 980px) {
   .showSpinner:before {
     margin-left: -50px;
+  }
+  .part-two-form label {
+    transform: translateY(0);
   }
 }

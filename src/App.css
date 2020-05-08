@@ -27,3 +27,8 @@ button {
   outline: 1px solid slategrey;
   border-radius: 4px;
 }
+
+input {
+  font-family: Lora, serif;
+  font-weight: 400;
+}

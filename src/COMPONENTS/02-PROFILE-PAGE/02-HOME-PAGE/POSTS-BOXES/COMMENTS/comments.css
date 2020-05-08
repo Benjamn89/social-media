@@ -26,6 +26,8 @@
   width: 500px;
   overflow: scroll;
   overflow-x: hidden;
+  opacity: 0;
+  animation: loadOnLogIn 0.3s forwards;
 }
 .comments-inside2-div {
   min-height: 30%;

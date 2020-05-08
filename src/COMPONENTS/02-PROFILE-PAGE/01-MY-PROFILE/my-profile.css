@@ -32,6 +32,8 @@
   flex-direction: column;
   overflow-y: scroll;
   position: relative;
+  opacity: 0;
+  animation: loadOnLogIn 0.5s forwards;
 }
 .my-pro-title {
   margin: 25px 0;

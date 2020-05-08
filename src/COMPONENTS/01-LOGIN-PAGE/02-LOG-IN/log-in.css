@@ -8,6 +8,8 @@
   transition: 0.5s;
   opacity: 0;
   animation: loadOnLogIn 0.3s forwards;
+  font-family: Lora, serif;
+  font-weight: 400;
 }
 
 @keyframes loadOnLogIn {
